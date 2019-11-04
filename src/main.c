@@ -10,19 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <fcntl.h>
-#include <unistd.h>
-#include "libft/libft.h"
-#define TYPE_COMMAND 1
-#define TYPE_STR 2
-#define TYPE_COMMENT 3
-#define TYPE_INSTRUCTION 4
-#define TYPE_VIRGULE 5
-#define TYPE_LABEL 6
-#define TYPE_DIRECT 7
-#define TYPE_INDEX 8
-#define TYPE_REGISTRE 9
-#define TYPE_UNKNOWN 10
+#include "../include/asm.h"
 
 typedef struct				s_lst
 {
@@ -184,7 +172,6 @@ int get_instruction(int fd, char *buffer, t_lst *lst)
 	}
 	if (buffer[0] == ',')
 		add_list(&lst, buffer, TYPE_VIRGULE);
-  // printf("%s", instruction);
 	ft_strdel(&instruction);
   return (1);
 }
