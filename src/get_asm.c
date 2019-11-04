@@ -31,7 +31,11 @@ int get_command(int fd, char *buffer, t_lst *lst)
     command = strjoinfree(command, buffer, 1);
     get_char(fd, buffer);
   }
-  add_list(&lst, command, TYPE_COMMAND);
+  if (!(add_list(&lst, command, TYPE_COMMAND)))
+  {
+    ft_strdel(&command);
+    return (0);
+  }
   ft_strdel(&command);
   return (1);
 }
@@ -50,7 +54,11 @@ int get_str(int fd, char *buffer, t_lst *lst)
   }
 	comment = strjoinfree(comment, buffer, 1);
 	get_char(fd, buffer);
-  add_list(&lst, comment, TYPE_STR);
+  if (!(add_list(&lst, comment, TYPE_STR)))
+  {
+    ft_strdel(&comment);
+    return (0);
+  }
   ft_strdel(&comment);
   return (1);
 }
@@ -67,7 +75,11 @@ int get_comment(int fd, char *buffer, t_lst *lst)
     comment = strjoinfree(comment, buffer, 1);
     get_char(fd, buffer);
   }
-  add_list(&lst, comment, TYPE_COMMENT);
+  if (!(add_list(&lst, comment, TYPE_COMMENT)))
+  {
+    ft_strdel(&comment);
+    return (0);
+  }
   ft_strdel(&comment);
   return (1);
 }
@@ -96,15 +108,31 @@ int get_instruction(int fd, char *buffer, t_lst *lst)
     get_char(fd, buffer);
   }
 	if (last_char == ':')
-		add_list(&lst, instruction, TYPE_LABEL_DEFINITION);
+  {
+    if (!(add_list(&lst, instruction, TYPE_LABEL_DEFINITION)))
+    {
+      ft_strdel(&instruction);
+      return(0);
+    }
+  }
 	else
 	{
 		if (is_instruction(instruction))
 			type = TYPE_INSTRUCTION;
-		add_list(&lst, instruction, type);
+		if (!(add_list(&lst, instruction, type)))
+    {
+      ft_strdel(&instruction);
+      return (0);
+    }
 	}
 	if (buffer[0] == ',')
-		add_list(&lst, buffer, TYPE_VIRGULE);
+	{
+    if (!(add_list(&lst, buffer, TYPE_VIRGULE)))
+    {
+      ft_strdel(&instruction);
+      return (0);
+    }
+  }
 	ft_strdel(&instruction);
   return (1);
 }

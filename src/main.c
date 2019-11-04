@@ -119,15 +119,26 @@ int main(int argc, char **argv)
     fd = open(argv[1], O_RDONLY );
     while (get_char(fd, buffer) > 0)
     {
-      if (buffer[0] == '.')
-        get_command(fd, buffer, list);
-      if (buffer[0] == '"')
-        get_str(fd, buffer, list);
-			if (buffer[0] == '#')
-				get_comment(fd, buffer, list);
-			if (!is_blank(buffer[0]))
-				get_instruction(fd, buffer, list);
-      // printf("%s", buffer);
+      if (buffer[0] == '.' && !get_command(fd, buffer, list))
+      {
+				ft_putendl("malloc error");
+				break ;
+			}
+      if (buffer[0] == '"' && !get_str(fd, buffer, list))
+			{
+				ft_putendl("malloc error");
+				break ;
+			}
+			if (buffer[0] == '#' && !get_comment(fd, buffer, list))
+			{
+				ft_putendl("malloc error");
+				break ;
+			}
+			if (!is_blank(buffer[0]) && !get_instruction(fd, buffer, list))
+			{
+				ft_putendl("malloc error");
+				break ;
+			}
     }
 		print_lst(list);
   }
