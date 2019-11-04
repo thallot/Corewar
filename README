@@ -1,1 +1,5 @@
-gcc -fsanitize=address main.c libft/libft.a
+COMPILATION
+	gcc -fsanitize=address main.c libft/libft.a
+
+UTILISATION 
+	./a.out champs/42.s
