@@ -19,7 +19,7 @@ LIBFT = libft/libft.a
 OBJDIR = obj
 SRCDIR = src
 
-SC = $(addsuffix .c, main)
+SC = $(addsuffix .c, main get_asm)
 
 SRCS = $(addprefix $(SRCDIR)/, $(SC))
 OBJS = $(addprefix $(OBJDIR)/, $(SC:.c=.o))

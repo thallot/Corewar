@@ -29,4 +29,27 @@
 # define TYPE_REGISTRE 9
 # define TYPE_UNKNOWN 10
 
+typedef struct				s_lst
+{
+	int 			type;
+	char			*name;
+	struct s_lst	*next;
+}							t_lst;
+
+/*
+*********************************** Get_asm.c **********************************
+*/
+int get_command(int fd, char *buffer, t_lst *lst);
+int get_str(int fd, char *buffer, t_lst *lst);
+int get_comment(int fd, char *buffer, t_lst *lst);
+int get_instruction(int fd, char *buffer, t_lst *lst);
+int get_char(int fd, char *buffer);
+/*
+*********************************** Main.c *************************************
+*/
+t_lst	*add_list(t_lst **list, char *name, int type);
+char	*strjoinfree(char *s1, char *s2, int opt);
+int is_blank(char c);
+int is_instruction(char *str);
+int is_separator(char c);
 #endif
