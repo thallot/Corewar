@@ -113,7 +113,7 @@ int get_command(int fd, char *buffer, t_lst *lst)
     get_char(fd, buffer);
   }
   add_list(&lst, command, TYPE_COMMAND);
-  // printf("%s", command);
+  ft_strdel(&command);
   return (1);
 }
 
@@ -132,7 +132,7 @@ int get_str(int fd, char *buffer, t_lst *lst)
 	comment = strjoinfree(comment, buffer, 1);
 	get_char(fd, buffer);
   add_list(&lst, comment, TYPE_STR);
-  // printf("%s", comment);
+  ft_strdel(&comment);
   return (1);
 }
 
@@ -149,7 +149,7 @@ int get_comment(int fd, char *buffer, t_lst *lst)
     get_char(fd, buffer);
   }
   add_list(&lst, comment, TYPE_COMMENT);
-  // printf("%s", comment);
+  ft_strdel(&comment);
   return (1);
 }
 
