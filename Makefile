@@ -43,7 +43,7 @@ all: $(NAME)
 $(NAME): lib $(OBJS) $(INCLS)
 	@echo "$(BOLD)$(GREY)~~~~~~~~~~~~ Generation ~~~~~~~~~~~~"
 	@$(CC) $(CFLAGS) $(LIBFT) $(OBJS) -o $(NAME)
-	@echo "$(GREEN)[OK] $(GREY)Tous les objets de $(WHITE)$(NAME) $(_BLUE)sont generes !\r"
+	@echo "$(GREEN)[OK] $(GREY)Tous les objets de $(WHITE)$(NAME) $(GREY)sont generes !\r"
 	@echo "$(GREEN)[OK] $(GREY)Compilation de $(WHITE)$(NAME)\n"
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c
