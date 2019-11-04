@@ -84,6 +84,8 @@ int get_instruction(int fd, char *buffer, t_lst *lst)
 		type = TYPE_INDEX;
 	else if (buffer[0] == 'r')
 		type = TYPE_REGISTRE;
+  else if (buffer[0] == ':')
+  	type = TYPE_LABEL;
 	else
 		type = TYPE_UNKNOWN;
   instruction = ft_strnew(0);
@@ -94,7 +96,7 @@ int get_instruction(int fd, char *buffer, t_lst *lst)
     get_char(fd, buffer);
   }
 	if (last_char == ':')
-		add_list(&lst, instruction, TYPE_LABEL);
+		add_list(&lst, instruction, TYPE_LABEL_DEFINITION);
 	else
 	{
 		if (is_instruction(instruction))

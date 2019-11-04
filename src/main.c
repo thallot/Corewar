@@ -91,7 +91,7 @@ void print_lst(t_lst *list)
 			printf("  -> (INSTRUCTION)\n");
 		if (list->type == TYPE_VIRGULE)
 			printf("  -> (SEPARATEUR ' , ')\n");
-		if (list->type == TYPE_LABEL)
+		if (list->type == TYPE_LABEL_DEFINITION)
 			printf("  -> (DEFINITION LABEL)\n");
 		if (list->type == TYPE_DIRECT)
 			printf("  -> (PARAMETRE DIRECT)\n");
@@ -101,6 +101,8 @@ void print_lst(t_lst *list)
 			printf("  -> (PARAMETRE REGISTRE)\n");
 		if (list->type == TYPE_UNKNOWN)
 			printf("  -> (ELEMENT INCONNU)\n");
+		if (list->type == TYPE_LABEL)
+			printf("  -> (APPEL LABEL)\n");
 		list = list->next;
 	}
 }

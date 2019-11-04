@@ -23,11 +23,12 @@
 # define TYPE_COMMENT 3
 # define TYPE_INSTRUCTION 4
 # define TYPE_VIRGULE 5
-# define TYPE_LABEL 6
+# define TYPE_LABEL_DEFINITION 6
 # define TYPE_DIRECT 7
 # define TYPE_INDEX 8
 # define TYPE_REGISTRE 9
-# define TYPE_UNKNOWN 10
+# define TYPE_LABEL 10
+# define TYPE_UNKNOWN 11
 
 typedef struct				s_lst
 {
