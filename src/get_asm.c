@@ -21,17 +21,18 @@ int get_char(int fd, char *buffer)
   return (ret);
 }
 
-int get_command(int fd, char *buffer, t_lst *lst)
+int get_command(t_env *env)
 {
   char *command;
 
   command = ft_strnew(0);
-  while (!is_blank(buffer[0]))
+  while (!is_blank(env->buffer[0]))
   {
-    command = strjoinfree(command, buffer, 1);
-    get_char(fd, buffer);
+    //integrer GC dans strjoinfree ?
+    command = strjoinfree(command, env->buffer, 1);
+    get_char(env->fd, env->buffer);
   }
-  if (!(add_list(&lst, command, TYPE_COMMAND)))
+  if (!(add_list(&(env->list), command, TYPE_COMMAND, env)))
   {
     ft_strdel(&command);
     return (0);
@@ -40,21 +41,21 @@ int get_command(int fd, char *buffer, t_lst *lst)
   return (1);
 }
 
-int get_str(int fd, char *buffer, t_lst *lst)
+int get_str(t_env *env)
 {
   char *comment;
 
   comment = ft_strnew(0);
-	comment = strjoinfree(comment, buffer, 1);
-	get_char(fd, buffer);
-  while (buffer[0] != '"')
+	comment = strjoinfree(comment, env->buffer, 1);
+	get_char(env->fd, env->buffer);
+  while (env->buffer[0] != '"')
   {
-    comment = strjoinfree(comment, buffer, 1);
-    get_char(fd, buffer);
+    comment = strjoinfree(comment, env->buffer, 1);
+    get_char(env->fd, env->buffer);
   }
-	comment = strjoinfree(comment, buffer, 1);
-	get_char(fd, buffer);
-  if (!(add_list(&lst, comment, TYPE_STR)))
+	comment = strjoinfree(comment, env->buffer, 1);
+	get_char(env->fd, env->buffer);
+  if (!(add_list(&(env->list), comment, TYPE_STR, env)))
   {
     ft_strdel(&comment);
     return (0);
@@ -63,19 +64,19 @@ int get_str(int fd, char *buffer, t_lst *lst)
   return (1);
 }
 
-int get_comment(int fd, char *buffer, t_lst *lst)
+int get_comment(t_env *env)
 {
   char *comment;
 
   comment = ft_strnew(0);
-	comment = strjoinfree(comment, buffer, 1);
-	get_char(fd, buffer);
-  while (buffer[0] != '\n')
+	comment = strjoinfree(comment, env->buffer, 1);
+	get_char(env->fd, env->buffer);
+  while (env->buffer[0] != '\n')
   {
-    comment = strjoinfree(comment, buffer, 1);
-    get_char(fd, buffer);
+    comment = strjoinfree(comment, env->buffer, 1);
+    get_char(env->fd, env->buffer);
   }
-  if (!(add_list(&lst, comment, TYPE_COMMENT)))
+  if (!(add_list(&(env->list), comment, TYPE_COMMENT, env)))
   {
     ft_strdel(&comment);
     return (0);
@@ -84,32 +85,33 @@ int get_comment(int fd, char *buffer, t_lst *lst)
   return (1);
 }
 
-int get_instruction(int fd, char *buffer, t_lst *lst)
+int get_instruction(t_env *env)
 {
   char *instruction;
 	int type;
 	char last_char;
 
-	if (buffer[0] == '%')
+  last_char = 0;
+	if (env->buffer[0] == '%')
 		type = TYPE_DIRECT;
-	else if (ft_isdigit(buffer[0]))
+	else if (ft_isdigit(env->buffer[0]))
 		type = TYPE_INDEX;
-	else if (buffer[0] == 'r')
+	else if (env->buffer[0] == 'r')
 		type = TYPE_REGISTRE;
-  else if (buffer[0] == ':')
+  else if (env->buffer[0] == ':')
   	type = TYPE_LABEL;
 	else
 		type = TYPE_UNKNOWN;
   instruction = ft_strnew(0);
-  while (!is_blank(buffer[0]) && !is_separator(buffer[0]))
+  while (!is_blank(env->buffer[0]) && !is_separator(env->buffer[0]))
   {
-    instruction = strjoinfree(instruction, buffer, 1);
-		last_char = buffer[0];
-    get_char(fd, buffer);
+    instruction = strjoinfree(instruction, env->buffer, 1);
+		last_char = env->buffer[0];
+    get_char(env->fd, env->buffer);
   }
 	if (last_char == ':')
   {
-    if (!(add_list(&lst, instruction, TYPE_LABEL_DEFINITION)))
+    if (!(add_list(&(env->list), instruction, TYPE_LABEL_DEFINITION, env)))
     {
       ft_strdel(&instruction);
       return(0);
@@ -119,15 +121,15 @@ int get_instruction(int fd, char *buffer, t_lst *lst)
 	{
 		if (is_instruction(instruction))
 			type = TYPE_INSTRUCTION;
-		if (!(add_list(&lst, instruction, type)))
+		if (!(add_list(&(env->list), instruction, type, env)))
     {
       ft_strdel(&instruction);
       return (0);
     }
 	}
-	if (buffer[0] == ',')
+	if (env->buffer[0] == ',')
 	{
-    if (!(add_list(&lst, buffer, TYPE_VIRGULE)))
+    if (!(add_list(&(env->list), env->buffer, TYPE_VIRGULE, env)))
     {
       ft_strdel(&instruction);
       return (0);

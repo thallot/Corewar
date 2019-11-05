@@ -12,15 +12,14 @@
 
 #include "../include/asm.h"
 
-t_lst	*add_list(t_lst **list, char *name, int type)
+t_lst	*add_list(t_lst **list, char *name, int type, t_env *env)
 {
 	t_lst *new;
 	t_lst **head;
 
 	head = list;
-	if (!(new = (t_lst *)ft_memalloc((sizeof(t_lst)))))
-		return (NULL);
-	new->name = ft_strdup(name);
+	new = (t_lst *)ft_memalloc_gc((sizeof(t_lst)), env);
+	new->name = ft_strdup_gc(name, env);
 	new->type = type;
 	new->next = NULL;
 	if (!(*list))
@@ -78,7 +77,7 @@ void print_lst(t_lst *list)
 {
 	while (list)
 	{
-		printf("%-*s", 15, list->name);
+		printf("%-15s", list->name);
 		if (list->type == 0)
 			printf("  -> (DEBUT)\n");
 		if (list->type == TYPE_COMMAND)
@@ -109,38 +108,39 @@ void print_lst(t_lst *list)
 
 int main(int argc, char **argv)
 {
-  int fd;
-  char buffer[2];
-  t_lst *list;
+	t_env *env;
 
-  add_list(&list, "BEGIN", 0);
-  if (argc > 1)
-  {
-    fd = open(argv[1], O_RDONLY );
-    while (get_char(fd, buffer) > 0)
-    {
-      if (buffer[0] == '.' && !get_command(fd, buffer, list))
-      {
-				ft_putendl("malloc error");
-				break ;
-			}
-      if (buffer[0] == '"' && !get_str(fd, buffer, list))
+	if (!(env = (t_env *)ft_memalloc(sizeof(t_env))))
+		return (-1);
+	env->list = NULL;
+	add_list(&(env->list), "BEGIN", 0, env);
+	if (argc > 1)
+	{
+		env->fd = open(argv[1], O_RDONLY);
+		while (get_char(env->fd, env->buffer) > 0)
+		{
+			if (env->buffer[0] == '.' && !get_command(env))
 			{
 				ft_putendl("malloc error");
 				break ;
 			}
-			if (buffer[0] == '#' && !get_comment(fd, buffer, list))
+			if (env->buffer[0] == '"' && !get_str(env))
 			{
 				ft_putendl("malloc error");
 				break ;
 			}
-			if (!is_blank(buffer[0]) && !get_instruction(fd, buffer, list))
+			if (env->buffer[0] == '#' && !get_comment(env))
 			{
 				ft_putendl("malloc error");
 				break ;
 			}
-    }
-		print_lst(list);
-  }
-  return (0);
+			if (!is_blank(env->buffer[0]) && !get_instruction(env))
+			{
+				ft_putendl("malloc error");
+				break ;
+			}
+		}
+		print_lst(env->list);
+	}
+  return (exit_gc(env, 0));
 }
