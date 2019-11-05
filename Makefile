@@ -12,14 +12,14 @@
 
 NAME = assembler
 
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -Wall -Werror -Wextra -g
 CC = gcc
 LIBFT = libft/libft.a
 
 OBJDIR = obj
 SRCDIR = src
 
-SC = $(addsuffix .c, main get_asm)
+SC = $(addsuffix .c, main get_asm garbage_collector)
 
 SRCS = $(addprefix $(SRCDIR)/, $(SC))
 OBJS = $(addprefix $(OBJDIR)/, $(SC:.c=.o))
