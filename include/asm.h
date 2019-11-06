@@ -100,7 +100,7 @@ typedef struct   s_env
 	char buffer[2];
 	t_lst *list;
   t_gc  *garbage_collector;
-  int (*parsing[27]) (struct s_env *env);
+  int (*parsing[28]) (struct s_env *env);
 }                t_env;
 
 
@@ -152,4 +152,8 @@ int is_valid_registre(t_env *env);
 int is_valid_live(t_env *env);
 int is_valid_ld(t_env *env);
 int is_valid_st(t_env *env);
+int is_valid_lld(t_env *env);
+int is_valid_lldi(t_env *env);
+int is_valid_lfork(t_env *env);
+int is_valid_aff(t_env *env);
 #endif
