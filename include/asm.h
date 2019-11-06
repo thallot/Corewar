@@ -138,7 +138,18 @@ char	*strjoinfree_gc(char *s1, char *s2, int opt, t_env *env);
 int is_blank(char c);
 int is_instruction(char *str);
 int is_separator(char c);
-
-int is_valid_live(t_env *env);
+/*
+*********************************** Tableau de fonctions ***********************
+*/
 int loop_parser(t_env *env);
+/*
+*********************************** Tableau de fonctions ***********************
+*/
+int is_valid_command(t_env *env);
+int is_valid_str(t_env *env);
+int is_valid_label(t_env *env);
+int is_valid_registre(t_env *env);
+int is_valid_live(t_env *env);
+int is_valid_ld(t_env *env);
+int is_valid_st(t_env *env);
 #endif

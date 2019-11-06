@@ -103,46 +103,43 @@ int is_valid_ld(t_env *env)
   return (1);
 }
 
-void  init_parsing_tab(t_env *env)
+int is_valid_st(t_env *env)
 {
-  env->parsing[12] = is_valid_live;
+  env->list = env->list->next;
+  if (env->list->type != TYPE_REGISTRE)
+  {
+    printf("Erreur de type de parametre pour l'instruction st, parametre 1 : [%s]\n", env->list->name);
+    exit(exit_gc(env, 1));
+  }
+  if (!is_valid_registre(env))
+    exit(exit_gc(env, 1));
+  env->list = env->list->next;
+  if (env->list->type != TYPE_VIRGULE)
+  {
+    printf("Erreur de formatage pour l'instruction st, pas de separateur dans le 1er et le deuxieme parametre");
+    exit(exit_gc(env, 1));
+  }
+  env->list = env->list->next;
+  if (env->list->type != TYPE_REGISTRE && env->list->type != TYPE_INDEX)
+  {
+    printf("Erreur de type de parametre pour l'instruction st, parametre 1 : [%s]\n", env->list->name);
+    exit(exit_gc(env, 1));
+  }
+  if (env->list->type == TYPE_REGISTRE && !is_valid_registre(env))
+    exit(exit_gc(env, 1));
+  return (1);
 }
 
-
-// int is_valid_st(t_env *env)
-// {
-//   env->list = env->list->next;
-//   if (env->list->type != TYPE_REGISTRE)
-//   {
-//     printf("Erreur de type de parametre pour l'instruction st, parametre 1 : [%s]\n", env->list->name);
-//     exit(exit_gc(env, 1));
-//   }
-//   if (!is_valid_registre(env))
-//     exit(exit_gc(env, 1));
-//   env->list = env->list->next;
-//   if (env->list->type != TYPE_VIRGULE)
-//   {
-//     printf("Erreur de formatage pour l'instruction st, pas de separateur dans le 1er et le deuxieme parametre");
-//     exit(exit_gc(env, 1));
-//   }
-//   env->list = env->list->next;
-//   if (env->list->type != TYPE_REGISTRE && env->list->type != TYPE_INDEX)
-//   {
-//     printf("Erreur de type de parametre pour l'instruction st, parametre 1 : [%s]\n", env->list->name);
-//     exit(exit_gc(env, 1));
-//   }
-//   if (env->list->type == TYPE_REGISTRE && !is_valid_registre(env))
-//     exit(exit_gc(env, 1));
-//   return (1);
-// }
-// void *create_tab_function(t_env *env)
-// {
-//   int (*check_instruction[27])(t_env*);
-//
-//   (void)env;
-//   check_instruction[0] = &is_valid_live;
-//   return (check_instruction);
-// }
+void  init_parsing_tab(t_env *env)
+{
+  env->parsing[1] = is_valid_command;
+  env->parsing[2] = is_valid_str;
+  env->parsing[7] = is_valid_label;
+  env->parsing[9] = is_valid_registre;
+  env->parsing[12] = is_valid_live;
+  env->parsing[13] = is_valid_ld;
+  env->parsing[14] = is_valid_st;
+}
 
 int loop_parser(t_env *env)
 {
@@ -160,7 +157,7 @@ int loop_parser(t_env *env)
     if (env->list->type == TYPE_INSTRUCTION_LD)
       printf(" VALID LD : %d (PARAM : %s | type %d)\n", is_valid_ld(env), env->list->name, env->list->type);
     if (env->list->type == TYPE_INSTRUCTION_ST)
-      printf(" VALID ST : %d (PARAM : %s | type %d)\n", is_valid_ld(env), env->list->name, env->list->type);
+      printf(" VALID ST : %d (PARAM : %s | type %d)\n", is_valid_st(env), env->list->name, env->list->type);
     if (env->list->type == TYPE_INSTRUCTION_LIVE)
       printf(" VALID LIVE : %d (PARAM : %s | type %d)\n", env->parsing[12](env), env->list->name, env->list->type);
     env->list = env->list->next;
