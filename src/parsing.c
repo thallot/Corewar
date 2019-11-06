@@ -89,7 +89,7 @@ int is_valid_ld(t_env *env)
   env->list = env->list->next;
   if (env->list->type != TYPE_VIRGULE)
   {
-    printf("Erreur de formatage pour l'instruction ld, pas de separateur dans le 1er et le deuxieme parametre");
+    printf("Erreur de formatage pour l'instruction ld, pas de separateur entre le 1er et le deuxieme parametre");
     exit(exit_gc(env, 1));
   }
   env->list = env->list->next;
@@ -139,6 +139,10 @@ void  init_parsing_tab(t_env *env)
   env->parsing[12] = is_valid_live;
   env->parsing[13] = is_valid_ld;
   env->parsing[14] = is_valid_st;
+  env->parsing[24] = is_valid_lld;
+  env->parsing[25] = is_valid_lldi;
+  env->parsing[26] = is_valid_lfork;
+  env->parsing[27] = is_valid_aff;
 }
 
 int loop_parser(t_env *env)
@@ -160,6 +164,14 @@ int loop_parser(t_env *env)
       printf(" VALID ST : %d (PARAM : %s | type %d)\n", is_valid_st(env), env->list->name, env->list->type);
     if (env->list->type == TYPE_INSTRUCTION_LIVE)
       printf(" VALID LIVE : %d (PARAM : %s | type %d)\n", env->parsing[12](env), env->list->name, env->list->type);
+    if (env->list->type == TYPE_INSTRUCTION_LLD)
+      printf(" VALID LLD : %d (PARAM : %s | type %d)\n", env->parsing[24](env), env->list->name, env->list->type);
+    if (env->list->type == TYPE_INSTRUCTION_LLDI)
+      printf(" VALID LLDI : %d (PARAM : %s | type %d)\n", env->parsing[25](env), env->list->name, env->list->type);
+    if (env->list->type == TYPE_INSTRUCTION_LFORK)
+      printf(" VALID LFORK : %d (PARAM : %s | type %d)\n", env->parsing[26](env), env->list->name, env->list->type);
+    if (env->list->type == TYPE_INSTRUCTION_AFF)
+      printf(" VALID AFF : %d (PARAM : %s | type %d)\n", env->parsing[27](env), env->list->name, env->list->type);
     env->list = env->list->next;
   }
   return (1);
