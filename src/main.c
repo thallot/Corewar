@@ -114,6 +114,10 @@ void print_lst(t_lst *list)
 			printf("  -> (ELEMENT INCONNU)\n");
 		if (list->type == TYPE_LABEL)
 			printf("  -> (APPEL LABEL)\n");
+		if (list->type == TYPE_DIRECT_2)
+			printf("  -> (DIRECT 2)\n");
+		if (list->type == TYPE_DIRECT_4)
+			printf("  -> (DIRECT 4)\n");
 		list = list->next;
 	}
 }
@@ -151,7 +155,7 @@ int main(int argc, char **argv)
 				break ;
 			}
 		}
-		// print_lst(env->list);
+		print_lst(env->list);
 	}
   return (exit_gc(env, 0));
 }

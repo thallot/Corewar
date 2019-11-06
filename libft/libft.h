@@ -95,6 +95,6 @@ int				ft_sqrt(int nb);
 int				ft_is_prime(int nb);
 int				get_next_line(const int fd, char **line,
 				int opt, int ret);
-int				ft_isnumber(char *str);
+int				ft_isnumber(char *str, int opt);
 
 #endif
