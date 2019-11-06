@@ -103,6 +103,12 @@ int is_valid_ld(t_env *env)
   return (1);
 }
 
+void  init_parsing_tab(t_env *env)
+{
+  env->parsing[12] = is_valid_live;
+}
+
+
 // int is_valid_st(t_env *env)
 // {
 //   env->list = env->list->next;
@@ -140,6 +146,7 @@ int is_valid_ld(t_env *env)
 
 int loop_parser(t_env *env)
 {
+  init_parsing_tab(env);
   while (env->list)
   {
     if (env->list->type == TYPE_REGISTRE)
@@ -150,12 +157,12 @@ int loop_parser(t_env *env)
       printf(" VALID COMMAND : %d (COMMAND : %s)\n", is_valid_command(env), env->list->name);
     if (env->list->type == TYPE_STR)
       printf(" VALID STR : %d (STR : %s)\n", is_valid_str(env), env->list->name);
-    if (env->list->type == TYPE_INSTRUCTION_LIVE)
-      printf(" VALID LIVE : %d (PARAM : %s | type %d)\n", is_valid_live(env), env->list->name, env->list->type);
     if (env->list->type == TYPE_INSTRUCTION_LD)
       printf(" VALID LD : %d (PARAM : %s | type %d)\n", is_valid_ld(env), env->list->name, env->list->type);
     if (env->list->type == TYPE_INSTRUCTION_ST)
       printf(" VALID ST : %d (PARAM : %s | type %d)\n", is_valid_ld(env), env->list->name, env->list->type);
+    if (env->list->type == TYPE_INSTRUCTION_LIVE)
+      printf(" VALID LIVE : %d (PARAM : %s | type %d)\n", env->parsing[12](env), env->list->name, env->list->type);
     env->list = env->list->next;
   }
   return (1);

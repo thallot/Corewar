@@ -100,6 +100,7 @@ typedef struct   s_env
 	char buffer[2];
 	t_lst *list;
   t_gc  *garbage_collector;
+  int (*parsing[27]) (struct s_env *env);
 }                t_env;
 
 
