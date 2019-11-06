@@ -17,7 +17,8 @@ int is_valid_command(t_env *env)
   if (!ft_strcmp(env->list->name, NAME_CMD_STRING)
   || !ft_strcmp(env->list->name, COMMENT_CMD_STRING))
     return (1);
-  return (0);
+  printf("Commande inconnue [%s]\n", env->list->name);
+  exit(exit_gc(env, 0));
 }
 
 int is_valid_str(t_env *env)
@@ -27,7 +28,8 @@ int is_valid_str(t_env *env)
   size = ft_strlen(env->list->name) - 1;
   if (env->list->name[0] == '"' && env->list->name[size] == '"')
     return (1);
-  return (0);
+  printf("Chaine de caractere mal formatée [%s]\n", env->list->name);
+  exit(exit_gc(env, 0));
 }
 
 int is_valid_label(t_env *env)
@@ -47,25 +49,32 @@ int is_valid_label(t_env *env)
     {
       if (i == size && c == ':')
         return (1);
-      printf("Erreur de formatage du label [%s], caractere invalide : %c", env->list->name, c);
-      return (0);
+      printf("Erreur de formatage du label [%s], caractere invalide : %c\n", env->list->name, c);
+      exit(exit_gc(env, 0));
     }
   }
   return (1);
 }
 
-// int is_valid_registre(t_env *env)
-// {
-//   int i;
-//
-//
-// }
+int is_valid_registre(t_env *env)
+{
+  int i;
+
+  i = ft_atoi(&(env->list->name)[1]);
+  if (i >= 0 && i <= 16)
+    return (1);
+  printf("Erreur de formatage du registre [%s]\n", env->list->name);
+  exit(exit_gc(env, 0));
+}
 
 int is_valid_live(t_env *env)
 {
   env->list = env->list->next;
   if (env->list->type != TYPE_DIRECT_4)
-    return (0);
+  {
+    printf("Erreur de parametre pour l'instruction live [%s]\n", env->list->name);
+    exit(exit_gc(env, 0));
+  }
   return (1);
 }
 
@@ -82,6 +91,8 @@ int loop_parser(t_env *env)
 {
   while (env->list)
   {
+    if (env->list->type == TYPE_REGISTRE)
+      printf(" VALID REGISTRE : %d (REGISTRE : %s)\n", is_valid_registre(env), env->list->name);
     if (env->list->type == TYPE_LABEL_DEFINITION)
       printf(" VALID LABEL : %d (LABEL : %s)\n", is_valid_label(env), env->list->name);
     if (env->list->type == TYPE_COMMAND)
