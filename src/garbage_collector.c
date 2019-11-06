@@ -41,7 +41,7 @@ t_gc	*add_list_gc(t_env *env, void *data)
 {
 	t_gc *new;
 
-	if (!(new = (t_gc *)ft_memalloc((sizeof(t_gc)))))
+	if (!(new = (t_gc *)malloc((sizeof(t_gc)))))
 		exit(exit_gc(env, -1));
 	new->data = data;
 	new->next = NULL;
@@ -84,24 +84,27 @@ char	*ft_strdup_gc(const char *s1, t_env *env)
 	return (dest);
 }
 
-// char    *ft_strdup_gc(const char *s1, t_env *env)
-// {
-//     int             i;
-//     int             len;
-//     char    *result;
+char	*ft_strjoin_gc(char *s1, char const *s2, t_env *env)
+{
+	char	*str;
+	size_t	size;
 
-//     i = 0;
-//     len = 0;
-//     while (s1[len])
-//             len++;
-//     if (!(result = (char*)malloc(sizeof(char) * len + 1)))
-//             return (NULL);
-//     while (i < len)
-//     {
-//             result[i] = s1[i];
-//             i++;
-//     }
-//     result[i] = '\0';
-//     add_list_gc(env, result);
-//     return (result);
-// }
+	str = NULL;
+	if (s2)
+	{
+		if (!s1)
+		{
+			if (!(s1 = (char *)ft_memalloc(sizeof(char))))
+				exit (exit_gc(env, -1));
+			add_list_gc(env, s1);
+		}
+		size = ft_strlen(s1) + ft_strlen(s2);
+		if (!(str = (char *)ft_memalloc(sizeof(char) * size + 1)))
+			exit (exit_gc(env, -1));
+		str = ft_strcat(str, s1);
+		str = ft_strcat(str, s2);
+		str[size] = '\0';
+		add_list_gc(env, str);
+	}
+	return (str);
+}

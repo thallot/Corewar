@@ -111,8 +111,6 @@ typedef struct		header_s
 }					header_t;
 
 
-
-
 /*
 *********************************** garbage_collector.c **********************************
 */
@@ -121,6 +119,7 @@ int   exit_gc(t_env *env, int ret);
 t_gc  *add_list_gc(t_env *env, void *data);
 void  *ft_memalloc_gc(size_t size, t_env *env);
 char	*ft_strdup_gc(const char *s1, t_env *env);
+char	*ft_strjoin_gc(char *s1, char const *s2, t_env *env);
 /*
 *********************************** Get_asm.c **********************************
 */
@@ -133,7 +132,7 @@ int get_char(int fd, char *buffer);
 *********************************** Main.c *************************************
 */
 t_lst	*add_list(t_lst **list, char *name, int type, t_env *env);
-char	*strjoinfree(char *s1, char *s2, int opt);
+char	*strjoinfree_gc(char *s1, char *s2, int opt, t_env *env);
 int is_blank(char c);
 int is_instruction(char *str);
 int is_separator(char c);

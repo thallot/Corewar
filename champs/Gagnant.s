@@ -66,5 +66,5 @@ level111:	live %42
 level100:	live %42
 		ldi  %0, %:code, r15		#set des octets 1-4
 		ld   %-194, r14			# $A -6 -0
-		ld   %0,r2			#
+		ld   %0,r2			#cc
 		zjmp %:label			#

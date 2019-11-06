@@ -19,7 +19,7 @@ t_lst	*add_list(t_lst **list, char *name, int type, t_env *env)
 
 	head = list;
 	new = (t_lst *)ft_memalloc_gc((sizeof(t_lst)), env);
-	new->name = ft_strdup_gc(name, env);
+	new->name = name;
 	new->type = type;
 	new->next = NULL;
 	if (!(*list))
@@ -32,19 +32,6 @@ t_lst	*add_list(t_lst **list, char *name, int type, t_env *env)
 	}
 	list = head;
 	return (*head);
-}
-
-char	*strjoinfree(char *s1, char *s2, int opt)
-{
-	char *tmp;
-
-	tmp = s1;
-	s1 = ft_strjoin(s1, s2);
-	if (opt >= 1)
-		ft_strdel(&tmp);
-	if (opt >= 2)
-		ft_strdel(&s2);
-	return (s1);
 }
 
 int is_blank(char c)
@@ -138,7 +125,6 @@ int main(int argc, char **argv)
 	if (!(env = (t_env *)ft_memalloc(sizeof(t_env))))
 		return (-1);
 	env->list = NULL;
-	// add_list(&(env->list), "BEGIN", 0, env);
 	if (argc > 1)
 	{
 		env->fd = open(argv[1], O_RDONLY);
@@ -165,7 +151,13 @@ int main(int argc, char **argv)
 				break ;
 			}
 		}
-		print_lst(env->list);
+		// print_lst(env->list);
 	}
   return (exit_gc(env, 0));
 }
+
+// int my_destructor(void) __attribute__((destructor));
+// int my_destructor(void) /* This function is called after main() */
+// {                       /* completes or after exit() is called. */
+//     while (2) ;
+// }
