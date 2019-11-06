@@ -137,4 +137,7 @@ char	*strjoinfree_gc(char *s1, char *s2, int opt, t_env *env);
 int is_blank(char c);
 int is_instruction(char *str);
 int is_separator(char c);
+
+int is_valid_live(t_env *env);
+int loop_parser(t_env *env);
 #endif

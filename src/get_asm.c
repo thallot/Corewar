@@ -42,7 +42,7 @@ int get_str(t_env *env)
   str = NULL;
 	str = ft_strjoin_gc(str, env->buffer, env);
 	get_char(env->fd, env->buffer);
-  while (env->buffer[0] != '"')
+  while (env->buffer[0] != '"' && env->buffer[0] != '\n')
   {
     str = ft_strjoin_gc(str, env->buffer, env);
     get_char(env->fd, env->buffer);
@@ -104,7 +104,6 @@ int get_instruction(t_env *env)
         type = TYPE_DIRECT_4;
       else
         type = TYPE_DIRECT_2;
-      printf("INT : %s | TYPE : %d\n", &instruction[1], type);
     }
 		if ((instruction_type = is_instruction(instruction)))
 			type = instruction_type;

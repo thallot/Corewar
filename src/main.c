@@ -156,6 +156,7 @@ int main(int argc, char **argv)
 			}
 		}
 		print_lst(env->list);
+		loop_parser(env);
 	}
   return (exit_gc(env, 0));
 }
