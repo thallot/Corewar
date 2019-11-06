@@ -56,13 +56,38 @@ int is_blank(char c)
 
 int is_instruction(char *str)
 {
-  if (!ft_strcmp("live", str) || !ft_strcmp("ld", str) || !ft_strcmp("st", str)
-	|| !ft_strcmp("add", str) || !ft_strcmp("sub", str) || !ft_strcmp("and", str)
-	|| !ft_strcmp("or", str) || !ft_strcmp("xor", str) || !ft_strcmp("zjmp", str)
-	|| !ft_strcmp("ldi", str) || !ft_strcmp("sti", str) || !ft_strcmp("fork", str)
-	|| !ft_strcmp("lld", str) || !ft_strcmp("lldi", str) || !ft_strcmp("lfork", str)
-	|| !ft_strcmp("aff", str))
-    return (1);
+  if (!ft_strcmp("live", str))
+		return (TYPE_INSTRUCTION_LIVE);
+	else if (!ft_strcmp("ld", str))
+		return (TYPE_INSTRUCTION_LD);
+ 	else if (!ft_strcmp("st", str))
+		return (TYPE_INSTRUCTION_ST);
+	else if (!ft_strcmp("add", str))
+		return (TYPE_INSTRUCTION_ADD);
+	else if (!ft_strcmp("sub", str))
+		return (TYPE_INSTRUCTION_SUB);
+	else if (!ft_strcmp("and", str))
+		return (TYPE_INSTRUCTION_AND);
+	else if (!ft_strcmp("or", str))
+		return (TYPE_INSTRUCTION_OR);
+	else if (!ft_strcmp("xor", str))
+		return (TYPE_INSTRUCTION_XOR);
+	else if (!ft_strcmp("zjmp", str))
+		return (TYPE_INSTRUCTION_ZJMP);
+	else if (!ft_strcmp("ldi", str))
+		return (TYPE_INSTRUCTION_LDI);
+	else if (!ft_strcmp("sti", str))
+		return (TYPE_INSTRUCTION_STI);
+	else if (!ft_strcmp("fork", str))
+		return (TYPE_INSTRUCTION_FORK);
+	else if (!ft_strcmp("lld", str))
+		return (TYPE_INSTRUCTION_LLD);
+	else if (!ft_strcmp("lldi", str))
+		return (TYPE_INSTRUCTION_LLDI);
+	else if (!ft_strcmp("lfork", str))
+		return (TYPE_INSTRUCTION_LFORK);
+	else if (!ft_strcmp("aff", str))
+		return (TYPE_INSTRUCTION_AFF);
   return (0);
 }
 
@@ -86,8 +111,8 @@ void print_lst(t_lst *list)
 			printf("  -> (STR POUR COMMAND)\n");
 		if (list->type == TYPE_COMMENT)
 			printf("  -> (COMMENT)\n");
-		if (list->type == TYPE_INSTRUCTION)
-			printf("  -> (INSTRUCTION)\n");
+		if (list->type > 11)
+			printf("  -> (INSTRUCTION) %d\n", list->type);
 		if (list->type == TYPE_VIRGULE)
 			printf("  -> (SEPARATEUR ' , ')\n");
 		if (list->type == TYPE_LABEL_DEFINITION)
@@ -113,7 +138,7 @@ int main(int argc, char **argv)
 	if (!(env = (t_env *)ft_memalloc(sizeof(t_env))))
 		return (-1);
 	env->list = NULL;
-	add_list(&(env->list), "BEGIN", 0, env);
+	// add_list(&(env->list), "BEGIN", 0, env);
 	if (argc > 1)
 	{
 		env->fd = open(argv[1], O_RDONLY);

@@ -96,7 +96,8 @@ SRC= ft_memset.c \
 	 ft_sqrt.c \
 	 ft_is_prime.c \
 	 ft_strmerge.c \
-	 get_next_line.c
+	 get_next_line.c \
+	 ft_isnumber.c
 
 
 ############## PATH ##################

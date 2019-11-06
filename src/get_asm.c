@@ -43,24 +43,24 @@ int get_command(t_env *env)
 
 int get_str(t_env *env)
 {
-  char *comment;
+  char *str;
 
-  comment = ft_strnew(0);
-	comment = strjoinfree(comment, env->buffer, 1);
+  str = ft_strnew(0);
+	str = strjoinfree(str, env->buffer, 1);
 	get_char(env->fd, env->buffer);
   while (env->buffer[0] != '"')
   {
-    comment = strjoinfree(comment, env->buffer, 1);
+    str = strjoinfree(str, env->buffer, 1);
     get_char(env->fd, env->buffer);
   }
-	comment = strjoinfree(comment, env->buffer, 1);
+	str = strjoinfree(str, env->buffer, 1);
 	get_char(env->fd, env->buffer);
-  if (!(add_list(&(env->list), comment, TYPE_STR, env)))
+  if (!(add_list(&(env->list), str, TYPE_STR, env)))
   {
-    ft_strdel(&comment);
+    ft_strdel(&str);
     return (0);
   }
-  ft_strdel(&comment);
+  ft_strdel(&str);
   return (1);
 }
 
@@ -89,6 +89,7 @@ int get_instruction(t_env *env)
 {
   char *instruction;
 	int type;
+  int instruction_type;
 	char last_char;
 
   last_char = 0;
@@ -119,8 +120,10 @@ int get_instruction(t_env *env)
   }
 	else
 	{
-		if (is_instruction(instruction))
-			type = TYPE_INSTRUCTION;
+		if ((instruction_type = is_instruction(instruction)))
+			type = instruction_type;
+    else if (ft_isnumber(instruction))
+      type = TYPE_INDEX;
 		if (!(add_list(&(env->list), instruction, type, env)))
     {
       ft_strdel(&instruction);

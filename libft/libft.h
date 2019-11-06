@@ -6,7 +6,7 @@
 /*   By: thallot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/02 13:35:33 by thallot           #+#    #+#             */
-/*   Updated: 2019/10/14 14:12:38 by thallot          ###   ########.fr       */
+/*   Updated: 2019/11/06 10:13:24 by thallot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,5 +95,6 @@ int				ft_sqrt(int nb);
 int				ft_is_prime(int nb);
 int				get_next_line(const int fd, char **line,
 				int opt, int ret);
+int				ft_isnumber(char *str);
 
 #endif
