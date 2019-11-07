@@ -90,8 +90,6 @@ void print_lst(t_lst *list)
 	while (list)
 	{
 		printf("%-15s", list->name);
-		if (list->type == 0)
-			printf("  -> (DEBUT)\n");
 		if (list->type == TYPE_COMMAND)
 			printf("  -> (COMMAND)\n");
 		if (list->type == TYPE_STR)

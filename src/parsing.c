@@ -466,6 +466,8 @@ int loop_parser(t_env *env)
   init_parsing_tab(env);
   while (env->list)
   {
+    if (env->list->type == TYPE_UNKNOWN)
+      exit(exit_gc(env, 1));
     if (env->list->type != TYPE_COMMENT)
       env->parsing[env->list->type](env);
     env->list = env->list->next;
