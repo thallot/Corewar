@@ -32,7 +32,7 @@ int is_valid_str(t_env *env)
   exit(exit_gc(env, 1));
 }
 
-int is_valid_label(t_env *env)
+int is_valid_label_definition(t_env *env)
 {
   int i;
   int size;
@@ -56,6 +56,30 @@ int is_valid_label(t_env *env)
   return (1);
 }
 
+int is_valid_label_call(t_env *env)
+{
+  int i;
+  t_lst *head;
+
+  i = 0;
+  if (env->list->name[i] == '%')
+    i++;
+  if (env->list->name[i] == ':')
+    i++;
+  head = env->label;
+  while (env->label)
+  {
+    if (!ft_strcmp(env->label->name, i + env->list->name))
+    {
+      env->label = head;
+      return (1);
+    }
+    env->label = env->label->next;
+  }
+  printf("Le label %s n'existe pas\n", i + env->list->name);
+  exit(exit_gc(env, 1));
+}
+
 int is_valid_registre(t_env *env)
 {
   int i;
@@ -75,6 +99,8 @@ int is_valid_live(t_env *env)
     printf("Erreur de type de parametre pour l'instruction live, parametre 1 : [%s]\n", env->list->name);
     exit(exit_gc(env, 1));
   }
+  if (env->list->type == TYPE_DIRECT && env->list->name[1] == ':')
+    is_valid_label_call(env);
   return (1);
 }
 
@@ -86,6 +112,8 @@ int is_valid_ld(t_env *env)
     printf("Erreur de type de parametre pour l'instruction ld, parametre 1 : [%s]\n", env->list->name);
     exit(exit_gc(env, 1));
   }
+  if (((env->list->type == TYPE_DIRECT && env->list->name[1] == ':') || env->list->type == TYPE_LABEL))
+    is_valid_label_call(env);
   env->list = env->list->next;
   if (env->list->type != TYPE_VIRGULE)
   {
@@ -98,8 +126,7 @@ int is_valid_ld(t_env *env)
     printf("Erreur de type de parametre pour l'instruction ld, parametre 2 : [%s]\n", env->list->name);
     exit(exit_gc(env, 1));
   }
-  if (!is_valid_registre(env))
-    exit(exit_gc(env, 1));
+  is_valid_registre(env);
   return (1);
 }
 
@@ -125,6 +152,8 @@ int is_valid_st(t_env *env)
     printf("Erreur de type de parametre pour l'instruction st, parametre 2 : [%s]\n", env->list->name);
     exit(exit_gc(env, 1));
   }
+  if (env->list->type == TYPE_LABEL)
+    is_valid_label_call(env);
   if (env->list->type == TYPE_REGISTRE && !is_valid_registre(env))
     exit(exit_gc(env, 1));
   return (1);
@@ -220,6 +249,8 @@ int is_valid_and(t_env *env)
     printf("Erreur de type de parametre pour l'instruction and, parametre 1 : [%s] devrait etre de type registre / DIRECTE 4 / INDIRECT\n", env->list->name);
     exit(exit_gc(env, 1));
   }
+  if (((env->list->type == TYPE_DIRECT && env->list->name[1] == ':') || env->list->type == TYPE_LABEL))
+    is_valid_label_call(env);
   if (env->list->type == TYPE_REGISTRE && !is_valid_registre(env))
     exit(exit_gc(env, 1));
   env->list = env->list->next;
@@ -234,6 +265,8 @@ int is_valid_and(t_env *env)
     printf("Erreur de type de parametre pour l'instruction and, parametre 2 : [%s] devrait etre de type registre / DIRECTE 4 / INDIRECT\n", env->list->name);
     exit(exit_gc(env, 1));
   }
+  if (((env->list->type == TYPE_DIRECT && env->list->name[1] == ':') || env->list->type == TYPE_LABEL))
+    is_valid_label_call(env);
   if (env->list->type == TYPE_REGISTRE && !is_valid_registre(env))
     exit(exit_gc(env, 1));
   env->list = env->list->next;
@@ -261,6 +294,8 @@ int is_valid_or(t_env *env)
     printf("Erreur de type de parametre pour l'instruction or, parametre 1 : [%s] devrait etre de type registre / DIRECTE 4 / INDIRECT\n", env->list->name);
     exit(exit_gc(env, 1));
   }
+  if (((env->list->type == TYPE_DIRECT && env->list->name[1] == ':') || env->list->type == TYPE_LABEL))
+    is_valid_label_call(env);
   if (env->list->type == TYPE_REGISTRE && !is_valid_registre(env))
     exit(exit_gc(env, 1));
   env->list = env->list->next;
@@ -275,6 +310,8 @@ int is_valid_or(t_env *env)
     printf("Erreur de type de parametre pour l'instruction or, parametre 2 : [%s] devrait etre de type registre / DIRECTE 4 / INDIRECT\n", env->list->name);
     exit(exit_gc(env, 1));
   }
+  if (((env->list->type == TYPE_DIRECT && env->list->name[1] == ':') || env->list->type == TYPE_LABEL))
+    is_valid_label_call(env);
   if (env->list->type == TYPE_REGISTRE && !is_valid_registre(env))
     exit(exit_gc(env, 1));
   env->list = env->list->next;
@@ -302,6 +339,8 @@ int is_valid_xor(t_env *env)
     printf("Erreur de type de parametre pour l'instruction xor, parametre 1 : [%s] devrait etre de type registre / DIRECTE 4 / INDIRECT\n", env->list->name);
     exit(exit_gc(env, 1));
   }
+  if (((env->list->type == TYPE_DIRECT && env->list->name[1] == ':') || env->list->type == TYPE_LABEL))
+    is_valid_label_call(env);
   if (env->list->type == TYPE_REGISTRE && !is_valid_registre(env))
     exit(exit_gc(env, 1));
   env->list = env->list->next;
@@ -316,6 +355,8 @@ int is_valid_xor(t_env *env)
     printf("Erreur de type de parametre pour l'instruction xor, parametre 2 : [%s] devrait etre de type registre / DIRECTE 4 / INDIRECT\n", env->list->name);
     exit(exit_gc(env, 1));
   }
+  if (((env->list->type == TYPE_DIRECT && env->list->name[1] == ':') || env->list->type == TYPE_LABEL))
+    is_valid_label_call(env);
   if (env->list->type == TYPE_REGISTRE && !is_valid_registre(env))
     exit(exit_gc(env, 1));
   env->list = env->list->next;
@@ -338,11 +379,13 @@ int is_valid_xor(t_env *env)
 int is_valid_zjmp(t_env *env)
 {
   env->list = env->list->next;
-  if (env->list->type != TYPE_DIRECT_2 && env->list->type != TYPE_DIRECT)
+  if (env->list->type != TYPE_DIRECT)
   {
     printf("Erreur de type de parametre pour l'instruction zjmp, parametre 1 : [%s] devrait etre de type directe 2 ou directe 4\n", env->list->name);
     exit(exit_gc(env, 1));
   }
+  if (env->list->type == TYPE_DIRECT && env->list->name[1] == ':')
+    is_valid_label_call(env);
   return (1);
 }
 
@@ -354,6 +397,8 @@ int is_valid_ldi(t_env *env)
     printf("Erreur de type de parametre pour l'instruction ldi, parametre 1 : [%s] devrait etre de type registre / DIRECTE 2 / DIRECTE 4 / INDIRECT\n", env->list->name);
     exit(exit_gc(env, 1));
   }
+  if (((env->list->type == TYPE_DIRECT && env->list->name[1] == ':') || env->list->type == TYPE_LABEL))
+    is_valid_label_call(env);
   env->list = env->list->next;
   if (env->list->type != TYPE_VIRGULE)
   {
@@ -366,6 +411,8 @@ int is_valid_ldi(t_env *env)
     printf("Erreur de type de parametre pour l'instruction ldi, parametre 2 : [%s] devrait etre de type  DIRECTE 2 / DIRECTE 4 / INDIRECT\n", env->list->name);
     exit(exit_gc(env, 1));
   }
+  if (env->list->type == TYPE_DIRECT && env->list->name[1] == ':')
+    is_valid_label_call(env);
   if (env->list->type == TYPE_REGISTRE && !is_valid_registre(env))
     exit(exit_gc(env, 1));
   env->list = env->list->next;
@@ -407,6 +454,8 @@ int is_valid_sti(t_env *env)
     printf("Erreur de type de parametre pour l'instruction sti, parametre 2 : [%s] devrait etre de type  DIRECTE 2 / DIRECTE 4 / INDIRECT\n", env->list->name);
     exit(exit_gc(env, 1));
   }
+  if (((env->list->type == TYPE_DIRECT && env->list->name[1] == ':') || env->list->type == TYPE_LABEL))
+    is_valid_label_call(env);
   if (env->list->type == TYPE_REGISTRE && !is_valid_registre(env))
     exit(exit_gc(env, 1));
   env->list = env->list->next;
@@ -421,6 +470,8 @@ int is_valid_sti(t_env *env)
     printf("Erreur de type de parametre pour l'instruction sti, parametre 3 : [%s] devrait etre de type DIRECTE 2 / DIRECTE 4 / INDIRECTE \n", env->list->name);
     exit(exit_gc(env, 1));
   }
+  if (((env->list->type == TYPE_DIRECT && env->list->name[1] == ':') || env->list->type == TYPE_LABEL))
+    is_valid_label_call(env);
   if (env->list->type == TYPE_REGISTRE && !is_valid_registre(env))
     exit(exit_gc(env, 1));
   return (1);
@@ -439,26 +490,26 @@ int is_valid_fork(t_env *env)
 
 void  init_parsing_tab(t_env *env)
 {
-  env->parsing[1] = is_valid_command;
-  env->parsing[2] = is_valid_str;
-  env->parsing[7] = is_valid_label;
-  env->parsing[9] = is_valid_registre;
-  env->parsing[12] = is_valid_live;
-  env->parsing[13] = is_valid_ld;
-  env->parsing[14] = is_valid_st;
-  env->parsing[15] = is_valid_add;
-  env->parsing[16] = is_valid_sub;
-  env->parsing[17] = is_valid_and;
-  env->parsing[18] = is_valid_or;
-  env->parsing[19] = is_valid_xor;
-  env->parsing[20] = is_valid_zjmp;
-  env->parsing[21] = is_valid_ldi;
-  env->parsing[22] = is_valid_sti;
-  env->parsing[23] = is_valid_fork;
-  env->parsing[24] = is_valid_lld;
-  env->parsing[25] = is_valid_lldi;
-  env->parsing[26] = is_valid_lfork;
-  env->parsing[27] = is_valid_aff;
+  env->parsing[TYPE_COMMAND] = is_valid_command;
+  env->parsing[TYPE_STR] = is_valid_str;
+  env->parsing[TYPE_LABEL_DEFINITION] = is_valid_label_definition;
+  env->parsing[TYPE_REGISTRE] = is_valid_registre;
+  env->parsing[TYPE_INSTRUCTION_LIVE] = is_valid_live;
+  env->parsing[TYPE_INSTRUCTION_LD] = is_valid_ld;
+  env->parsing[TYPE_INSTRUCTION_ST] = is_valid_st;
+  env->parsing[TYPE_INSTRUCTION_ADD] = is_valid_add;
+  env->parsing[TYPE_INSTRUCTION_SUB] = is_valid_sub;
+  env->parsing[TYPE_INSTRUCTION_AND] = is_valid_and;
+  env->parsing[TYPE_INSTRUCTION_OR] = is_valid_or;
+  env->parsing[TYPE_INSTRUCTION_XOR] = is_valid_xor;
+  env->parsing[TYPE_INSTRUCTION_ZJMP] = is_valid_zjmp;
+  env->parsing[TYPE_INSTRUCTION_LDI] = is_valid_ldi;
+  env->parsing[TYPE_INSTRUCTION_STI] = is_valid_sti;
+  env->parsing[TYPE_INSTRUCTION_FORK] = is_valid_fork;
+  env->parsing[TYPE_INSTRUCTION_LLD] = is_valid_lld;
+  env->parsing[TYPE_INSTRUCTION_LLDI] = is_valid_lldi;
+  env->parsing[TYPE_INSTRUCTION_LFORK] = is_valid_lfork;
+  env->parsing[TYPE_INSTRUCTION_AFF] = is_valid_aff;
 }
 
 int loop_parser(t_env *env)
@@ -466,10 +517,13 @@ int loop_parser(t_env *env)
   init_parsing_tab(env);
   while (env->list)
   {
-    if (env->list->type == TYPE_UNKNOWN)
-      exit(exit_gc(env, 1));
-    if (env->list->type != TYPE_COMMENT)
+    if (env->list->type >= TYPE_INSTRUCTION_LIVE && env->list->type <= TYPE_LABEL_DEFINITION)
       env->parsing[env->list->type](env);
+    else if (env->list->type != TYPE_COMMENT)
+    {
+      printf("Element inconnu : %s\n", env->list->name);
+      exit(exit_gc(env, 1));
+    }
     env->list = env->list->next;
   }
   return (1);

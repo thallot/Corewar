@@ -96,7 +96,7 @@ void print_lst(t_lst *list)
 			printf("  -> (STR POUR COMMAND)\n");
 		if (list->type == TYPE_COMMENT)
 			printf("  -> (COMMENT)\n");
-		if (list->type > 11)
+		if (list->type >= 1 && list->type <= 16)
 			printf("  -> (INSTRUCTION) %d\n", list->type);
 		if (list->type == TYPE_VIRGULE)
 			printf("  -> (SEPARATEUR ' , ')\n");
@@ -132,7 +132,6 @@ int main(int argc, char **argv)
 		env->fd = open(argv[1], O_RDONLY);
 		while (get_char(env->fd, env->buffer) > 0)
 		{
-			printf(" BUF : %s\n", env->buffer);
 			if (env->buffer[0] == '.' && !get_command(env))
 			{
 				ft_putendl("malloc error");
@@ -154,8 +153,9 @@ int main(int argc, char **argv)
 				break ;
 			}
 		}
-		print_lst(env->list);
+		// print_lst(env->list);
 		loop_parser(env);
+		// print_lst(env->label);
 	}
   return (exit_gc(env, 0));
 }

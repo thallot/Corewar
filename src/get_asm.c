@@ -42,7 +42,7 @@ int get_str(t_env *env)
   str = NULL;
 	str = ft_strjoin_gc(str, env->buffer, env);
 	get_char(env->fd, env->buffer);
-  while (env->buffer[0] != '"' && env->buffer[0] != '\n')
+  while (env->buffer[0] != '"' && env->buffer[0] != '\n' && env->buffer[0] != '\0')
   {
     str = ft_strjoin_gc(str, env->buffer, env);
     get_char(env->fd, env->buffer);
@@ -60,7 +60,7 @@ int get_comment(t_env *env)
   comment = NULL;
 	comment = ft_strjoin_gc(comment, env->buffer, env);
 	get_char(env->fd, env->buffer);
-  while (env->buffer[0] != '\n')
+  while (env->buffer[0] != '\n' && env->buffer[0] != '\0')
   {
     comment = ft_strjoin_gc(comment, env->buffer, env);
     get_char(env->fd, env->buffer);
@@ -95,7 +95,11 @@ int get_instruction(t_env *env)
     get_char(env->fd, env->buffer);
   }
 	if (last_char == ':')
+  {
     add_list(&(env->list), instruction, TYPE_LABEL_DEFINITION, env);
+    instruction[ft_strlen(instruction) - 1] = '\0';
+    add_list(&(env->label), instruction, TYPE_LABEL_DEFINITION, env);
+  }
 	else if (instruction)
 	{
     // if (type == TYPE_DIRECT)

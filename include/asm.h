@@ -18,34 +18,34 @@
 # include <stdlib.h>
 # include <stdio.h>
 # include "../libft/libft.h"
-# define TYPE_DIRECT 0
-# define TYPE_COMMAND 1
-# define TYPE_STR 2
-# define TYPE_COMMENT 3
-# define TYPE_DIRECT_2 4
-# define TYPE_DIRECT_4 5
-# define TYPE_VIRGULE 6
-# define TYPE_LABEL_DEFINITION 7
-# define TYPE_INDEX 8
-# define TYPE_REGISTRE 9
-# define TYPE_LABEL 10
-# define TYPE_UNKNOWN 11
-# define TYPE_INSTRUCTION_LIVE 12
-# define TYPE_INSTRUCTION_LD 13
-# define TYPE_INSTRUCTION_ST 14
-# define TYPE_INSTRUCTION_ADD 15
-# define TYPE_INSTRUCTION_SUB 16
-# define TYPE_INSTRUCTION_AND 17
-# define TYPE_INSTRUCTION_OR 18
-# define TYPE_INSTRUCTION_XOR 19
-# define TYPE_INSTRUCTION_ZJMP 20
-# define TYPE_INSTRUCTION_LDI 21
-# define TYPE_INSTRUCTION_STI 22
-# define TYPE_INSTRUCTION_FORK 23
-# define TYPE_INSTRUCTION_LLD 24
-# define TYPE_INSTRUCTION_LLDI 25
-# define TYPE_INSTRUCTION_LFORK 26
-# define TYPE_INSTRUCTION_AFF 27
+# define TYPE_INSTRUCTION_LIVE 1
+# define TYPE_INSTRUCTION_LD 2
+# define TYPE_INSTRUCTION_ST 3
+# define TYPE_INSTRUCTION_ADD 4
+# define TYPE_INSTRUCTION_SUB 5
+# define TYPE_INSTRUCTION_AND 6
+# define TYPE_INSTRUCTION_OR 7
+# define TYPE_INSTRUCTION_XOR 8
+# define TYPE_INSTRUCTION_ZJMP 9
+# define TYPE_INSTRUCTION_LDI 10
+# define TYPE_INSTRUCTION_STI 11
+# define TYPE_INSTRUCTION_FORK 12
+# define TYPE_INSTRUCTION_LLD 13
+# define TYPE_INSTRUCTION_LLDI 14
+# define TYPE_INSTRUCTION_LFORK 15
+# define TYPE_INSTRUCTION_AFF 16
+# define TYPE_COMMAND 17
+# define TYPE_STR 18
+# define TYPE_LABEL 19
+# define TYPE_LABEL_DEFINITION 20
+# define TYPE_DIRECT_2 21
+# define TYPE_DIRECT_4 22
+# define TYPE_VIRGULE 23
+# define TYPE_COMMENT 24
+# define TYPE_INDEX 25
+# define TYPE_REGISTRE 26
+# define TYPE_DIRECT 27
+# define TYPE_UNKNOWN 28
 
 # define IND_SIZE 2
 # define REG_SIZE	4
@@ -99,6 +99,7 @@ typedef struct   s_env
   int fd;
 	char buffer[2];
 	t_lst *list;
+  t_lst *label;
   t_gc  *garbage_collector;
   int (*parsing[28]) (struct s_env *env);
 }                t_env;
@@ -156,4 +157,5 @@ int is_valid_lld(t_env *env);
 int is_valid_lldi(t_env *env);
 int is_valid_lfork(t_env *env);
 int is_valid_aff(t_env *env);
+int is_valid_label_call(t_env *env);
 #endif

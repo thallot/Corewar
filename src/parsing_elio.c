@@ -21,6 +21,8 @@ int is_valid_lfork(t_env *env)
         printf("Erreur de type de parametre : devrait etre un direct2");
         exit(exit_gc(env, 1));
     }
+    if (env->list->type == TYPE_DIRECT && env->list->name[1] == ':')
+      is_valid_label_call(env);
     return (1);
 }
 
@@ -32,6 +34,8 @@ int is_valid_lldi(t_env *env)
     printf("Erreur de type de parametre pour l'instruction lldi, parametre 1 : [%s] devrait etre de type RG/ID/D2\n", env->list->name);
     exit(exit_gc(env, 1));
   }
+  if (((env->list->type == TYPE_DIRECT && env->list->name[1] == ':') || env->list->type == TYPE_LABEL))
+    is_valid_label_call(env);
   if (env->list->type == TYPE_REGISTRE)
     is_valid_registre(env);
   env->list = env->list->next;
@@ -46,6 +50,8 @@ int is_valid_lldi(t_env *env)
     printf("Erreur de type de parametre pour l'instruction lldi, parametre 2 : [%s] devrait etre de type ID/D2\n", env->list->name);
     exit(exit_gc(env, 1));
   }
+  if (((env->list->type == TYPE_DIRECT && env->list->name[1] == ':') || env->list->type == TYPE_LABEL))
+    is_valid_label_call(env);
   env->list = env->list->next;
   if (env->list->type != TYPE_VIRGULE)
   {
@@ -70,6 +76,8 @@ int is_valid_lld(t_env *env)
         printf("Erreur de type de parametre pour l'instruction lld, parametre 1 : [%s] devrait etre de type ID/D4\n", env->list->name);
         exit(exit_gc(env, 1));
     }
+    if (((env->list->type == TYPE_DIRECT && env->list->name[1] == ':') || env->list->type == TYPE_LABEL))
+      is_valid_label_call(env);
     env->list = env->list->next;
     if (env->list->type != TYPE_VIRGULE)
     {
