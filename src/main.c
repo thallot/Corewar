@@ -153,9 +153,9 @@ int main(int argc, char **argv)
 				break ;
 			}
 		}
-		// print_lst(env->list);
+		print_lst(env->list);
 		loop_parser(env);
-		// print_lst(env->label);
+		print_lst(env->label);
 	}
   return (exit_gc(env, 0));
 }
