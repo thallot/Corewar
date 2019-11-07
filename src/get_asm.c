@@ -98,13 +98,13 @@ int get_instruction(t_env *env)
     add_list(&(env->list), instruction, TYPE_LABEL_DEFINITION, env);
 	else if (instruction)
 	{
-    if (type == TYPE_DIRECT)
-    {
-      if (ft_isnumber(&instruction[1], 0))
-        type = TYPE_DIRECT_4;
-      else
-        type = TYPE_DIRECT_2;
-    }
+    // if (type == TYPE_DIRECT)
+    // {
+    //   if (ft_isnumber(&instruction[1], 0))
+    //     type = TYPE_DIRECT_4;
+    //   else
+    //     type = TYPE_DIRECT_2;
+    // }
 		if ((instruction_type = is_instruction(instruction)))
 			type = instruction_type;
     else if (ft_isnumber(instruction, 1))

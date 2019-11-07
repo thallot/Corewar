@@ -18,7 +18,7 @@
 # include <stdlib.h>
 # include <stdio.h>
 # include "../libft/libft.h"
-# define TYPE_DIRECT -1
+# define TYPE_DIRECT 0
 # define TYPE_COMMAND 1
 # define TYPE_STR 2
 # define TYPE_COMMENT 3
