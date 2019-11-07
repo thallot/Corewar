@@ -36,7 +36,7 @@ t_lst	*add_list(t_lst **list, char *name, int type, t_env *env)
 
 int is_blank(char c)
 {
-  if (c == ' ' || c == '\t' || c == '\n' || c == '\r' || c == '\f')
+  if (c == ' ' || c == '\t' || c == '\n' || c == '\r' || c == '\f' | c == '\0')
     return (1);
   return (0);
 }
@@ -132,6 +132,7 @@ int main(int argc, char **argv)
 		env->fd = open(argv[1], O_RDONLY);
 		while (get_char(env->fd, env->buffer) > 0)
 		{
+			printf(" BUF : %s\n", env->buffer);
 			if (env->buffer[0] == '.' && !get_command(env))
 			{
 				ft_putendl("malloc error");
