@@ -466,46 +466,8 @@ int loop_parser(t_env *env)
   init_parsing_tab(env);
   while (env->list)
   {
-    if (env->list->type == TYPE_REGISTRE)
-      printf(" VALID REGISTRE : %d (REGISTRE : %s)\n", is_valid_registre(env), env->list->name);
-    if (env->list->type == TYPE_LABEL_DEFINITION)
-      printf(" VALID LABEL : %d (LABEL : %s)\n", is_valid_label(env), env->list->name);
-    if (env->list->type == TYPE_COMMAND)
-      printf(" VALID COMMAND : %d (COMMAND : %s)\n", is_valid_command(env), env->list->name);
-    if (env->list->type == TYPE_STR)
-      printf(" VALID STR : %d (STR : %s)\n", is_valid_str(env), env->list->name);
-    if (env->list->type == TYPE_INSTRUCTION_LD)
-      printf(" VALID LD : %d (PARAM : %s | type %d)\n", is_valid_ld(env), env->list->name, env->list->type);
-    if (env->list->type == TYPE_INSTRUCTION_ST)
-      printf(" VALID ST : %d (PARAM : %s | type %d)\n", is_valid_st(env), env->list->name, env->list->type);
-    if (env->list->type == TYPE_INSTRUCTION_LIVE)
-      printf(" VALID LIVE : %d (PARAM : %s | type %d)\n", env->parsing[12](env), env->list->name, env->list->type);
-    if (env->list->type == TYPE_INSTRUCTION_ADD)
-      printf(" VALID ADD : %d (PARAM : %s | type %d)\n", env->parsing[15](env), env->list->name, env->list->type);
-    if (env->list->type == TYPE_INSTRUCTION_SUB)
-      printf(" VALID SUB : %d (PARAM : %s | type %d)\n", env->parsing[16](env), env->list->name, env->list->type);
-    if (env->list->type == TYPE_INSTRUCTION_AND)
-      printf(" VALID AND : %d (PARAM : %s | type %d)\n", env->parsing[17](env), env->list->name, env->list->type);
-    if (env->list->type == TYPE_INSTRUCTION_OR)
-      printf(" VALID OR : %d (PARAM : %s | type %d)\n", env->parsing[18](env), env->list->name, env->list->type);
-    if (env->list->type == TYPE_INSTRUCTION_XOR)
-      printf(" VALID XOR : %d (PARAM : %s | type %d)\n", env->parsing[19](env), env->list->name, env->list->type);
-    if (env->list->type == TYPE_INSTRUCTION_ZJMP)
-      printf(" VALID ZJMP : %d (PARAM : %s | type %d)\n", env->parsing[20](env), env->list->name, env->list->type);
-    if (env->list->type == TYPE_INSTRUCTION_LDI)
-      printf(" VALID LDI : %d (PARAM : %s | type %d)\n", env->parsing[21](env), env->list->name, env->list->type);
-    if (env->list->type == TYPE_INSTRUCTION_STI)
-      printf(" VALID STI : %d (PARAM : %s | type %d)\n", env->parsing[22](env), env->list->name, env->list->type);
-    if (env->list->type == TYPE_INSTRUCTION_FORK)
-      printf(" VALID FORK : %d (PARAM : %s | type %d)\n", env->parsing[23](env), env->list->name, env->list->type);
-    if (env->list->type == TYPE_INSTRUCTION_LLD)
-      printf(" VALID LLD : %d (PARAM : %s | type %d)\n", env->parsing[24](env), env->list->name, env->list->type);
-    if (env->list->type == TYPE_INSTRUCTION_LLDI)
-      printf(" VALID LLDI : %d (PARAM : %s | type %d)\n", env->parsing[25](env), env->list->name, env->list->type);
-    if (env->list->type == TYPE_INSTRUCTION_LFORK)
-      printf(" VALID LFORK : %d (PARAM : %s | type %d)\n", env->parsing[26](env), env->list->name, env->list->type);
-    if (env->list->type == TYPE_INSTRUCTION_AFF)
-      printf(" VALID AFF : %d (PARAM : %s | type %d)\n", env->parsing[27](env), env->list->name, env->list->type);
+    if (env->list->type != TYPE_COMMENT)
+      env->parsing[env->list->type](env);
     env->list = env->list->next;
   }
   return (1);
