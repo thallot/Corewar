@@ -47,7 +47,7 @@ void zap_comment(t_env *env)
 
 void zap_all(t_env *env)
 {
-  while (env->list->type == TYPE_VIRGULE || env->list->type == TYPE_COMMENT || env->list->type == TYPE_LABEL_DEFINITION)
+  while (env->list && (env->list->type == TYPE_VIRGULE || env->list->type == TYPE_COMMENT || env->list->type == TYPE_LABEL_DEFINITION))
     env->list = env->list->next;
 }
 
@@ -142,6 +142,8 @@ void	w_header(t_env *env)
   while (env->list)
   {
     zap_all(env);
+    if (!env->list)
+      break ;
     octet = get_size(env);
     cpt_octet += octet;
     if (env->list->type >= 1 && env->list->type <= 16)
@@ -159,7 +161,7 @@ void	w_header(t_env *env)
       if (env->list->type == TYPE_DIRECT_2)
       {
         if (env->list->name[1] == ':')
-          op = env->label->next->type - cpt_instr + 1;
+          op = env->label->next->type - cpt_instr;
         else
           op = ft_atoi(&(env->list)->name[1]);
       }
