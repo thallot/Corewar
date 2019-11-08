@@ -50,13 +50,15 @@ void	w_header(t_env *env)
 	int		fd;
 	int		magic;
 	char	name[129];
-	char	comment[2049];
+	char	comment[2048];
 	int		i;
+  int size;
 
 	i = -1;
+  size = 320;
 	magic = 15369203;
 	ft_bzero(name, 129);
-	ft_bzero(comment, 2049);
+	ft_bzero(comment, 2048);
   zap_comment(env);
   if (ft_strcmp(env->list->name, NAME_CMD_STRING))
   {
@@ -76,10 +78,13 @@ void	w_header(t_env *env)
 	env->list = env->list->next;
 	ft_strcpy(comment, env->list->name);
 	ft_memrev(&magic, 4);
+  ft_memrev(&size, 4);
 	fd = open("test.cor", O_WRONLY);
 	write(fd, &magic, 4);
 	lseek(fd, SEEK_CUR, 4);
 	write(fd, name, 129);
-	lseek(fd, SEEK_CUR, 129);
-	write(fd, comment, 2049);
+  lseek(fd, SEEK_CUR, 129);
+  write(fd, &size, 4);
+	lseek(fd, SEEK_CUR, 4);
+	write(fd, comment, 2048);
 }
