@@ -45,9 +45,9 @@ void zap_comment(t_env *env)
     env->list = env->list->next;
 }
 
-void zap_separator(t_env *env)
+void zap_all(t_env *env)
 {
-  while (env->list->type == TYPE_VIRGULE)
+  while (env->list->type == TYPE_VIRGULE || env->list->type == TYPE_COMMENT || env->list->type == TYPE_LABEL_DEFINITION)
     env->list = env->list->next;
 }
 
@@ -61,6 +61,8 @@ int generate_ocp(t_env *env)
   i = 0;
   ocp = 0;
   head = env->list;
+  if (env->list->type == TYPE_INSTRUCTION_AFF)
+    return (64);
   if (env->list->type == TYPE_INSTRUCTION_LD || env->list->type == TYPE_INSTRUCTION_ST || env->list->type == TYPE_INSTRUCTION_LLD)
     offset = 2;
   else
@@ -93,8 +95,8 @@ void	w_header(t_env *env)
 	char	comment[2052];
 	int		i;
   int size;
-  int octet;
-  int ocp;
+
+
 
 	i = -1;
   printf("SIZE : %d\n", env->size);
@@ -129,26 +131,43 @@ void	w_header(t_env *env)
   write(env->fd_cor, &size, 4);
 	write(env->fd_cor, comment, 2052);
   env->list = env->list->next;
+
+  int ocp;
+  int op;
+  int octet;
+  int cpt_octet;
+  int cpt_instr;
+
+  cpt_octet = 0;
   while (env->list)
   {
-    zap_comment(env);
-    zap_separator(env);
+    zap_all(env);
     octet = get_size(env);
+    cpt_octet += octet;
     if (env->list->type >= 1 && env->list->type <= 16)
     {
+      cpt_instr = cpt_octet;
       write(env->fd_cor, &(env->list)->type, octet);
-      if (env->list->type != TYPE_INSTRUCTION_ZJMP && env->list->type != TYPE_INSTRUCTION_LIVE && env->list->type != TYPE_INSTRUCTION_FORK && env->list->type != TYPE_INSTRUCTION_LFORK && env->list->type != TYPE_INSTRUCTION_AFF)
+      if (env->list->type != TYPE_INSTRUCTION_ZJMP && env->list->type != TYPE_INSTRUCTION_LIVE && env->list->type != TYPE_INSTRUCTION_FORK && env->list->type != TYPE_INSTRUCTION_LFORK)
       {
         ocp = generate_ocp(env);
         write(env->fd_cor, &ocp, octet);
       }
     }
-    // else
-    // {
-    //   ft_memrev(&(env->list)->name, octet);
-    //   write(env->fd_cor, &(env->list)->name, octet);
-    // }
-
+    else
+    {
+      if (env->list->type == TYPE_DIRECT_2)
+      {
+        if (env->list->name[1] == ':')
+          op = env->label->next->type - cpt_instr + 1;
+        else
+          op = ft_atoi(&(env->list)->name[1]);
+      }
+      else if (env->list->type == TYPE_DIRECT_4 || env->list->type == TYPE_REGISTRE)
+        op = ft_atoi(&(env->list)->name[1]);
+      ft_memrev(&op, octet);
+      write(env->fd_cor, &op, octet);
+    }
     env->list = env->list->next;
   }
 }
