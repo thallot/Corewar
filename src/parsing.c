@@ -54,6 +54,7 @@ int is_valid_label_definition(t_env *env)
   int i;
   int size;
   char c;
+  t_lst *head;
 
   i = 0;
   size = ft_strlen(env->list->name) - 1;
@@ -65,11 +66,23 @@ int is_valid_label_definition(t_env *env)
     else
     {
       if (i == size && c == ':')
-        return (1);
+        break ;
       printf("Erreur de formatage du label [%s], caractere invalide : %c\n", env->list->name, c);
       exit(exit_gc(env, 1));
     }
   }
+  head = env->label;
+  while (env->label)
+  {
+    if (!ft_strncmp(env->label->name, env->list->name, size))
+    {
+      env->label->type = env->size;
+      env->label = head;
+      return (1);
+    }
+    env->label = env->label->next;
+  }
+  env->label = head;
   return (1);
 }
 

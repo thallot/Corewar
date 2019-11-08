@@ -116,6 +116,8 @@ void print_lst(t_lst *list)
 			printf("  -> (DIRECT 2)\n");
 		if (list->type == TYPE_DIRECT_4)
 			printf("  -> (DIRECT 4)\n");
+		else
+			printf("SIZE : %d\n", list->type);
 		list = list->next;
 	}
 }
