@@ -98,7 +98,9 @@ typedef struct				s_lst
 
 typedef struct   s_env
 {
-  int fd;
+  int   fd_s;
+  int   fd_cor;
+  char  *file_name;
 	char buffer[2];
 	t_lst *list;
   t_lst *label;
@@ -167,6 +169,9 @@ int is_valid_label_call(t_env *env);
 */
 void	w_header(t_env *env);
 void    ft_memrev(void *mask, size_t size);
-void zap_comment(t_env *env);
-void zap_separator(t_env *env);
+/*
+*********************************** file_parser.c *********************************
+*/
+char	*ft_strndup_gc(t_env *env, const char *s1, size_t n);
+int     parsing_file_s(t_env *env, char *file_path);
 #endif

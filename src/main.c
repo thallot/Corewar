@@ -128,11 +128,15 @@ int main(int argc, char **argv)
 
 	if (!(env = (t_env *)ft_memalloc(sizeof(t_env))))
 		return (-1);
-	env->list = NULL;
+	parsing_file_s(env, argv[1]);
 	if (argc > 1)
 	{
-		env->fd = open(argv[1], O_RDONLY);
-		while (get_char(env->fd, env->buffer) > 0)
+		if ((env->fd_s = open(argv[1], O_RDONLY)) == -1)
+		{
+			printf(".S FILE DOES NOT EXIST\n");
+			exit(exit_gc(env, 1));
+		}
+		while (get_char(env->fd_s, env->buffer) > 0)
 		{
 			if (env->buffer[0] == '.' && !get_command(env))
 			{

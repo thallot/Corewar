@@ -53,13 +53,12 @@ void zap_separator(t_env *env)
 
 void	w_header(t_env *env)
 {
-	int		fd;
 	int		magic;
 	char	name[132];
 	char	comment[2052];
 	int		i;
   int size;
-  int octet;
+  // int octet;
 
 	i = -1;
   printf("SIZE : %d\n", env->size);
@@ -87,23 +86,23 @@ void	w_header(t_env *env)
 	ft_strcpy(comment, env->list->name);
 	ft_memrev(&magic, 4);
   ft_memrev(&size, 4);
-	fd = open("test.cor", O_TRUNC | O_RDWR | O_CREAT, 0777);
-  printf("FD : %d\n", fd);
-	write(fd, &magic, 4);
-	lseek(fd, SEEK_CUR, 4);
-	write(fd, name, 132);
-  lseek(fd, SEEK_CUR, 132);
-  write(fd, &size, 4);
-	lseek(fd, SEEK_CUR, 4);
-	write(fd, comment, 2052);
-  env->list = env->list->next;
-  while (env->list)
-  {
-    zap_comment(env);
-    zap_separator(env);
-    octet = get_size(env);
-    ft_memrev(&(env->list)->name, octet);
-    write(fd, &(env->list)->name, octet);
-    env->list = env->list->next;
-  }
+	env->fd_cor = open(ft_strcat(env->file_name, ".cor"), O_TRUNC | O_RDWR | O_CREAT, 0777);
+  printf("FD : %d\n", env->fd_cor);
+	write(env->fd_cor, &magic, 4);
+	lseek(env->fd_cor, SEEK_CUR, 4);
+	write(env->fd_cor, name, 132);
+  lseek(env->fd_cor, SEEK_CUR, 132);
+  write(env->fd_cor, &size, 4);
+	lseek(env->fd_cor, SEEK_CUR, 4);
+	write(env->fd_cor, comment, 2052);
+  // env->list = env->list->next;
+  // while (env->list)
+  // {
+  //   zap_comment(env);
+  //   zap_separator(env);
+  //   octet = get_size(env);
+  //   ft_memrev(&(env->list)->name, octet);
+  //   write(env->fd_cor, &(env->list)->name, octet);
+  //   env->list = env->list->next;
+  // }
 }

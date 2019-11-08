@@ -12,11 +12,11 @@
 
 #include "../include/asm.h"
 
-int get_char(int fd, char *buffer)
+int get_char(int fd_s, char *buffer)
 {
   int ret;
 
-  ret = read(fd, buffer, 1);
+  ret = read(fd_s, buffer, 1);
   buffer[ret] = '\0';
   return (ret);
 }
@@ -29,7 +29,7 @@ int get_command(t_env *env)
   while (!is_blank(env->buffer[0]))
   {
     command = ft_strjoin_gc(command, env->buffer, env);
-    get_char(env->fd, env->buffer);
+    get_char(env->fd_s, env->buffer);
   }
   add_list(&(env->list), command, TYPE_COMMAND, env);
   return (1);
@@ -41,14 +41,14 @@ int get_str(t_env *env)
 
   str = NULL;
 	str = ft_strjoin_gc(str, env->buffer, env);
-	get_char(env->fd, env->buffer);
+	get_char(env->fd_s, env->buffer);
   while (env->buffer[0] != '"' && env->buffer[0] != '\n' && env->buffer[0] != '\0')
   {
     str = ft_strjoin_gc(str, env->buffer, env);
-    get_char(env->fd, env->buffer);
+    get_char(env->fd_s, env->buffer);
   }
 	str = ft_strjoin_gc(str, env->buffer, env);
-	get_char(env->fd, env->buffer);
+	get_char(env->fd_s, env->buffer);
   add_list(&(env->list), str, TYPE_STR, env);
   return (1);
 }
@@ -59,11 +59,11 @@ int get_comment(t_env *env)
 
   comment = NULL;
 	comment = ft_strjoin_gc(comment, env->buffer, env);
-	get_char(env->fd, env->buffer);
+	get_char(env->fd_s, env->buffer);
   while (env->buffer[0] != '\n' && env->buffer[0] != '\0')
   {
     comment = ft_strjoin_gc(comment, env->buffer, env);
-    get_char(env->fd, env->buffer);
+    get_char(env->fd_s, env->buffer);
   }
   add_list(&(env->list), comment, TYPE_COMMENT, env);
   return (1);
@@ -92,7 +92,7 @@ int get_instruction(t_env *env)
   {
     instruction = ft_strjoin_gc(instruction, env->buffer, env);
 		last_char = env->buffer[0];
-    get_char(env->fd, env->buffer);
+    get_char(env->fd_s, env->buffer);
   }
 	if (last_char == ':')
   {
