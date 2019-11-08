@@ -49,16 +49,16 @@ void	w_header(t_env *env)
 {
 	int		fd;
 	int		magic;
-	char	name[129];
-	char	comment[2048];
+	char	name[132];
+	char	comment[2052];
 	int		i;
   int size;
 
 	i = -1;
   size = 320;
 	magic = 15369203;
-	ft_bzero(name, 129);
-	ft_bzero(comment, 2048);
+	ft_bzero(name, 132);
+	ft_bzero(comment, 2052);
   zap_comment(env);
   if (ft_strcmp(env->list->name, NAME_CMD_STRING))
   {
@@ -79,12 +79,13 @@ void	w_header(t_env *env)
 	ft_strcpy(comment, env->list->name);
 	ft_memrev(&magic, 4);
   ft_memrev(&size, 4);
-	fd = open("test.cor", O_WRONLY);
+	fd = open("test.cor", O_TRUNC | O_RDWR | O_CREAT, 0777);
+  printf("FD : %d\n", fd);
 	write(fd, &magic, 4);
 	lseek(fd, SEEK_CUR, 4);
-	write(fd, name, 129);
-  lseek(fd, SEEK_CUR, 129);
+	write(fd, name, 132);
+  lseek(fd, SEEK_CUR, 132);
   write(fd, &size, 4);
 	lseek(fd, SEEK_CUR, 4);
-	write(fd, comment, 2048);
+	write(fd, comment, 2052);
 }

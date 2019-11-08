@@ -70,6 +70,8 @@
 # define CYCLE_DELTA 50
 # define NBR_LIVE 21
 # define MAX_CHECKS 10
+# define T_ 1
+# define T_OCP 1
 # define T_REG 1
 # define T_DIR 2
 # define T_IND 4
@@ -102,6 +104,7 @@ typedef struct   s_env
   t_lst *label;
   t_gc  *garbage_collector;
   int (*parsing[28]) (struct s_env *env);
+  int size;
 }                t_env;
 
 
