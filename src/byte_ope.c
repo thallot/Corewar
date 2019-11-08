@@ -55,7 +55,8 @@ void	w_header(t_env *env)
   int size;
 
 	i = -1;
-  size = 320;
+  printf("SIZE : %d\n", env->size);
+  size = env->size;
 	magic = 15369203;
 	ft_bzero(name, 132);
 	ft_bzero(comment, 2052);

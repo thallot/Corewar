@@ -70,7 +70,7 @@
 # define CYCLE_DELTA 50
 # define NBR_LIVE 21
 # define MAX_CHECKS 10
-# define T_ 1
+# define T_INSTRUCTION 1
 # define T_OCP 1
 # define T_REG 1
 # define T_DIR 2
@@ -146,6 +146,7 @@ int is_separator(char c);
 *********************************** Tableau de fonctions ***********************
 */
 int loop_parser(t_env *env);
+int get_size(t_env *env);
 /*
 *********************************** Tableau de fonctions ***********************
 */
