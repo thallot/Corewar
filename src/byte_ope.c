@@ -39,6 +39,12 @@ void    ft_memrev(void *mask, size_t size)
     }
 }
 
+void zap_comment(t_env *env)
+{
+  while (env->list->type == TYPE_COMMENT)
+    env->list = env->list->next;
+}
+
 void	w_header(t_env *env)
 {
 	int		fd;
@@ -51,9 +57,22 @@ void	w_header(t_env *env)
 	magic = 15369203;
 	ft_bzero(name, 129);
 	ft_bzero(comment, 2049);
-	env->list = env->list->next;
-	ft_strcpy(name, env->list->name);
-	env->list = env->list->next;
+  zap_comment(env);
+  if (ft_strcmp(env->list->name, NAME_CMD_STRING))
+  {
+    printf("Le nom du champions n'est pas la 1ere commande\n");
+    exit(exit_gc(env, 1));
+  }
+  zap_comment(env);
+  env->list = env->list->next;
+  ft_strcpy(name, env->list->name);
+  env->list = env->list->next;
+  if (ft_strcmp(env->list->name, COMMENT_CMD_STRING))
+  {
+    printf("Le commentaire du champions n'est pas la 2e commande (%s)\n", env->list->name);
+    exit(exit_gc(env, 1));
+  }
+  zap_comment(env);
 	env->list = env->list->next;
 	ft_strcpy(comment, env->list->name);
 	ft_memrev(&magic, 4);
