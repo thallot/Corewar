@@ -137,7 +137,7 @@ void	w_header(t_env *env)
     if (env->list->type >= 1 && env->list->type <= 16)
     {
       write(env->fd_cor, &(env->list)->type, octet);
-      if (env->list->type != TYPE_INSTRUCTION_LIVE && env->list->type != TYPE_INSTRUCTION_FORK && env->list->type != TYPE_INSTRUCTION_LFORK && env->list->type != TYPE_INSTRUCTION_AFF)
+      if (env->list->type != TYPE_INSTRUCTION_ZJMP && env->list->type != TYPE_INSTRUCTION_LIVE && env->list->type != TYPE_INSTRUCTION_FORK && env->list->type != TYPE_INSTRUCTION_LFORK && env->list->type != TYPE_INSTRUCTION_AFF)
       {
         ocp = generate_ocp(env);
         write(env->fd_cor, &ocp, octet);
