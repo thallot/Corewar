@@ -27,7 +27,12 @@ int is_valid_str(t_env *env)
 
   size = ft_strlen(env->list->name) - 1;
   if (env->list->name[0] == '"' && env->list->name[size] == '"')
+  {
+    env->list->name = ft_memmove(env->list->name, env->list->name + 1, size);
+    env->list->name[size]= '\0';
+    env->list->name[size - 1]= '\0';
     return (1);
+  }
   printf("Chaine de caractere mal formatée [%s]\n", env->list->name);
   exit(exit_gc(env, 1));
 }
@@ -514,6 +519,9 @@ void  init_parsing_tab(t_env *env)
 
 int loop_parser(t_env *env)
 {
+  t_lst *head;
+
+  head = env->list;
   init_parsing_tab(env);
   while (env->list)
   {
@@ -526,5 +534,6 @@ int loop_parser(t_env *env)
     }
     env->list = env->list->next;
   }
+  env->list = head;
   return (1);
 }

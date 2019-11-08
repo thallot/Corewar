@@ -154,7 +154,7 @@ int main(int argc, char **argv)
 			}
 		}
 		// print_lst(env->list);
-		// loop_parser(env);
+		loop_parser(env);
 		// print_lst(env->label);
 		w_header(env);
 	}
