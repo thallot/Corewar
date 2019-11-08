@@ -45,6 +45,12 @@ void zap_comment(t_env *env)
     env->list = env->list->next;
 }
 
+void zap_separator(t_env *env)
+{
+  while (env->list->type == TYPE_VIRGULE)
+    env->list = env->list->next;
+}
+
 void	w_header(t_env *env)
 {
 	int		fd;
@@ -53,6 +59,7 @@ void	w_header(t_env *env)
 	char	comment[2052];
 	int		i;
   int size;
+  int octet;
 
 	i = -1;
   printf("SIZE : %d\n", env->size);
@@ -89,4 +96,14 @@ void	w_header(t_env *env)
   write(fd, &size, 4);
 	lseek(fd, SEEK_CUR, 4);
 	write(fd, comment, 2052);
+  env->list = env->list->next;
+  while (env->list)
+  {
+    zap_comment(env);
+    zap_separator(env);
+    octet = get_size(env);
+    ft_memrev(&(env->list)->name, octet);
+    write(fd, &(env->list)->name, octet);
+    env->list = env->list->next;
+  }
 }

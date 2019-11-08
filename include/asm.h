@@ -167,4 +167,6 @@ int is_valid_label_call(t_env *env);
 */
 void	w_header(t_env *env);
 void    ft_memrev(void *mask, size_t size);
+void zap_comment(t_env *env);
+void zap_separator(t_env *env);
 #endif

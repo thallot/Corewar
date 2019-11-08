@@ -14,7 +14,7 @@
 
 int get_size(t_env *env)
 {
-  if (env->list->type == TYPE_REGISTRE)
+  if (env->list->type == TYPE_REGISTRE || (env->list->type >= TYPE_INSTRUCTION_LIVE && env->list->type <= TYPE_INSTRUCTION_AFF))
     return (1);
   if (env->list->type == TYPE_DIRECT_2 || env->list->type == TYPE_INDEX || env->list->type == TYPE_LABEL_DEFINITION || env->list->type == TYPE_LABEL)
     return (2);
