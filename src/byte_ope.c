@@ -188,7 +188,7 @@ void	w_header(t_env *env)
     }
     else
     {
-      if (env->list->type == TYPE_DIRECT_2)
+      if (env->list->type == TYPE_DIRECT_2 || env->list->type == TYPE_DIRECT_4)
       {
         if (env->list->name[1] == ':')
         {
@@ -205,7 +205,7 @@ void	w_header(t_env *env)
       }
       else if (env->list->type == TYPE_INDEX)
         op = ft_atoi(env->list->name);
-      else if (env->list->type == TYPE_DIRECT_4 || env->list->type == TYPE_REGISTRE)
+      else if (env->list->type == TYPE_REGISTRE)
         op = ft_atoi(&(env->list)->name[1]);
       ft_memrev(&op, octet);
       write(env->fd_cor, &op, octet);
