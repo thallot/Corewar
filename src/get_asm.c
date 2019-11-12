@@ -42,7 +42,7 @@ int get_str(t_env *env)
   str = NULL;
 	str = ft_strjoin_gc(str, env->buffer, env);
 	get_char(env->fd_s, env->buffer);
-  while (env->buffer[0] != '"' && env->buffer[0] != '\n' && env->buffer[0] != '\0')
+  while (env->buffer[0] != '"' && env->buffer[0] != '\0')
   {
     str = ft_strjoin_gc(str, env->buffer, env);
     get_char(env->fd_s, env->buffer);
