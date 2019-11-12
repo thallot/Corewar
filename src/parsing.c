@@ -54,7 +54,8 @@ int is_valid_label_definition(t_env *env)
   int i;
   int size;
   char c;
-  t_lst *head;
+  // t_lst *head;
+  t_lst *current;
 
   i = 0;
   size = ft_strlen(env->list->name) - 1;
@@ -71,18 +72,22 @@ int is_valid_label_definition(t_env *env)
       exit(exit_gc(env, 1));
     }
   }
-  head = env->label;
-  while (env->label)
+  current = env->label;
+  // env->list->name[size + 1] = '\0';
+  while (current)
   {
-    if (!ft_strncmp(env->label->name, env->list->name, size))
+    if (!ft_strcmp(current->name, env->list->name))
     {
-      env->label->type = env->size;
-      env->label = head;
+      printf("label name : %s |  ENV SIZE : %d\n",env->list->name, env->size);
+      current->type = env->size;
+      printf("label name : %s | ENV SIZE : %d\n",env->list->name, current->type);
+      // env->list->name[size + 1] = ':';
+      // env->label = head;
       return (1);
     }
-    env->label = env->label->next;
+    current = current->next;
   }
-  env->label = head;
+  // env->label = head;
   return (1);
 }
 
@@ -612,6 +617,7 @@ int loop_parser(t_env *env)
       exit(exit_gc(env, 1));
     }
     env->list = env->list->next;
+    print_lst(env->label);
   }
   env->list = head;
   return (1);

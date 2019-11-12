@@ -73,11 +73,11 @@ int generate_ocp(t_env *env)
     if (env->list->type == TYPE_VIRGULE)
       env->list = env->list->next;
     if (env->list->type == TYPE_REGISTRE)
-      ocp = ocp | REG_CODE;
-    else if (env->list->type == TYPE_DIRECT_2 || env->list->type == TYPE_DIRECT_4 ||env->list->type == TYPE_INDEX || env->list->type == TYPE_LABEL)
-      ocp = ocp | DIR_CODE;
+      ocp = ocp | REG_CODE; // 01 1
+    else if (env->list->type == TYPE_DIRECT_2)
+      ocp = ocp | DIR_CODE; // 10 2
     else
-      ocp = ocp | IND_CODE;
+      ocp = ocp | IND_CODE; // 11 3
     ocp = ocp << 2;
     env->list = env->list->next;
     i++;
@@ -154,11 +154,19 @@ void	w_header(t_env *env)
   int cpt_instr;
   int label_index;
 
+
+  print_lst(env->label);
   cpt_octet = 0;
+  int offset;
+  offset = 0;
+  int cpt = 0;
   // cpt_octet == compteur de la taille totale depuis le PC
   while (env->list)
   {
     zap_all(env);
+    printf("%d :  %s\n",cpt, env->list->name);
+    cpt++;
+
     if (!env->list)
       break ;
     //octet == la taille totale de l'element que nous somme entrain d'analyser : peut etre == 1/2/4
@@ -166,16 +174,15 @@ void	w_header(t_env *env)
     //on incremente la taille totale depuis le PC
     cpt_octet += octet;
     // Si le type est une instruction valide ->
-    if (env->list->type == TYPE_INDEX)
+    if (env->list->type == TYPE_LABEL)
        printf("INDEX FOUND\n");
     if (env->list->type >= 1 && env->list->type <= 16)
     {
-      //on stock son index depuis CP dans cpt_instr
       cpt_instr = cpt_octet;
-      //on ecrit l'instruction dans la memoire (toutjours sur 1 octet)
       write(env->fd_cor, &(env->list)->type, 1);
       if (env->list->type != TYPE_INSTRUCTION_ZJMP && env->list->type != TYPE_INSTRUCTION_LIVE && env->list->type != TYPE_INSTRUCTION_FORK && env->list->type != TYPE_INSTRUCTION_LFORK)
       {
+        cpt_octet++;
         ocp = generate_ocp(env);
         write(env->fd_cor, &ocp, octet);
       }
@@ -184,29 +191,27 @@ void	w_header(t_env *env)
     {
       if (env->list->type == TYPE_DIRECT_2)
       {
-        //si on rencontre un direct_2 qui fait reference a un label
         if (env->list->name[1] == ':')
         {
-          // on parcours grace a looking_for_label notre liste de label et on recupere l'index du label en question
           label_index = looking_for_label(env, env->list->name + 2);
-          // if (label_index > cpt_instr)
-            op = label_index - cpt_instr;
-          // else
-          // {
-            // il s'agit ici de trouver une facon de recupere l'index correspondant quand le label a ete declare avant l'appel
-            //possible qu'on ait juste besoin de cast en unsigned short (ca devrait fonctionner, mais la si je change op en unsigned short, ca abort)
-            // op = 65535 - (env->size - (cpt_instr - label_index));
-          // }
-          printf("op = %d, env->list->name + 2 = %s, label_index = %d, cpt_instr = %d, size  = %d\n", op, env->list->name + 2, label_index, cpt_instr, env->size);
+          op = label_index - cpt_instr + 1;
         }
         else
           op = ft_atoi(&(env->list)->name[1]);
       }
+      else if (env->list->type == TYPE_LABEL)
+      {
+        label_index = looking_for_label(env, env->list->name + 1);
+        op = label_index - cpt_instr + 1;
+      }
+      else if (env->list->type == TYPE_INDEX)
+        op = ft_atoi(env->list->name);
       else if (env->list->type == TYPE_DIRECT_4 || env->list->type == TYPE_REGISTRE)
         op = ft_atoi(&(env->list)->name[1]);
-      ft_memrev(&op, octet);
-      write(env->fd_cor, &op, octet);
+
     }
+    ft_memrev(&op, octet);
+    write(env->fd_cor, &op, octet);
     env->list = env->list->next;
   }
 }

@@ -174,4 +174,6 @@ void    ft_memrev(void *mask, size_t size);
 */
 char	*ft_strndup_gc(t_env *env, const char *s1, size_t n);
 int     parsing_file_s(t_env *env, char *file_path);
+
+void print_lst(t_lst *list);
 #endif

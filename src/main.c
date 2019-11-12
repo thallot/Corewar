@@ -90,34 +90,7 @@ void print_lst(t_lst *list)
 	while (list)
 	{
 		printf("%-15s", list->name);
-		if (list->type == TYPE_COMMAND)
-			printf("  -> (COMMAND)\n");
-		if (list->type == TYPE_STR)
-			printf("  -> (STR POUR COMMAND)\n");
-		if (list->type == TYPE_COMMENT)
-			printf("  -> (COMMENT)\n");
-		if (list->type >= 1 && list->type <= 16)
-			printf("  -> (INSTRUCTION) %d\n", list->type);
-		if (list->type == TYPE_VIRGULE)
-			printf("  -> (SEPARATEUR ' , ')\n");
-		if (list->type == TYPE_LABEL_DEFINITION)
-			printf("  -> (DEFINITION LABEL)\n");
-		if (list->type == TYPE_DIRECT)
-			printf("  -> (PARAMETRE DIRECT)\n");
-		if (list->type == TYPE_INDEX)
-			printf("  -> (PARAMETRE INDEX)\n");
-		if (list->type == TYPE_REGISTRE)
-			printf("  -> (PARAMETRE REGISTRE)\n");
-		if (list->type == TYPE_UNKNOWN)
-			printf("  -> (ELEMENT INCONNU)\n");
-		if (list->type == TYPE_LABEL)
-			printf("  -> (APPEL LABEL)\n");
-		if (list->type == TYPE_DIRECT_2)
-			printf("  -> (DIRECT 2)\n");
-		if (list->type == TYPE_DIRECT_4)
-			printf("  -> (DIRECT 4)\n");
-		else
-			printf("SIZE : %d\n", list->type);
+		printf("SIZE : %d\n", list->type);
 		list = list->next;
 	}
 }
