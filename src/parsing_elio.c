@@ -3,16 +3,16 @@
 
 int is_valid_aff(t_env *env)
 {
-  env->size += T_INSTRUCTION;
-    env->list = env->list->next;
-    if (env->list->type != TYPE_REGISTRE)
-    {
-        printf("Erreur de type de parametre : devrait etre un registre");
-        exit(exit_gc(env, 1));
-    }
-    env->size += get_size(env);
-    is_valid_registre(env);
-    return (1);
+  env->size += T_INSTRUCTION + T_OCP;
+  env->list = env->list->next;
+  if (env->list->type != TYPE_REGISTRE)
+  {
+      printf("Erreur de type de parametre : devrait etre un registre");
+      exit(exit_gc(env, 1));
+  }
+  env->size += get_size(env);
+  is_valid_registre(env);
+  return (1);
 }
 
 int is_valid_lfork(t_env *env)
