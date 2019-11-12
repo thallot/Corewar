@@ -74,7 +74,7 @@ int generate_ocp(t_env *env)
       env->list = env->list->next;
     if (env->list->type == TYPE_REGISTRE)
       ocp = ocp | REG_CODE; // 01 1
-    else if (env->list->type == TYPE_DIRECT_2)
+    else if (env->list->type == TYPE_DIRECT_2 || env->list->type == TYPE_DIRECT_4)
       ocp = ocp | DIR_CODE; // 10 2
     else
       ocp = ocp | IND_CODE; // 11 3
@@ -164,7 +164,6 @@ void	w_header(t_env *env)
   while (env->list)
   {
     zap_all(env);
-    printf("%d :  %s\n",cpt, env->list->name);
     cpt++;
 
     if (!env->list)
@@ -208,10 +207,9 @@ void	w_header(t_env *env)
         op = ft_atoi(env->list->name);
       else if (env->list->type == TYPE_DIRECT_4 || env->list->type == TYPE_REGISTRE)
         op = ft_atoi(&(env->list)->name[1]);
-
+      ft_memrev(&op, octet);
+      write(env->fd_cor, &op, octet);
     }
-    ft_memrev(&op, octet);
-    write(env->fd_cor, &op, octet);
     env->list = env->list->next;
   }
 }
