@@ -102,13 +102,6 @@ int get_instruction(t_env *env)
   }
 	else if (instruction)
 	{
-    // if (type == TYPE_DIRECT)
-    // {
-    //   if (ft_isnumber(&instruction[1], 0))
-    //     type = TYPE_DIRECT_4;
-    //   else
-    //     type = TYPE_DIRECT_2;
-    // }
 		if ((instruction_type = is_instruction(instruction)))
 			type = instruction_type;
     else if (ft_isnumber(instruction, 1))

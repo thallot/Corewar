@@ -109,8 +109,7 @@ void	w_header(t_env *env)
 	char	comment[2052];
 	int		i;
   int size;
-  char *tmp;
-
+  
 	i = -1;
   size = env->size;
 	magic = 15369203;
@@ -136,9 +135,7 @@ void	w_header(t_env *env)
 	ft_strcpy(comment, env->list->name);
 	ft_memrev(&magic, 4);
   ft_memrev(&size, 4);
-  tmp = ft_strdup(env->file_name);
-	env->fd_cor = open(ft_strcat(tmp, ".cor"), O_TRUNC | O_RDWR | O_CREAT, 0777);
-  ft_strdel(&tmp);
+	env->fd_cor = open(ft_strjoin_gc(env->file_name, ".cor", env), O_TRUNC | O_RDWR | O_CREAT, 0777);
 	write(env->fd_cor, &magic, 4);
 	write(env->fd_cor, name, 132);
   write(env->fd_cor, &size, 4);
@@ -158,20 +155,13 @@ void w_core(t_env *env)
 
 
   cpt_octet = 0;
-  int offset;
-  offset = 0;
-  // cpt_octet == compteur de la taille totale depuis le PC
   while (env->list)
   {
     zap_all(env);
-
     if (!env->list)
       break ;
-    //octet == la taille totale de l'element que nous somme entrain d'analyser : peut etre == 1/2/4
     octet = get_size(env);
-    //on incremente la taille totale depuis le PC
     cpt_octet += octet;
-    // Si le type est une instruction valide ->
     if (env->list->type >= 1 && env->list->type <= 16)
     {
       cpt_instr = cpt_octet;

@@ -215,8 +215,7 @@ int is_valid_add(t_env *env)
   if (env->list->type != TYPE_REGISTRE)
     print_error(env, "add", 3);
   env->size += get_size(env);
-  if (!is_valid_registre(env))
-    exit(exit_gc(env, 1));
+  is_valid_param(env);
   return (1);
 }
 
