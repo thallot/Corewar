@@ -129,6 +129,8 @@ t_gc	*add_list_gc(t_env *env, void *data);
 void	*ft_memalloc_gc(size_t size, t_env *env);
 char	*ft_strdup_gc(const char *s1, t_env *env);
 char	*ft_strjoin_gc(char *s1, char const *s2, t_env *env);
+char	*ft_strndup_gc(t_env *env, const char *s1, size_t n);
+char	*ft_strndup_gc(t_env *env, const char *s1, size_t n);
 /*
 *********************************** Get_asm.c **********************************
 */
@@ -178,7 +180,6 @@ void    ft_memrev(void *mask, size_t size);
 /*
 *********************************** file_parser.c *********************************
 */
-char	*ft_strndup_gc(t_env *env, const char *s1, size_t n);
 int     parsing_file_s(t_env *env, char *file_path);
 
 void print_lst(t_lst *list);

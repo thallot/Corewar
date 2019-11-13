@@ -66,3 +66,21 @@ char    *ft_strjoin_gc(char *s1, char const *s2, t_env *env)
 	}
 	return (str);
 }
+
+char	*ft_strndup_gc(t_env *env, const char *s1, size_t n)
+{
+	size_t	i;
+	char	*dest;
+
+	if (!(dest = (char *)malloc(sizeof(*dest) * n + 1)))
+		exit(exit_gc(env, -1));
+	i = 0;
+	while (s1[i] != '\0' && i < n)
+	{
+		dest[i] = s1[i];
+		i++;
+	}
+	dest[i] = '\0';
+    add_list_gc(env, dest);
+	return (dest);
+}

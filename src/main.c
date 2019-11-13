@@ -6,7 +6,7 @@
 /*   By: thallot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 11:05:30 by thallot           #+#    #+#             */
-/*   Updated: 2019/11/04 11:05:31 by thallot          ###   ########.fr       */
+/*   Updated: 2019/11/13 14:45:23 by thallot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,32 +34,17 @@ t_lst	*add_list(t_lst **list, char *name, int type, t_env *env)
 	return (*head);
 }
 
-int is_blank(char c)
+int		is_blank(char c)
 {
-  if (c == ' ' || c == '\t' || c == '\n' || c == '\r' || c == '\f' | c == '\0')
-    return (1);
-  return (0);
+	if (c == ' ' || c == '\t' || c == '\n' || c == '\r'
+	|| c == '\f' | c == '\0')
+		return (1);
+	return (0);
 }
 
-int is_instruction(char *str)
+int		is_instruction_next(char *str)
 {
-  if (!ft_strcmp("live", str))
-		return (TYPE_INSTRUCTION_LIVE);
-	else if (!ft_strcmp("ld", str))
-		return (TYPE_INSTRUCTION_LD);
- 	else if (!ft_strcmp("st", str))
-		return (TYPE_INSTRUCTION_ST);
-	else if (!ft_strcmp("add", str))
-		return (TYPE_INSTRUCTION_ADD);
-	else if (!ft_strcmp("sub", str))
-		return (TYPE_INSTRUCTION_SUB);
-	else if (!ft_strcmp("and", str))
-		return (TYPE_INSTRUCTION_AND);
-	else if (!ft_strcmp("or", str))
-		return (TYPE_INSTRUCTION_OR);
-	else if (!ft_strcmp("xor", str))
-		return (TYPE_INSTRUCTION_XOR);
-	else if (!ft_strcmp("zjmp", str))
+	if (!ft_strcmp("zjmp", str))
 		return (TYPE_INSTRUCTION_ZJMP);
 	else if (!ft_strcmp("ldi", str))
 		return (TYPE_INSTRUCTION_LDI);
@@ -75,17 +60,38 @@ int is_instruction(char *str)
 		return (TYPE_INSTRUCTION_LFORK);
 	else if (!ft_strcmp("aff", str))
 		return (TYPE_INSTRUCTION_AFF);
-  return (0);
+	return (0);
 }
 
-int is_separator(char c)
+int		is_instruction(char *str)
 {
-  if (c == ',')
-    return (1);
-  return (0);
+	if (!ft_strcmp("live", str))
+		return (TYPE_INSTRUCTION_LIVE);
+	else if (!ft_strcmp("ld", str))
+		return (TYPE_INSTRUCTION_LD);
+	else if (!ft_strcmp("st", str))
+		return (TYPE_INSTRUCTION_ST);
+	else if (!ft_strcmp("add", str))
+		return (TYPE_INSTRUCTION_ADD);
+	else if (!ft_strcmp("sub", str))
+		return (TYPE_INSTRUCTION_SUB);
+	else if (!ft_strcmp("and", str))
+		return (TYPE_INSTRUCTION_AND);
+	else if (!ft_strcmp("or", str))
+		return (TYPE_INSTRUCTION_OR);
+	else if (!ft_strcmp("xor", str))
+		return (TYPE_INSTRUCTION_XOR);
+	return (is_instruction_next(str));
 }
 
-void print_lst(t_lst *list)
+int		is_separator(char c)
+{
+	if (c == ',')
+		return (1);
+	return (0);
+}
+
+void	print_lst(t_lst *list)
 {
 	while (list)
 	{
@@ -95,35 +101,64 @@ void print_lst(t_lst *list)
 	}
 }
 
-int main(int argc, char **argv)
+void	check_error_main(t_env *env, int argc, char **argv, int opt)
+{
+	if (opt == 0)
+	{
+		if (argc != 2)
+		{
+			printf("Wrong params number\n");
+			exit(exit_gc(env, 1));
+		}
+		if ((env->fd_s = open(argv[1], O_RDONLY)) <= 0)
+		{
+			printf(".S FILE DOES NOT EXIST\n");
+			exit(exit_gc(env, 1));
+		}
+		if (read(env->fd_s, 0, 0) < 0)
+		{
+			printf("Not a valid file\n");
+			exit(exit_gc(env, 1));
+		}
+	}
+	else if (!env->list)
+	{
+		printf("Not a valid file\n");
+		exit(exit_gc(env, 1));
+	}
+}
+
+int		main(int argc, char **argv)
 {
 	t_env *env;
 
 	if (!(env = (t_env *)ft_memalloc(sizeof(t_env))))
 		return (-1);
 	parsing_file_s(env, argv[1]);
-	if (argc > 1)
+	check_error_main(env, argc, argv, 0);
+	while (get_char(env->fd_s, env->buffer) > 0)
 	{
-		if ((env->fd_s = open(argv[1], O_RDONLY)) == -1)
-		{
-			printf(".S FILE DOES NOT EXIST\n");
-			exit(exit_gc(env, 1));
-		}
-		while (get_char(env->fd_s, env->buffer) > 0)
-		{
-			if (env->buffer[0] == '.')
-				get_command(env);
-			if (env->buffer[0] == '"')
-				get_str(env);
-			if (env->buffer[0] == '#')
-				get_comment(env);
-			if (!is_blank(env->buffer[0]))
-				get_instruction(env);
-		}
-		loop_parser(env);
-		w_header(env);
-		w_core(env);
-		printf("Writing output program to %s.cor\n", env->file_name);
+		if (env->buffer[0] == '.')
+			get_command(env);
+		if (env->buffer[0] == '"')
+			get_str(env);
+		if (env->buffer[0] == '#')
+			get_comment(env);
+		if (!is_blank(env->buffer[0]))
+			get_instruction(env);
 	}
-  return (exit_gc(env, 0));
+	check_error_main(env, argc, argv, 1);
+	loop_parser(env);
+	w_header(env);
+	w_core(env);
+	printf("Writing output program to %s.cor\n", env->file_name);
+	return (exit_gc(env, 0));
 }
+
+/*
+** int my_destructor(void) __attribute__((destructor));
+** int my_destructor(void)
+** {
+**     while (2) ;
+** }
+*/
