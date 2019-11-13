@@ -136,6 +136,8 @@ int main(int argc, char **argv)
 		loop_parser(env);
 		// print_lst(env->label);
 		w_header(env);
+		w_core(env);
+		printf("Writing output program to %s.cor\n", env->file_name);
 	}
   return (exit_gc(env, 0));
 }

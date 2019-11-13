@@ -35,7 +35,6 @@ int     parsing_file_s(t_env *env, char *file_path)
     char    *dot_s;
     int     len;
 
-    (void)env;
     dot_s = ft_strrchr(file_path, '/');
     if (!(dot_s = ft_strrchr(file_path, '/')))
         dot_s = file_path;
@@ -49,6 +48,5 @@ int     parsing_file_s(t_env *env, char *file_path)
         printf("valid .s file needed\n");
         exit(exit_gc(env, 1));
     }
-    printf("env->file_name = %s\n", env->file_name);
     return (0);
 }

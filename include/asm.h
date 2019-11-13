@@ -164,10 +164,13 @@ int is_valid_lldi(t_env *env);
 int is_valid_lfork(t_env *env);
 int is_valid_aff(t_env *env);
 int is_valid_label_call(t_env *env);
+
+int is_valid_separator(t_env *env, char *instr, int one, int two);
 /*
 *********************************** Byte_ope.c *********************************
 */
 void	w_header(t_env *env);
+void w_core(t_env *env);
 void    ft_memrev(void *mask, size_t size);
 /*
 *********************************** file_parser.c *********************************

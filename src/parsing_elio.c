@@ -47,12 +47,7 @@ int is_valid_lldi(t_env *env)
   env->list->type = env->list->type == TYPE_DIRECT ? TYPE_DIRECT_2 : env->list->type;
   env->size += get_size(env);
   env->list = env->list->next;
-  if (env->list->type != TYPE_VIRGULE)
-  {
-    printf("Erreur de formatage pour l'instruction lldi, pas de separateur entre le 1er et le 2eme parametre\n");
-    exit(exit_gc(env, 1));
-  }
-  env->list = env->list->next;
+  is_valid_separator(env, "lldi", 1, 2);
   if (env->list->type != TYPE_INDEX && env->list->type != TYPE_DIRECT && env->list->type != TYPE_LABEL)
   {
     printf("Erreur de type de parametre pour l'instruction lldi, parametre 2 : [%s] devrait etre de type ID/D2\n", env->list->name);
@@ -63,12 +58,7 @@ int is_valid_lldi(t_env *env)
   env->list->type = env->list->type == TYPE_DIRECT ? TYPE_DIRECT_2 : env->list->type;
   env->size += get_size(env);
   env->list = env->list->next;
-  if (env->list->type != TYPE_VIRGULE)
-  {
-    printf("Erreur de formatage pour l'instruction lldi, pas de separateur entre le 2eme et le 3eme parametre\n");
-    exit(exit_gc(env, 1));
-  }
-  env->list = env->list->next;
+  is_valid_separator(env, "lldi", 2, 3);
   if (env->list->type != TYPE_REGISTRE)
   {
     printf("Erreur de type de parametre pour l'instruction lldi, parametre 3 : [%s] devrait etre de type RG\n", env->list->name);
@@ -93,12 +83,7 @@ int is_valid_lld(t_env *env)
     env->list->type = env->list->type == TYPE_DIRECT ? TYPE_DIRECT_4 : env->list->type;
     env->size += get_size(env);
     env->list = env->list->next;
-    if (env->list->type != TYPE_VIRGULE)
-    {
-        printf("Erreur de formatage pour l'instruction lld, pas de separateur entre le 1er et le 2eme parametre\n");
-        exit(exit_gc(env, 1));
-    }
-    env->list = env->list->next;
+    is_valid_separator(env, "lld", 1, 2);
     if (env->list->type != TYPE_REGISTRE)
     {
         printf("Erreur de type de parametre pour l'instruction lld, parametre 2 : [%s] devrait etre de type RG\n", env->list->name);

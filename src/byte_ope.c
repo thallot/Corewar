@@ -96,10 +96,7 @@ int   looking_for_label(t_env *env, char *to_find)
   while (current)
   {
     if (ft_strcmp(to_find, current->name) == 0)
-    {
-      printf("found the right label: %s\n", current->name);
       return (current->type);
-    }
     current = current->next;
   }
   return (0);
@@ -112,9 +109,9 @@ void	w_header(t_env *env)
 	char	comment[2052];
 	int		i;
   int size;
+  char *tmp;
 
 	i = -1;
-  printf("SIZE : %d\n", env->size);
   size = env->size;
 	magic = 15369203;
 	ft_bzero(name, 132);
@@ -139,14 +136,19 @@ void	w_header(t_env *env)
 	ft_strcpy(comment, env->list->name);
 	ft_memrev(&magic, 4);
   ft_memrev(&size, 4);
-	env->fd_cor = open(ft_strcat(env->file_name, ".cor"), O_TRUNC | O_RDWR | O_CREAT, 0777);
-  printf("FD : %d\n", env->fd_cor);
+  tmp = ft_strdup(env->file_name);
+	env->fd_cor = open(ft_strcat(tmp, ".cor"), O_TRUNC | O_RDWR | O_CREAT, 0777);
+  ft_strdel(&tmp);
 	write(env->fd_cor, &magic, 4);
 	write(env->fd_cor, name, 132);
   write(env->fd_cor, &size, 4);
 	write(env->fd_cor, comment, 2052);
   env->list = env->list->next;
 
+}
+
+void w_core(t_env *env)
+{
   int ocp;
   int op;
   int octet;
@@ -155,16 +157,13 @@ void	w_header(t_env *env)
   int label_index;
 
 
-  print_lst(env->label);
   cpt_octet = 0;
   int offset;
   offset = 0;
-  int cpt = 0;
   // cpt_octet == compteur de la taille totale depuis le PC
   while (env->list)
   {
     zap_all(env);
-    cpt++;
 
     if (!env->list)
       break ;
@@ -173,8 +172,6 @@ void	w_header(t_env *env)
     //on incremente la taille totale depuis le PC
     cpt_octet += octet;
     // Si le type est une instruction valide ->
-    if (env->list->type == TYPE_LABEL)
-       printf("INDEX FOUND\n");
     if (env->list->type >= 1 && env->list->type <= 16)
     {
       cpt_instr = cpt_octet;

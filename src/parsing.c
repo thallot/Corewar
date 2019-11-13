@@ -24,6 +24,17 @@ int get_size(t_env *env)
   exit(exit_gc(env, 1));
 }
 
+int is_valid_separator(t_env *env, char *instr, int one, int two)
+{
+  if (env->list->type != TYPE_VIRGULE)
+  {
+    printf("Erreur de formatage pour l'instruction %s, pas de separateur dans le %d et le %de parametre", instr, one, two);
+    exit(exit_gc(env, 1));
+  }
+  env->list = env->list->next;
+  return (1);
+}
+
 int is_valid_command(t_env *env)
 {
   if (!ft_strcmp(env->list->name, NAME_CMD_STRING)
@@ -73,21 +84,15 @@ int is_valid_label_definition(t_env *env)
     }
   }
   current = env->label;
-  // env->list->name[size + 1] = '\0';
   while (current)
   {
     if (!ft_strcmp(current->name, env->list->name))
     {
-      printf("label name : %s |  ENV SIZE : %d\n",env->list->name, env->size);
       current->type = env->size;
-      printf("label name : %s | ENV SIZE : %d\n",env->list->name, current->type);
-      // env->list->name[size + 1] = ':';
-      // env->label = head;
       return (1);
     }
     current = current->next;
   }
-  // env->label = head;
   return (1);
 }
 
@@ -156,12 +161,7 @@ int is_valid_ld(t_env *env)
   env->list->type = env->list->type == TYPE_DIRECT ? TYPE_DIRECT_4 : env->list->type;
   env->size += get_size(env);
   env->list = env->list->next;
-  if (env->list->type != TYPE_VIRGULE)
-  {
-    printf("Erreur de formatage pour l'instruction ld, pas de separateur entre le 1er et le deuxieme parametre");
-    exit(exit_gc(env, 1));
-  }
-  env->list = env->list->next;
+  is_valid_separator(env, "ld", 1, 2);
   if (env->list->type != TYPE_REGISTRE)
   {
     printf("Erreur de type de parametre pour l'instruction ld, parametre 2 : [%s]\n", env->list->name);
@@ -185,12 +185,7 @@ int is_valid_st(t_env *env)
   if (!is_valid_registre(env))
     exit(exit_gc(env, 1));
   env->list = env->list->next;
-  if (env->list->type != TYPE_VIRGULE)
-  {
-    printf("Erreur de formatage pour l'instruction st, pas de separateur dans le 1er et le 2e parametre");
-    exit(exit_gc(env, 1));
-  }
-  env->list = env->list->next;
+  is_valid_separator(env, "st", 1, 2);
   if (env->list->type != TYPE_REGISTRE && env->list->type != TYPE_INDEX && env->list->type != TYPE_LABEL)
   {
     printf("Erreur de type de parametre pour l'instruction st, parametre 2 : [%s]\n", env->list->name);
@@ -217,12 +212,7 @@ int is_valid_add(t_env *env)
   if (!is_valid_registre(env))
     exit(exit_gc(env, 1));
   env->list = env->list->next;
-  if (env->list->type != TYPE_VIRGULE)
-  {
-    printf("Erreur de formatage pour l'instruction add, pas de separateur dans le 1er et le 2e parametre");
-    exit(exit_gc(env, 1));
-  }
-  env->list = env->list->next;
+  is_valid_separator(env, "add", 1, 2);
   if (env->list->type != TYPE_REGISTRE)
   {
     printf("Erreur de type de parametre pour l'instruction add, parametre 2 : [%s] devrait etre de type registre\n", env->list->name);
@@ -232,12 +222,7 @@ int is_valid_add(t_env *env)
   if (!is_valid_registre(env))
     exit(exit_gc(env, 1));
   env->list = env->list->next;
-  if (env->list->type != TYPE_VIRGULE)
-  {
-    printf("Erreur de formatage pour l'instruction add, pas de separateur dans le 2e et le 3e parametre");
-    exit(exit_gc(env, 1));
-  }
-  env->list = env->list->next;
+  is_valid_separator(env, "add", 2, 3);
   if (env->list->type != TYPE_REGISTRE)
   {
     printf("Erreur de type de parametre pour l'instruction add, parametre 3 : [%s] devrait etre de type registre\n", env->list->name);
@@ -262,12 +247,7 @@ int is_valid_sub(t_env *env)
   if (!is_valid_registre(env))
     exit(exit_gc(env, 1));
   env->list = env->list->next;
-  if (env->list->type != TYPE_VIRGULE)
-  {
-    printf("Erreur de formatage pour l'instruction sub, pas de separateur dans le 1er et le 2e parametre");
-    exit(exit_gc(env, 1));
-  }
-  env->list = env->list->next;
+  is_valid_separator(env, "sub", 1, 2);
   if (env->list->type != TYPE_REGISTRE)
   {
     printf("Erreur de type de parametre pour l'instruction sub, parametre 2 : [%s] devrait etre de type registre\n", env->list->name);
@@ -277,12 +257,7 @@ int is_valid_sub(t_env *env)
   if (!is_valid_registre(env))
     exit(exit_gc(env, 1));
   env->list = env->list->next;
-  if (env->list->type != TYPE_VIRGULE)
-  {
-    printf("Erreur de formatage pour l'instruction sub, pas de separateur dans le 2e et le 3e parametre");
-    exit(exit_gc(env, 1));
-  }
-  env->list = env->list->next;
+  is_valid_separator(env, "sub", 2, 3);
   if (env->list->type != TYPE_REGISTRE)
   {
     printf("Erreur de type de parametre pour l'instruction sub, parametre 3 : [%s] devrait etre de type registre\n", env->list->name);
@@ -310,12 +285,7 @@ int is_valid_and(t_env *env)
   if (env->list->type == TYPE_REGISTRE && !is_valid_registre(env))
     exit(exit_gc(env, 1));
   env->list = env->list->next;
-  if (env->list->type != TYPE_VIRGULE)
-  {
-    printf("Erreur de formatage pour l'instruction and, pas de separateur dans le 1er et le 2e parametre");
-    exit(exit_gc(env, 1));
-  }
-  env->list = env->list->next;
+  is_valid_separator(env, "and", 1, 2);
   if (env->list->type != TYPE_REGISTRE && env->list->type != TYPE_DIRECT && env->list->type != TYPE_INDEX && env->list->type != TYPE_LABEL)
   {
     printf("Erreur de type de parametre pour l'instruction and, parametre 2 : [%s] devrait etre de type registre / DIRECTE 4 / INDIRECT\n", env->list->name);
@@ -328,12 +298,7 @@ int is_valid_and(t_env *env)
   if (env->list->type == TYPE_REGISTRE && !is_valid_registre(env))
     exit(exit_gc(env, 1));
   env->list = env->list->next;
-  if (env->list->type != TYPE_VIRGULE)
-  {
-    printf("Erreur de formatage pour l'instruction and, pas de separateur dans le 2e et le 3e parametre");
-    exit(exit_gc(env, 1));
-  }
-  env->list = env->list->next;
+  is_valid_separator(env, "and", 2, 3);
   if (env->list->type != TYPE_REGISTRE)
   {
     printf("Erreur de type de parametre pour l'instruction and, parametre 3 : [%s] devrait etre de type registre\n", env->list->name);
@@ -361,12 +326,7 @@ int is_valid_or(t_env *env)
   if (env->list->type == TYPE_REGISTRE && !is_valid_registre(env))
     exit(exit_gc(env, 1));
   env->list = env->list->next;
-  if (env->list->type != TYPE_VIRGULE)
-  {
-    printf("Erreur de formatage pour l'instruction or, pas de separateur dans le 1er et le 2e parametre");
-    exit(exit_gc(env, 1));
-  }
-  env->list = env->list->next;
+  is_valid_separator(env, "or", 1, 2);
   if (env->list->type != TYPE_REGISTRE && env->list->type != TYPE_DIRECT && env->list->type != TYPE_INDEX && env->list->type != TYPE_LABEL)
   {
     printf("Erreur de type de parametre pour l'instruction or, parametre 2 : [%s] devrait etre de type registre / DIRECTE 4 / INDIRECT\n", env->list->name);
@@ -379,12 +339,7 @@ int is_valid_or(t_env *env)
   env->list->type = env->list->type == TYPE_DIRECT ? TYPE_DIRECT_4 : env->list->type;
   env->size += get_size(env);
   env->list = env->list->next;
-  if (env->list->type != TYPE_VIRGULE)
-  {
-    printf("Erreur de formatage pour l'instruction or, pas de separateur dans le 2e et le 3e parametre");
-    exit(exit_gc(env, 1));
-  }
-  env->list = env->list->next;
+  is_valid_separator(env, "or", 2, 3);
   if (env->list->type != TYPE_REGISTRE)
   {
     printf("Erreur de type de parametre pour l'instruction or, parametre 3 : [%s] devrait etre de type registre\n", env->list->name);
@@ -412,12 +367,7 @@ int is_valid_xor(t_env *env)
   env->list->type = env->list->type == TYPE_DIRECT ? TYPE_DIRECT_4 : env->list->type;
   env->size += get_size(env);
   env->list = env->list->next;
-  if (env->list->type != TYPE_VIRGULE)
-  {
-    printf("Erreur de formatage pour l'instruction xor, pas de separateur dans le 1er et le 2e parametre");
-    exit(exit_gc(env, 1));
-  }
-  env->list = env->list->next;
+  is_valid_separator(env, "xor", 1, 2);
   if (env->list->type != TYPE_REGISTRE && env->list->type != TYPE_DIRECT && env->list->type != TYPE_INDEX && env->list->type != TYPE_LABEL)
   {
     printf("Erreur de type de parametre pour l'instruction xor, parametre 2 : [%s] devrait etre de type registre / DIRECTE 4 / INDIRECT\n", env->list->name);
@@ -430,12 +380,7 @@ int is_valid_xor(t_env *env)
   env->list->type = env->list->type == TYPE_DIRECT ? TYPE_DIRECT_4 : env->list->type;
   env->size += get_size(env);
   env->list = env->list->next;
-  if (env->list->type != TYPE_VIRGULE)
-  {
-    printf("Erreur de formatage pour l'instruction xor, pas de separateur dans le 2e et le 3e parametre");
-    exit(exit_gc(env, 1));
-  }
-  env->list = env->list->next;
+  is_valid_separator(env, "xor", 2, 3);
   if (env->list->type != TYPE_REGISTRE)
   {
     printf("Erreur de type de parametre pour l'instruction xor, parametre 3 : [%s] devrait etre de type registre\n", env->list->name);
@@ -477,12 +422,7 @@ int is_valid_ldi(t_env *env)
   env->list->type = env->list->type == TYPE_DIRECT ? TYPE_DIRECT_2 : env->list->type;
   env->size += get_size(env);
   env->list = env->list->next;
-  if (env->list->type != TYPE_VIRGULE)
-  {
-    printf("Erreur de formatage pour l'instruction ldi, pas de separateur dans le 1er et le 2e parametre");
-    exit(exit_gc(env, 1));
-  }
-  env->list = env->list->next;
+  is_valid_separator(env, "ldi", 1, 2);
   if (env->list->type != TYPE_DIRECT && env->list->type != TYPE_REGISTRE)
   {
     printf("Erreur de type de parametre pour l'instruction ldi, parametre 2 : [%s] devrait etre de type  DIRECTE 2 / DIRECTE 4 / INDIRECT\n", env->list->name);
@@ -495,12 +435,7 @@ int is_valid_ldi(t_env *env)
   env->list->type = env->list->type == TYPE_DIRECT ? TYPE_DIRECT_2 : env->list->type;
   env->size += get_size(env);
   env->list = env->list->next;
-  if (env->list->type != TYPE_VIRGULE)
-  {
-    printf("Erreur de formatage pour l'instruction ldi, pas de separateur dans le 2e et le 3e parametre");
-    exit(exit_gc(env, 1));
-  }
-  env->list = env->list->next;
+  is_valid_separator(env, "ldi", 2, 3);
   if (env->list->type != TYPE_REGISTRE)
   {
     printf("Erreur de type de parametre pour l'instruction ldi, parametre 3 : [%s] devrait etre de type registre\n", env->list->name);
@@ -525,12 +460,7 @@ int is_valid_sti(t_env *env)
   if (!is_valid_registre(env))
     exit(exit_gc(env, 1));
   env->list = env->list->next;
-  if (env->list->type != TYPE_VIRGULE)
-  {
-    printf("Erreur de formatage pour l'instruction sti, pas de separateur dans le 1er et le 2e parametre");
-    exit(exit_gc(env, 1));
-  }
-  env->list = env->list->next;
+  is_valid_separator(env, "sti", 1, 2);
   if (env->list->type != TYPE_REGISTRE && env->list->type != TYPE_DIRECT && env->list->type != TYPE_INDEX && env->list->type != TYPE_LABEL)
   {
     printf("Erreur de type de parametre pour l'instruction sti, parametre 2 : [%s] devrait etre de type  DIRECTE 2 / DIRECTE 4 / INDIRECT\n", env->list->name);
@@ -543,12 +473,7 @@ int is_valid_sti(t_env *env)
   env->list->type = env->list->type == TYPE_DIRECT ? TYPE_DIRECT_2 : env->list->type;
   env->size += get_size(env);
   env->list = env->list->next;
-  if (env->list->type != TYPE_VIRGULE)
-  {
-    printf("Erreur de formatage pour l'instruction sti, pas de separateur dans le 2e et le 3e parametre");
-    exit(exit_gc(env, 1));
-  }
-  env->list = env->list->next;
+  is_valid_separator(env, "sti", 2, 3);
   if (env->list->type != TYPE_INDEX && env->list->type != TYPE_DIRECT && env->list->type != TYPE_REGISTRE && env->list->type != TYPE_LABEL)
   {
     printf("Erreur de type de parametre pour l'instruction sti, parametre 3 : [%s] devrait etre de type DIRECTE 2 / DIRECTE 4 / INDIRECTE \n", env->list->name);
@@ -617,7 +542,6 @@ int loop_parser(t_env *env)
       exit(exit_gc(env, 1));
     }
     env->list = env->list->next;
-    print_lst(env->label);
   }
   env->list = head;
   return (1);
