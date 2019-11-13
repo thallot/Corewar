@@ -128,6 +128,7 @@ t_gc  *add_list_gc(t_env *env, void *data);
 void  *ft_memalloc_gc(size_t size, t_env *env);
 char	*ft_strdup_gc(const char *s1, t_env *env);
 char	*ft_strjoin_gc(char *s1, char const *s2, t_env *env);
+char	*ft_strndup_gc(t_env *env, const char *s1, size_t n);
 /*
 *********************************** Get_asm.c **********************************
 */

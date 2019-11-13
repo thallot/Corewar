@@ -104,9 +104,14 @@ int main(int argc, char **argv)
 	parsing_file_s(env, argv[1]);
 	if (argc > 1)
 	{
-		if ((env->fd_s = open(argv[1], O_RDONLY)) == -1)
+		if ((env->fd_s = open(argv[1], O_RDONLY)) <= 0)
 		{
 			printf(".S FILE DOES NOT EXIST\n");
+			exit(exit_gc(env, 1));
+		}
+		if (read(env->fd_s, 0, 0)	< 0)
+		{
+			printf("Not a valid file\n");
 			exit(exit_gc(env, 1));
 		}
 		while (get_char(env->fd_s, env->buffer) > 0)
@@ -119,6 +124,11 @@ int main(int argc, char **argv)
 				get_comment(env);
 			if (!is_blank(env->buffer[0]))
 				get_instruction(env);
+		}
+		if (!env->list)
+		{
+			printf("Not a valid file\n");;
+			exit(exit_gc(env, 1));
 		}
 		loop_parser(env);
 		w_header(env);

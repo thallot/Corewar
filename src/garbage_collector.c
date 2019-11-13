@@ -13,6 +13,24 @@
 #include "../include/asm.h"
 #include <stdlib.h>
 
+char	*ft_strndup_gc(t_env *env, const char *s1, size_t n)
+{
+	size_t	i;
+	char	*dest;
+
+	if (!(dest = (char *)malloc(sizeof(*dest) * n + 1)))
+		exit(exit_gc(env, -1));
+	i = 0;
+	while (s1[i] != '\0' && i < n)
+	{
+		dest[i] = s1[i];
+		i++;
+	}
+	dest[i] = '\0';
+    add_list_gc(env, dest);
+	return (dest);
+}
+
 void    del_garbage_collector(t_env *env)
 {
     t_gc *current;
