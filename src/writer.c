@@ -20,7 +20,8 @@ void	check_error(t_env *env, char *name)
 	zap_all(env, 0);
 	if (ft_strcmp(env->list->name, NAME_CMD_STRING))
 	{
-		printf("Le nom du champions n'est pas la 1ere commande\n");
+		printf("Le nom du champions n'est pas la \
+		1ere commande (%s)\n", str);
 		exit(exit_gc(env, 1));
 	}
 	zap_all(env, 0);
