@@ -1,0 +1,116 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: thallot <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/11/13 15:51:15 by thallot           #+#    #+#             */
+/*   Updated: 2019/11/13 15:51:16 by thallot          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../include/asm.h"
+
+int		get_type(t_env *env)
+{
+	int type;
+
+	if (env->buffer[0] == '%')
+		type = TYPE_DIRECT;
+	else if (ft_isdigit(env->buffer[0]))
+		type = TYPE_INDEX;
+	else if (env->buffer[0] == 'r')
+		type = TYPE_REGISTRE;
+	else if (env->buffer[0] == ':')
+		type = TYPE_LABEL;
+	else
+		type = TYPE_UNKNOWN;
+	return (type);
+}
+
+void	add_elem(t_env *env, int type, char *instruction, char last_char)
+{
+	int instruction_type;
+
+	if (last_char == ':')
+	{
+		add_list(&(env->list), instruction, TYPE_LABEL_DEFINITION, env);
+		instruction[ft_strlen(instruction) - 1] = '\0';
+		add_list(&(env->label), instruction, TYPE_LABEL_DEFINITION, env);
+	}
+	else if (instruction)
+	{
+		if ((instruction_type = is_instruction(instruction)))
+			type = instruction_type;
+		else if (ft_isnumber(instruction, 1))
+			type = TYPE_INDEX;
+		add_list(&(env->list), instruction, type, env);
+	}
+	if (env->buffer[0] == ',')
+		add_list(&(env->list), ",", TYPE_VIRGULE, env);
+}
+
+int		is_instruction_next(char *str)
+{
+	if (!ft_strcmp("zjmp", str))
+		return (TYPE_INSTRUCTION_ZJMP);
+	else if (!ft_strcmp("ldi", str))
+		return (TYPE_INSTRUCTION_LDI);
+	else if (!ft_strcmp("sti", str))
+		return (TYPE_INSTRUCTION_STI);
+	else if (!ft_strcmp("fork", str))
+		return (TYPE_INSTRUCTION_FORK);
+	else if (!ft_strcmp("lld", str))
+		return (TYPE_INSTRUCTION_LLD);
+	else if (!ft_strcmp("lldi", str))
+		return (TYPE_INSTRUCTION_LLDI);
+	else if (!ft_strcmp("lfork", str))
+		return (TYPE_INSTRUCTION_LFORK);
+	else if (!ft_strcmp("aff", str))
+		return (TYPE_INSTRUCTION_AFF);
+	return (0);
+}
+
+int		is_instruction(char *str)
+{
+	if (!ft_strcmp("live", str))
+		return (TYPE_INSTRUCTION_LIVE);
+	else if (!ft_strcmp("ld", str))
+		return (TYPE_INSTRUCTION_LD);
+	else if (!ft_strcmp("st", str))
+		return (TYPE_INSTRUCTION_ST);
+	else if (!ft_strcmp("add", str))
+		return (TYPE_INSTRUCTION_ADD);
+	else if (!ft_strcmp("sub", str))
+		return (TYPE_INSTRUCTION_SUB);
+	else if (!ft_strcmp("and", str))
+		return (TYPE_INSTRUCTION_AND);
+	else if (!ft_strcmp("or", str))
+		return (TYPE_INSTRUCTION_OR);
+	else if (!ft_strcmp("xor", str))
+		return (TYPE_INSTRUCTION_XOR);
+	return (is_instruction_next(str));
+}
+
+t_lst	*add_list(t_lst **list, char *name, int type, t_env *env)
+{
+	t_lst *new;
+	t_lst **head;
+
+	head = list;
+	new = (t_lst *)ft_memalloc_gc((sizeof(t_lst)), env);
+	new->name = name;
+	new->type = type;
+	new->next = NULL;
+	if (!(*list))
+		*list = new;
+	else
+	{
+		while ((*list)->next)
+			list = &(*list)->next;
+		(*list)->next = new;
+	}
+	list = head;
+	return (*head);
+}

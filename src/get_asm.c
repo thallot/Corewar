@@ -69,45 +69,6 @@ int		get_comment(t_env *env)
 	return (1);
 }
 
-int		get_type(t_env *env)
-{
-	int type;
-
-	if (env->buffer[0] == '%')
-		type = TYPE_DIRECT;
-	else if (ft_isdigit(env->buffer[0]))
-		type = TYPE_INDEX;
-	else if (env->buffer[0] == 'r')
-		type = TYPE_REGISTRE;
-	else if (env->buffer[0] == ':')
-		type = TYPE_LABEL;
-	else
-		type = TYPE_UNKNOWN;
-	return (type);
-}
-
-void	add_elem(t_env *env, int type, char *instruction, char last_char)
-{
-	int instruction_type;
-
-	if (last_char == ':')
-	{
-		add_list(&(env->list), instruction, TYPE_LABEL_DEFINITION, env);
-		instruction[ft_strlen(instruction) - 1] = '\0';
-		add_list(&(env->label), instruction, TYPE_LABEL_DEFINITION, env);
-	}
-	else if (instruction)
-	{
-		if ((instruction_type = is_instruction(instruction)))
-			type = instruction_type;
-		else if (ft_isnumber(instruction, 1))
-			type = TYPE_INDEX;
-		add_list(&(env->list), instruction, type, env);
-	}
-	if (env->buffer[0] == ',')
-		add_list(&(env->list), ",", TYPE_VIRGULE, env);
-}
-
 int		get_instruction(t_env *env)
 {
 	char	*instruction;

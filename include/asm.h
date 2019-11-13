@@ -184,13 +184,38 @@ void print_error(t_env *env, char *instr, int nb);
 /*
 *********************************** Byte_ope.c *********************************
 */
-void	w_header(t_env *env);
-void w_core(t_env *env);
+int		generate_ocp(t_env *env);
 void    ft_memrev(void *mask, size_t size);
+void	zap_all(t_env *env, int opt);
+int		looking_for_label(t_env *env, char *to_find);
 /*
-*********************************** file_parser.c *********************************
+*********************************** file_parser.c ******************************
 */
 int     parsing_file_s(t_env *env, char *file_path);
+/*
+*********************************** Writer.c ***********************************
+*/
+void	check_error(t_env *env, char *name);
+void	w_header(t_env *env);
+void	write_instr(t_env *env, int *cpt_instr, int *cpt_octet, int octet);
+void	write_param(t_env *env, int *cpt_instr, int octet);
+void	w_core(t_env *env);
+/*
+*********************************** Utils.c ************************************
+*/
+int		get_type(t_env *env);
+void	add_elem(t_env *env, int type, char *instruction, char last_char);
+int		is_instruction_next(char *str);
+int		is_instruction(char *str);
+t_lst	*add_list(t_lst **list, char *name, int type, t_env *env);
+/*
+*********************************** util_parsing.c *****************************
+*/
+int get_size(t_env *env);
+void print_error(t_env *env, char *instr, int nb);
+int is_valid_separator(t_env *env, char *instr, int one, int two);
+int is_valid_param(t_env *env);
+void	is_valid_label_call(t_env *env);
 
 void print_lst(t_lst *list);
 #endif

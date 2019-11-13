@@ -6,33 +6,11 @@
 /*   By: thallot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 11:05:30 by thallot           #+#    #+#             */
-/*   Updated: 2019/11/13 14:45:23 by thallot          ###   ########.fr       */
+/*   Updated: 2019/11/13 15:54:05 by thallot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/asm.h"
-
-t_lst	*add_list(t_lst **list, char *name, int type, t_env *env)
-{
-	t_lst *new;
-	t_lst **head;
-
-	head = list;
-	new = (t_lst *)ft_memalloc_gc((sizeof(t_lst)), env);
-	new->name = name;
-	new->type = type;
-	new->next = NULL;
-	if (!(*list))
-		*list = new;
-	else
-	{
-		while ((*list)->next)
-			list = &(*list)->next;
-		(*list)->next = new;
-	}
-	list = head;
-	return (*head);
-}
 
 int		is_blank(char c)
 {
@@ -40,48 +18,6 @@ int		is_blank(char c)
 	|| c == '\f' | c == '\0')
 		return (1);
 	return (0);
-}
-
-int		is_instruction_next(char *str)
-{
-	if (!ft_strcmp("zjmp", str))
-		return (TYPE_INSTRUCTION_ZJMP);
-	else if (!ft_strcmp("ldi", str))
-		return (TYPE_INSTRUCTION_LDI);
-	else if (!ft_strcmp("sti", str))
-		return (TYPE_INSTRUCTION_STI);
-	else if (!ft_strcmp("fork", str))
-		return (TYPE_INSTRUCTION_FORK);
-	else if (!ft_strcmp("lld", str))
-		return (TYPE_INSTRUCTION_LLD);
-	else if (!ft_strcmp("lldi", str))
-		return (TYPE_INSTRUCTION_LLDI);
-	else if (!ft_strcmp("lfork", str))
-		return (TYPE_INSTRUCTION_LFORK);
-	else if (!ft_strcmp("aff", str))
-		return (TYPE_INSTRUCTION_AFF);
-	return (0);
-}
-
-int		is_instruction(char *str)
-{
-	if (!ft_strcmp("live", str))
-		return (TYPE_INSTRUCTION_LIVE);
-	else if (!ft_strcmp("ld", str))
-		return (TYPE_INSTRUCTION_LD);
-	else if (!ft_strcmp("st", str))
-		return (TYPE_INSTRUCTION_ST);
-	else if (!ft_strcmp("add", str))
-		return (TYPE_INSTRUCTION_ADD);
-	else if (!ft_strcmp("sub", str))
-		return (TYPE_INSTRUCTION_SUB);
-	else if (!ft_strcmp("and", str))
-		return (TYPE_INSTRUCTION_AND);
-	else if (!ft_strcmp("or", str))
-		return (TYPE_INSTRUCTION_OR);
-	else if (!ft_strcmp("xor", str))
-		return (TYPE_INSTRUCTION_XOR);
-	return (is_instruction_next(str));
 }
 
 int		is_separator(char c)
