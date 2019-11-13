@@ -29,7 +29,8 @@ void	check_error(t_env *env, char *name)
 	env->list = env->list->next;
 	if (ft_strcmp(env->list->name, COMMENT_CMD_STRING))
 	{
-		printf("Le commentaire du champions est mal placé (%s)\n", str);
+		printf("Le commentaire du champions n'est pas \
+		la 2e commande (%s)\n", str);
 		exit(exit_gc(env, 1));
 	}
 	zap_all(env, 0);
