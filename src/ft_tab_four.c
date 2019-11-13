@@ -6,7 +6,7 @@
 /*   By: edillenb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 15:08:43 by edillenb          #+#    #+#             */
-/*   Updated: 2019/11/13 15:17:18 by edillenb         ###   ########.fr       */
+/*   Updated: 2019/11/13 17:27:10 by edillenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 ** Verifie si l'instruction fork possede les bons parametres,
 ** et en bon nombre
 */
+
 void	is_valid_fork(t_env *env)
 {
 	env->size += T_INSTRUCTION;
@@ -31,6 +32,7 @@ void	is_valid_fork(t_env *env)
 ** Verifie si l'instruction aff possede les bons parametres,
 ** et en bon nombre
 */
+
 void	is_valid_aff(t_env *env)
 {
 	env->size += T_INSTRUCTION + T_OCP;
@@ -45,6 +47,7 @@ void	is_valid_aff(t_env *env)
 ** Verifie si l'instruction lfork possede les bons parametres,
 ** et en bon nombre
 */
+
 void	is_valid_lfork(t_env *env)
 {
 	env->size += T_INSTRUCTION;
@@ -61,6 +64,7 @@ void	is_valid_lfork(t_env *env)
 ** Verifie si l'instruction lldi possede les bons parametres,
 ** et en bon nombre
 */
+
 void	is_valid_lldi(t_env *env)
 {
 	env->size += T_INSTRUCTION + T_OCP;
@@ -93,6 +97,7 @@ void	is_valid_lldi(t_env *env)
 ** Verifie si l'instruction lld possede les bons parametres,
 ** et en bon nombre
 */
+
 void	is_valid_lld(t_env *env)
 {
 	env->size += T_INSTRUCTION + T_OCP;

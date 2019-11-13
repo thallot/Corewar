@@ -13,9 +13,10 @@
 #include "../include/asm.h"
 
 /*
-** Parse les premiers elements de notre liste issue du lexeur et verifie que 
+** Parse les premiers elements de notre liste issue du lexeur et verifie que
 ** les informations liées au header son correctes
 */
+
 void	check_error(t_env *env, char *name)
 {
 	char *str;
@@ -46,6 +47,7 @@ void	check_error(t_env *env, char *name)
 ** Crée le fichier .cor et ecrit les éléments correspondant au header
 ** dans le fichier créé
 */
+
 void	w_header(t_env *env)
 {
 	int		magic;
@@ -71,9 +73,10 @@ void	w_header(t_env *env)
 }
 
 /*
-** Ecrit en memoire dans le fichier .cor l'instruction rencontrée  
+** Ecrit en memoire dans le fichier .cor l'instruction rencontrée
 ** et si nécessaire écrit également à la suite son OCP (byte d'encodage)
 */
+
 void	write_instr(t_env *env, int *cpt_instr, int *cpt_octet, int octet)
 {
 	int ocp;
@@ -97,6 +100,7 @@ void	write_instr(t_env *env, int *cpt_instr, int *cpt_octet, int octet)
 ** sont fournis en arg: le cpt_instr (idx de l'instru dont depend le param)
 ** ainsi que la taille en memoire en octet du param
 */
+
 void	write_param(t_env *env, int *cpt_instr, int octet)
 {
 	int label_index;
@@ -130,6 +134,7 @@ void	write_param(t_env *env, int *cpt_instr, int octet)
 ** On itere notre liste issue du lexeur et on ecrit a l'aide des fonctions
 ** ci-dessus les elements un à un dans le fichier .cor
 */
+
 void	w_core(t_env *env)
 {
 	int cpt_octet;

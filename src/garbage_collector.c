@@ -16,6 +16,7 @@
 /*
 ** Traverse la liste garbage collector et libere tous les nodes
 */
+
 void	del_garbage_collector(t_env *env)
 {
 	t_gc *current;
@@ -37,6 +38,7 @@ void	del_garbage_collector(t_env *env)
 ** Fonction a appeler dans tout appel à exit()
 ** Libere le garbage collector ainsi que la structure d'environnement
 */
+
 int		exit_gc(t_env *env, int ret)
 {
 	if (ret == -1)
@@ -50,6 +52,7 @@ int		exit_gc(t_env *env, int ret)
 ** Ajoute un maillon a la liste garbage collector
 ** Stock le pointeur sur une zone memoire fraichement alloue dans le node
 */
+
 t_gc	*add_list_gc(t_env *env, void *data)
 {
 	t_gc *new;

@@ -17,6 +17,7 @@
 ** copie d'un memalloc classique + exit proprement en cas d'echec malloc
 ** + ajoute le pointeur malloc au garbage collector
 */
+
 void	*ft_memalloc_gc(size_t size, t_env *env)
 {
 	char *ptr;
@@ -32,6 +33,7 @@ void	*ft_memalloc_gc(size_t size, t_env *env)
 ** copie d'un strdup classique + exit proprement en cas d'echec malloc
 ** + ajoute le pointeur malloc au garbage collector
 */
+
 char	*ft_strdup_gc(const char *s1, t_env *env)
 {
 	int		i;
@@ -54,6 +56,7 @@ char	*ft_strdup_gc(const char *s1, t_env *env)
 ** copie d'un strjoin classique + exit proprement en cas d'echec malloc
 ** + ajoute le pointeur malloc au garbage collector
 */
+
 char	*ft_strjoin_gc(char *s1, char const *s2, t_env *env)
 {
 	char	*str;
@@ -83,6 +86,7 @@ char	*ft_strjoin_gc(char *s1, char const *s2, t_env *env)
 ** copie d'un strndup classique + exit proprement en cas d'echec malloc
 ** + ajoute le pointeur malloc au garbage collector
 */
+
 char	*ft_strndup_gc(t_env *env, const char *s1, size_t n)
 {
 	size_t	i;

@@ -16,6 +16,7 @@
 ** Retourne le type d'un element du lexeur en fonction de
 ** son premier caractere
 */
+
 int		get_type(t_env *env)
 {
 	int type;
@@ -37,6 +38,7 @@ int		get_type(t_env *env)
 ** Ajoute un element dans la liste du lexeur,
 ** avec son type et sa valeur (name)
 */
+
 void	add_elem(t_env *env, int type, char *instruction, char last_char)
 {
 	int instruction_type;
@@ -63,6 +65,7 @@ void	add_elem(t_env *env, int type, char *instruction, char last_char)
 ** Return le type d'instruction en fonction de la string passée
 ** en paramètre
 */
+
 int		is_instruction(char *str)
 {
 	if (!ft_strcmp("live", str))
@@ -87,6 +90,7 @@ int		is_instruction(char *str)
 /*
 ** Suite de la fonction ci-dessus
 */
+
 int		is_instruction_next(char *str)
 {
 	if (!ft_strcmp("zjmp", str))
@@ -112,6 +116,7 @@ int		is_instruction_next(char *str)
 ** Ajoute un nouvel élément à la liste du lexeur,
 ** y stocke la chaine de caractères passée en paramètre
 */
+
 t_lst	*add_list(t_lst **list, char *name, int type, t_env *env)
 {
 	t_lst *new;

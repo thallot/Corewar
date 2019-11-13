@@ -15,6 +15,7 @@
 /*
 ** Identifie le charactere comme etant un whitespace
 */
+
 int		is_blank(char c)
 {
 	if (c == ' ' || c == '\t' || c == '\n' || c == '\r'
@@ -26,6 +27,7 @@ int		is_blank(char c)
 /*
 ** Identifie un charactere comme etant un separateur valide (',')
 */
+
 int		is_separator(char c)
 {
 	if (c == ',')
@@ -36,6 +38,7 @@ int		is_separator(char c)
 /*
 ** Fonction de debug, permet d'imprimer une liste (lexeur ou label)
 */
+
 void	print_lst(t_lst *list)
 {
 	while (list)
@@ -51,6 +54,7 @@ void	print_lst(t_lst *list)
 ** OPT == 0 -> 1 seul param, fichier en param s'ouvre et readable
 ** OPT != 0 -> on a ajouté au moins un element au lexeur
 */
+
 void	check_error_main(t_env *env, int argc, char **argv, int opt)
 {
 	if (opt == 0)
@@ -85,6 +89,7 @@ void	check_error_main(t_env *env, int argc, char **argv, int opt)
 ** Appel la boucle de parsing
 ** Puis les boucles d'ecriture
 */
+
 int		main(int argc, char **argv)
 {
 	t_env *env;

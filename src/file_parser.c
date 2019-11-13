@@ -17,6 +17,7 @@
 ** Si le fichier n'est pas un .s valide la fonction exit
 ** Sinon le nom est stocké dans env->file_name
 */
+
 int		parsing_file_s(t_env *env, char *file_path)
 {
 	char	*dot_s;

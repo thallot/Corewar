@@ -6,7 +6,7 @@
 /*   By: thallot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 15:44:29 by thallot           #+#    #+#             */
-/*   Updated: 2019/11/13 14:37:27 by edillenb         ###   ########.fr       */
+/*   Updated: 2019/11/13 17:49:14 by edillenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,43 +79,42 @@
 # define PROG_NAME_LENGTH (128)
 # define COMMENT_LENGTH (2048)
 # define COREWAR_EXEC_MAGIC 0xea83f3
-typedef char	t_arg_type;
 
-typedef struct      s_gc
-{
-  void        *data;
-  struct s_gc *next;
-}                   t_gc;
+typedef char			t_arg_type;
 
-typedef struct				s_lst
+typedef struct			s_gc
 {
-	int 			type;
+	void			*data;
+	struct s_gc		*next;
+}						t_gc;
+
+typedef struct			s_lst
+{
+	int				type;
 	char			*name;
 	struct s_lst	*next;
-}							t_lst;
+}						t_lst;
 
-typedef struct   s_env
+typedef struct			s_env
 {
-  int   fd_s;
-  int   fd_cor;
-  char  *file_name;
-	char buffer[2];
-	t_lst *list;
-  t_lst *label;
-  t_gc  *garbage_collector;
-  void (*parsing[28]) (struct s_env *env);
-  int size;
-}                t_env;
+	int				fd_s;
+	int				fd_cor;
+	char			*file_name;
+	char			buffer[2];
+	t_lst			*list;
+	t_lst			*label;
+	t_gc			*garbage_collector;
+	void			(*parsing[28]) (struct s_env *env);
+	int size;
+}						t_env;
 
-
-typedef struct		header_s
+typedef struct			header_s
 {
-  unsigned int		magic;
-  char				prog_name[PROG_NAME_LENGTH + 1];
-  unsigned int		prog_size;
-  char				comment[COMMENT_LENGTH + 1];
-}					header_t;
-
+	unsigned int	magic;
+	char			prog_name[PROG_NAME_LENGTH + 1];
+	unsigned int	prog_size;
+	char			comment[COMMENT_LENGTH + 1];
+}						header_t;
 
 /*
 *********************************** garbage_collector.c ************************
@@ -165,33 +164,32 @@ void	is_valid_and(t_env *env);
 void	is_valid_live(t_env *env);
 void	is_valid_ld(t_env *env);
 void	is_valid_st(t_env *env);
-void  is_valid_or(t_env *env);
-void  is_valid_xor(t_env *env);
-void  is_valid_zjmp(t_env *env);
-void  is_valid_ldi(t_env *env);
-void  is_valid_sti(t_env *env);
-void  is_valid_fork(t_env *env);
+void	is_valid_or(t_env *env);
+void	is_valid_xor(t_env *env);
+void	is_valid_zjmp(t_env *env);
+void	is_valid_ldi(t_env *env);
+void	is_valid_sti(t_env *env);
+void	is_valid_fork(t_env *env);
 void	is_valid_lld(t_env *env);
 void	is_valid_lldi(t_env *env);
 void	is_valid_lfork(t_env *env);
 void	is_valid_aff(t_env *env);
 void	is_valid_label_call(t_env *env);
 void	is_valid_label_definition(t_env *env);
-
-int  is_valid_separator(t_env *env, char *instr, int one, int two);
-int  is_valid_param(t_env *env);
-void print_error(t_env *env, char *instr, int nb);
+int		is_valid_separator(t_env *env, char *instr, int one, int two);
+int		is_valid_param(t_env *env);
+void	print_error(t_env *env, char *instr, int nb);
 /*
 *********************************** Byte_ope.c *********************************
 */
 int		generate_ocp(t_env *env);
-void  ft_memrev(void *mask, size_t size);
+void	ft_memrev(void *mask, size_t size);
 void	zap_all(t_env *env, int opt);
 int		looking_for_label(t_env *env, char *to_find);
 /*
 *********************************** file_parser.c ******************************
 */
-int     parsing_file_s(t_env *env, char *file_path);
+int		parsing_file_s(t_env *env, char *file_path);
 /*
 *********************************** Writer.c ***********************************
 */
@@ -211,10 +209,10 @@ t_lst	*add_list(t_lst **list, char *name, int type, t_env *env);
 /*
 *********************************** util_parsing.c *****************************
 */
-int get_size(t_env *env);
-void print_error(t_env *env, char *instr, int nb);
-int is_valid_separator(t_env *env, char *instr, int one, int two);
-int is_valid_param(t_env *env);
+int		get_size(t_env *env);
+void	print_error(t_env *env, char *instr, int nb);
+int		is_valid_separator(t_env *env, char *instr, int one, int two);
+int		is_valid_param(t_env *env);
 void	is_valid_label_call(t_env *env);
 
 void print_lst(t_lst *list);
