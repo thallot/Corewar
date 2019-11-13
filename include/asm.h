@@ -166,6 +166,7 @@ int is_valid_aff(t_env *env);
 int is_valid_label_call(t_env *env);
 
 int is_valid_separator(t_env *env, char *instr, int one, int two);
+int is_valid_param(t_env *env);
 /*
 *********************************** Byte_ope.c *********************************
 */
