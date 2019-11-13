@@ -6,7 +6,7 @@
 #    By: thallot <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/27 16:42:47 by edillenb          #+#    #+#              #
-#    Updated: 2019/11/04 15:11:36 by thallot          ###   ########.fr        #
+#    Updated: 2019/11/13 14:11:20 by edillenb         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,8 @@ LIBFT = libft/libft.a
 OBJDIR = obj
 SRCDIR = src
 
-SC = $(addsuffix .c, main get_asm garbage_collector parsing parsing_elio byte_ope file_parser)
+SC = $(addsuffix .c, main get_asm garbage_collector parsing is_valid_instru_one\
+	byte_ope file_parser gc_functions)
 
 SRCS = $(addprefix $(SRCDIR)/, $(SC))
 OBJS = $(addprefix $(OBJDIR)/, $(SC:.c=.o))

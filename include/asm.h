@@ -6,7 +6,7 @@
 /*   By: thallot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 15:44:29 by thallot           #+#    #+#             */
-/*   Updated: 2019/11/04 15:44:30 by thallot          ###   ########.fr       */
+/*   Updated: 2019/11/13 14:37:27 by edillenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,6 @@
 # define COREWAR_EXEC_MAGIC 0xea83f3
 typedef char	t_arg_type;
 
-
-
 typedef struct      s_gc
 {
   void        *data;
@@ -105,7 +103,7 @@ typedef struct   s_env
 	t_lst *list;
   t_lst *label;
   t_gc  *garbage_collector;
-  int (*parsing[28]) (struct s_env *env);
+  void (*parsing[28]) (struct s_env *env);
   int size;
 }                t_env;
 
@@ -120,50 +118,53 @@ typedef struct		header_s
 
 
 /*
-*********************************** garbage_collector.c **********************************
+*********************************** garbage_collector.c ************************
 */
-void  del_garbage_collector(t_env *env);
-int   exit_gc(t_env *env, int ret);
-t_gc  *add_list_gc(t_env *env, void *data);
-void  *ft_memalloc_gc(size_t size, t_env *env);
+void	del_garbage_collector(t_env *env);
+int		exit_gc(t_env *env, int ret);
+t_gc	*add_list_gc(t_env *env, void *data);
+/*
+*********************************** gc_functions.c *****************************
+*/
+void	*ft_memalloc_gc(size_t size, t_env *env);
 char	*ft_strdup_gc(const char *s1, t_env *env);
 char	*ft_strjoin_gc(char *s1, char const *s2, t_env *env);
 /*
 *********************************** Get_asm.c **********************************
 */
-int get_command(t_env *env);
-int get_str(t_env *env);
-int get_comment(t_env *env);
-int get_instruction(t_env *env);
-int get_char(int fd, char *buffer);
+int		get_command(t_env *env);
+int		get_str(t_env *env);
+int		get_comment(t_env *env);
+int		get_instruction(t_env *env);
+int		get_char(int fd, char *buffer);
 /*
 *********************************** Main.c *************************************
 */
 t_lst	*add_list(t_lst **list, char *name, int type, t_env *env);
 char	*strjoinfree_gc(char *s1, char *s2, int opt, t_env *env);
-int is_blank(char c);
-int is_instruction(char *str);
-int is_separator(char c);
+int		is_blank(char c);
+int		is_instruction(char *str);
+int		is_separator(char c);
 /*
 *********************************** Tableau de fonctions ***********************
 */
-int loop_parser(t_env *env);
-int get_size(t_env *env);
+int		loop_parser(t_env *env);
+int		get_size(t_env *env);
 /*
 *********************************** Tableau de fonctions ***********************
 */
-int is_valid_command(t_env *env);
-int is_valid_str(t_env *env);
-int is_valid_label(t_env *env);
-int is_valid_registre(t_env *env);
-int is_valid_live(t_env *env);
-int is_valid_ld(t_env *env);
-int is_valid_st(t_env *env);
-int is_valid_lld(t_env *env);
-int is_valid_lldi(t_env *env);
-int is_valid_lfork(t_env *env);
-int is_valid_aff(t_env *env);
-int is_valid_label_call(t_env *env);
+void	is_valid_command(t_env *env);
+void	is_valid_str(t_env *env);
+void	is_valid_label(t_env *env);
+void	is_valid_registre(t_env *env);
+void	is_valid_live(t_env *env);
+void	is_valid_ld(t_env *env);
+void	is_valid_st(t_env *env);
+void	is_valid_lld(t_env *env);
+void	is_valid_lldi(t_env *env);
+void	is_valid_lfork(t_env *env);
+void	is_valid_aff(t_env *env);
+void	is_valid_label_call(t_env *env);
 
 int is_valid_separator(t_env *env, char *instr, int one, int two);
 int is_valid_param(t_env *env);

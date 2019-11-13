@@ -127,9 +127,3 @@ int main(int argc, char **argv)
 	}
   return (exit_gc(env, 0));
 }
-
-// int my_destructor(void) __attribute__((destructor));
-// int my_destructor(void) /* This function is called after main() */
-// {                       /* completes or after exit() is called. */
-//     while (2) ;
-// }
