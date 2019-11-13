@@ -12,6 +12,11 @@
 
 #include "../include/asm.h"
 
+/*
+** Parse le fichier ouvert par l'assembler
+** Si le fichier n'est pas un .s valide la fonction exit
+** Sinon le resultat est stocké dans env->file_name
+*/
 int		parsing_file_s(t_env *env, char *file_path)
 {
 	char	*dot_s;

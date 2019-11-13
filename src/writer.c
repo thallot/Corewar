@@ -12,6 +12,10 @@
 
 #include "../include/asm.h"
 
+/*
+** Verifie que les 2 premiere lignes (Hors commentaire)
+** Sont le nom du champions, puis son commentaire
+*/
 void	check_error(t_env *env, char *name)
 {
 	char *str;
@@ -38,6 +42,10 @@ void	check_error(t_env *env, char *name)
 	env->list = env->list->next;
 }
 
+/*
+** Cree un fichier.cor ou reinitialise l'ancien s'il existe deja
+** Puis ecris le Header en bytecode
+*/
 void	w_header(t_env *env)
 {
 	int		magic;
@@ -62,6 +70,10 @@ void	w_header(t_env *env)
 	env->list = env->list->next;
 }
 
+/*
+** Ecris une instruction, et son OCP si elle en a en bytecode
+** dans le fichier .cor
+*/
 void	write_instr(t_env *env, int *cpt_instr, int *cpt_octet, int octet)
 {
 	int ocp;
@@ -80,6 +92,11 @@ void	write_instr(t_env *env, int *cpt_instr, int *cpt_octet, int octet)
 	}
 }
 
+/*
+** Ecris le parametre en bytecode dans le fichier .cor
+** Si le parametre est l'adresse d'un label,
+** ecris la distance entre le label et le PC de l'instruction courante
+*/
 void	write_param(t_env *env, int *cpt_instr, int octet)
 {
 	int label_index;
@@ -108,6 +125,9 @@ void	write_param(t_env *env, int *cpt_instr, int octet)
 	write(env->fd_cor, &op, octet);
 }
 
+/*
+** Ecris le fichier .s en bytecode (Sans le header)
+*/
 void	w_core(t_env *env)
 {
 	int cpt_octet;

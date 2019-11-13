@@ -12,6 +12,9 @@
 
 #include "../include/asm.h"
 
+/*
+** Verifie si la commande est valide (nom ou commentaire)
+*/
 void	is_valid_command(t_env *env)
 {
 	if (!ft_strcmp(env->list->name, NAME_CMD_STRING)
@@ -21,6 +24,10 @@ void	is_valid_command(t_env *env)
 	exit(exit_gc(env, 1));
 }
 
+/*
+** Verifie si la chaine de caractere commence,
+** et finis par le caractere "
+*/
 void	is_valid_str(t_env *env)
 {
 	int		size;
@@ -39,6 +46,10 @@ void	is_valid_str(t_env *env)
 	exit(exit_gc(env, 1));
 }
 
+/*
+** Verifie que le label est composé uniquement de caractere
+** disponible dans LABEL_CHARS, et que le label existe
+*/
 void	is_valid_label_definition(t_env *env)
 {
 	int		i;
@@ -67,6 +78,9 @@ void	is_valid_label_definition(t_env *env)
 	}
 }
 
+/*
+** Verifie que le registre est compris entre 0 et 16
+*/
 void	is_valid_registre(t_env *env)
 {
 	int i;
@@ -78,6 +92,10 @@ void	is_valid_registre(t_env *env)
 	exit(exit_gc(env, 1));
 }
 
+/*
+** Verifie si l'instruction live possede les bons parametres,
+** et en bon nombre
+*/
 void	is_valid_live(t_env *env)
 {
 	env->size += T_INSTRUCTION;

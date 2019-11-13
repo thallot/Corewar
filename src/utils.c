@@ -12,6 +12,9 @@
 
 #include "../include/asm.h"
 
+/*
+** Retourne le type d'un element en fonction de son premier caractere
+*/
 int		get_type(t_env *env)
 {
 	int type;
@@ -29,6 +32,10 @@ int		get_type(t_env *env)
 	return (type);
 }
 
+/*
+** Ajoute un element dans la liste du lexeur,
+** avec son type et sa valeur (name)
+*/
 void	add_elem(t_env *env, int type, char *instruction, char last_char)
 {
 	int instruction_type;

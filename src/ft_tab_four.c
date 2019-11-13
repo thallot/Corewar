@@ -12,6 +12,10 @@
 
 #include "../include/asm.h"
 
+/*
+** Verifie si l'instruction fork possede les bons parametres,
+** et en bon nombre
+*/
 void	is_valid_fork(t_env *env)
 {
 	env->size += T_INSTRUCTION;
@@ -23,6 +27,10 @@ void	is_valid_fork(t_env *env)
 	env->size += get_size(env);
 }
 
+/*
+** Verifie si l'instruction aff possede les bons parametres,
+** et en bon nombre
+*/
 void	is_valid_aff(t_env *env)
 {
 	env->size += T_INSTRUCTION + T_OCP;
@@ -33,6 +41,10 @@ void	is_valid_aff(t_env *env)
 	is_valid_param(env);
 }
 
+/*
+** Verifie si l'instruction lfork possede les bons parametres,
+** et en bon nombre
+*/
 void	is_valid_lfork(t_env *env)
 {
 	env->size += T_INSTRUCTION;
@@ -45,6 +57,10 @@ void	is_valid_lfork(t_env *env)
 	env->size += get_size(env);
 }
 
+/*
+** Verifie si l'instruction lldi possede les bons parametres,
+** et en bon nombre
+*/
 void	is_valid_lldi(t_env *env)
 {
 	env->size += T_INSTRUCTION + T_OCP;
@@ -73,6 +89,10 @@ void	is_valid_lldi(t_env *env)
 	is_valid_param(env);
 }
 
+/*
+** Verifie si l'instruction lld possede les bons parametres,
+** et en bon nombre
+*/
 void	is_valid_lld(t_env *env)
 {
 	env->size += T_INSTRUCTION + T_OCP;
