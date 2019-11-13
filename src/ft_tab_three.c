@@ -12,6 +12,9 @@
 
 #include "../include/asm.h"
 
+/*
+** Verifie si l'instruction OR et ses parametres sont valides
+*/
 void	is_valid_or(t_env *env)
 {
 	env->size += T_INSTRUCTION + T_OCP;
@@ -40,6 +43,9 @@ void	is_valid_or(t_env *env)
 	is_valid_param(env);
 }
 
+/*
+** Verifie si l'instruction XOR et ses parametres sont valides
+*/
 void	is_valid_xor(t_env *env)
 {
 	env->size += T_INSTRUCTION + T_OCP;
@@ -68,6 +74,9 @@ void	is_valid_xor(t_env *env)
 	is_valid_param(env);
 }
 
+/*
+** Verifie si l'instruction ZJMP et ses parametres sont valides
+*/
 void	is_valid_zjmp(t_env *env)
 {
 	env->size += T_INSTRUCTION;
@@ -79,6 +88,9 @@ void	is_valid_zjmp(t_env *env)
 	env->size += get_size(env);
 }
 
+/*
+** Verifie si l'instruction LDI et ses parametres sont valides
+*/
 void	is_valid_ldi(t_env *env)
 {
 	env->size += T_INSTRUCTION + T_OCP;
@@ -106,6 +118,9 @@ void	is_valid_ldi(t_env *env)
 	is_valid_param(env);
 }
 
+/*
+** Verifie si l'instruction STI et ses parametres sont valides
+*/
 void	is_valid_sti(t_env *env)
 {
 	env->size += T_INSTRUCTION + T_OCP;

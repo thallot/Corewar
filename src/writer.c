@@ -13,7 +13,7 @@
 #include "../include/asm.h"
 
 /*
-** Parse les premiers elements de notre liste issue du lexeur et verifi que 
+** Parse les premiers elements de notre liste issue du lexeur et verifie que 
 ** les informations liées au header son correctes
 */
 void	check_error(t_env *env, char *name)
@@ -94,7 +94,7 @@ void	write_instr(t_env *env, int *cpt_instr, int *cpt_octet, int octet)
 
 /*
 ** Ecrit en memoire dans le fichier .s un element de type parametre
-** sont fournis en arg: le cpt_instr (idx de l'instruction dont depend le param)
+** sont fournis en arg: le cpt_instr (idx de l'instru dont depend le param)
 ** ainsi que la taille en memoire en octet du param
 */
 void	write_param(t_env *env, int *cpt_instr, int octet)

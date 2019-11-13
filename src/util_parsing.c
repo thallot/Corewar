@@ -12,6 +12,11 @@
 
 #include "../include/asm.h"
 
+/*
+** Return la taille en octet de l'element actuellement pointé
+** par le pointeur sur liste du lexeur (env->list)
+** Gestion d'erreur si l'element n'est pas de type parametre 
+*/
 int		get_size(t_env *env)
 {
 	if (env->list->type == TYPE_REGISTRE
@@ -30,6 +35,11 @@ int		get_size(t_env *env)
 	exit(exit_gc(env, 1));
 }
 
+/*
+** Affiche sur la sortie standard un message d'erreur correspondant a
+** l'erreur rencontrée
+** Exit ensuite le programme proprement 
+*/
 void	print_error(t_env *env, char *instr, int nb)
 {
 	printf("Erreur de type de parametre pour l'instruction %s, \
@@ -37,6 +47,10 @@ void	print_error(t_env *env, char *instr, int nb)
 	exit(exit_gc(env, 1));
 }
 
+/*
+** Idenfifie l'element comment etant le separateur ','
+** si l'element ne correspond pas, exit le programme proprement
+*/
 int		is_valid_separator(t_env *env, char *instr, int one, int two)
 {
 	if (env->list->type != TYPE_VIRGULE)
@@ -49,6 +63,10 @@ int		is_valid_separator(t_env *env, char *instr, int one, int two)
 	return (1);
 }
 
+/*
+** Verifie la validite de l'element dans le cas d'un DIRECT (label) ||
+** INDIRECT (label) || REGISTRE
+*/
 int		is_valid_param(t_env *env)
 {
 	if (((env->list->type == TYPE_DIRECT
@@ -59,6 +77,11 @@ int		is_valid_param(t_env *env)
 	return (1);
 }
 
+/*
+** Verifie si l'element DIRECT (label) || INDIRECT (label)
+** fait reference a un label existant parmis la liste de label
+** identifiée précédemment, en cas d'erreur, exit proprement
+*/
 void	is_valid_label_call(t_env *env)
 {
 	int		i;

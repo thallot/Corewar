@@ -13,6 +13,9 @@
 #include "../include/asm.h"
 #include <stdlib.h>
 
+/*
+** Traverse la liste garbage collector et libere tous les nodes
+*/
 void	del_garbage_collector(t_env *env)
 {
 	t_gc *current;
@@ -30,6 +33,10 @@ void	del_garbage_collector(t_env *env)
 	}
 }
 
+/*
+** Fonction a appeler dans tout appel à exit()
+** Libere le garbage collector ainsi que la structure d'environnement
+*/
 int		exit_gc(t_env *env, int ret)
 {
 	if (ret == -1)
@@ -39,6 +46,10 @@ int		exit_gc(t_env *env, int ret)
 	return (ret);
 }
 
+/*
+** Ajoute un maillon a la liste garbage collector
+** Stock le pointeur sur une zone memoire fraichement alloue dans le node
+*/
 t_gc	*add_list_gc(t_env *env, void *data)
 {
 	t_gc *new;
@@ -48,11 +59,11 @@ t_gc	*add_list_gc(t_env *env, void *data)
 	new->data = data;
 	new->next = NULL;
 	if (!(env->garbage_collector))
-		*(&(env->garbage_collector)) = new;
+		env->garbage_collector = new;
 	else
 	{
 		new->next = env->garbage_collector;
-		*(&(env->garbage_collector)) = new;
+		env->garbage_collector = new;
 	}
 	return (env->garbage_collector);
 }

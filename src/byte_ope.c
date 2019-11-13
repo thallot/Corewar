@@ -20,6 +20,9 @@
 #include <stdio.h>
 #include "../include/asm.h"
 
+/*
+** Reverse les bytes d'une variable
+*/
 void	ft_memrev(void *mask, size_t size)
 {
 	size_t	i;
@@ -40,6 +43,10 @@ void	ft_memrev(void *mask, size_t size)
 	}
 }
 
+/*
+** Skip Comment with opt = 0
+** Skip Comment and separator and label definition with opt != 0
+*/
 void	zap_all(t_env *env, int opt)
 {
 	if (opt == 0)
@@ -56,6 +63,11 @@ void	zap_all(t_env *env, int opt)
 	}
 }
 
+/*
+** Boucle qui effectue un | binaire sur l'int OCP,
+** en fonction du parametre de env->list
+** Return l'OCP
+*/
 int		loop_ocp(t_env *env, int offset)
 {
 	int i;
@@ -83,6 +95,9 @@ int		loop_ocp(t_env *env, int offset)
 	return (ocp);
 }
 
+/*
+** Genere un OCP en fonction des parametre de l'instruction
+*/
 int		generate_ocp(t_env *env)
 {
 	t_lst	*head;
@@ -104,6 +119,10 @@ int		generate_ocp(t_env *env)
 	return (ocp);
 }
 
+/*
+** Recherche un label dans la liste de label,
+** et retourne son index (en octet)
+*/
 int		looking_for_label(t_env *env, char *to_find)
 {
 	t_lst *current;

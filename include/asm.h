@@ -178,14 +178,14 @@ void	is_valid_aff(t_env *env);
 void	is_valid_label_call(t_env *env);
 void	is_valid_label_definition(t_env *env);
 
-int is_valid_separator(t_env *env, char *instr, int one, int two);
-int is_valid_param(t_env *env);
+int  is_valid_separator(t_env *env, char *instr, int one, int two);
+int  is_valid_param(t_env *env);
 void print_error(t_env *env, char *instr, int nb);
 /*
 *********************************** Byte_ope.c *********************************
 */
 int		generate_ocp(t_env *env);
-void    ft_memrev(void *mask, size_t size);
+void  ft_memrev(void *mask, size_t size);
 void	zap_all(t_env *env, int opt);
 int		looking_for_label(t_env *env, char *to_find);
 /*

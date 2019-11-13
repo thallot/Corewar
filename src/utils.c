@@ -13,7 +13,8 @@
 #include "../include/asm.h"
 
 /*
-** Retourne le type du parametre actuellement present dans le buffer
+** Retourne le type d'un element du lexeur en fonction de
+** son premier caractere
 */
 int		get_type(t_env *env)
 {
@@ -33,7 +34,8 @@ int		get_type(t_env *env)
 }
 
 /*
-**
+** Ajoute un element dans la liste du lexeur,
+** avec son type et sa valeur (name)
 */
 void	add_elem(t_env *env, int type, char *instruction, char last_char)
 {
@@ -57,27 +59,10 @@ void	add_elem(t_env *env, int type, char *instruction, char last_char)
 		add_list(&(env->list), ",", TYPE_VIRGULE, env);
 }
 
-int		is_instruction_next(char *str)
-{
-	if (!ft_strcmp("zjmp", str))
-		return (TYPE_INSTRUCTION_ZJMP);
-	else if (!ft_strcmp("ldi", str))
-		return (TYPE_INSTRUCTION_LDI);
-	else if (!ft_strcmp("sti", str))
-		return (TYPE_INSTRUCTION_STI);
-	else if (!ft_strcmp("fork", str))
-		return (TYPE_INSTRUCTION_FORK);
-	else if (!ft_strcmp("lld", str))
-		return (TYPE_INSTRUCTION_LLD);
-	else if (!ft_strcmp("lldi", str))
-		return (TYPE_INSTRUCTION_LLDI);
-	else if (!ft_strcmp("lfork", str))
-		return (TYPE_INSTRUCTION_LFORK);
-	else if (!ft_strcmp("aff", str))
-		return (TYPE_INSTRUCTION_AFF);
-	return (0);
-}
-
+/*
+** Return le type d'instruction en fonction de la string passée
+** en paramètre
+*/
 int		is_instruction(char *str)
 {
 	if (!ft_strcmp("live", str))
@@ -99,6 +84,34 @@ int		is_instruction(char *str)
 	return (is_instruction_next(str));
 }
 
+/*
+** Suite de la fonction ci-dessus
+*/
+int		is_instruction_next(char *str)
+{
+	if (!ft_strcmp("zjmp", str))
+		return (TYPE_INSTRUCTION_ZJMP);
+	else if (!ft_strcmp("ldi", str))
+		return (TYPE_INSTRUCTION_LDI);
+	else if (!ft_strcmp("sti", str))
+		return (TYPE_INSTRUCTION_STI);
+	else if (!ft_strcmp("fork", str))
+		return (TYPE_INSTRUCTION_FORK);
+	else if (!ft_strcmp("lld", str))
+		return (TYPE_INSTRUCTION_LLD);
+	else if (!ft_strcmp("lldi", str))
+		return (TYPE_INSTRUCTION_LLDI);
+	else if (!ft_strcmp("lfork", str))
+		return (TYPE_INSTRUCTION_LFORK);
+	else if (!ft_strcmp("aff", str))
+		return (TYPE_INSTRUCTION_AFF);
+	return (0);
+}
+
+/*
+** Ajoute un nouvel élément à la liste du lexeur,
+** y stocke la chaine de caractères passée en paramètre
+*/
 t_lst	*add_list(t_lst **list, char *name, int type, t_env *env)
 {
 	t_lst *new;

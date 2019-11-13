@@ -12,6 +12,9 @@
 
 #include "../include/asm.h"
 
+/*
+** Initialise le tableau de pointeur sur fonction
+*/
 void	init_parsing_tab(t_env *env)
 {
 	env->parsing[TYPE_COMMAND] = is_valid_command;
@@ -36,6 +39,11 @@ void	init_parsing_tab(t_env *env)
 	env->parsing[TYPE_INSTRUCTION_AFF] = is_valid_aff;
 }
 
+/*
+** Boucle principale de parsing du fichier .s
+** a chaque iteration, fait appel à une fonction du tableau défini précédemment
+** en fonction du type de l'element
+*/
 int		loop_parser(t_env *env)
 {
 	t_lst *head;

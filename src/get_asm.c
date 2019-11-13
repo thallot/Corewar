@@ -12,6 +12,9 @@
 
 #include "../include/asm.h"
 
+/*
+** Retourne le prochain caractere du fichier en lecture
+*/
 int		get_char(int fd_s, char *buffer)
 {
 	int ret;
@@ -21,6 +24,11 @@ int		get_char(int fd_s, char *buffer)
 	return (ret);
 }
 
+/*
+** Lis caractere par caractere la commande,
+** jusqu a rencontrer un whitespace.
+** Puis l'ajoute dans la liste du lexeur avec le type commande
+*/
 int		get_command(t_env *env)
 {
 	char *command;
@@ -35,6 +43,11 @@ int		get_command(t_env *env)
 	return (1);
 }
 
+/*
+** Lis caractere par caractere la string,
+** jusqu a rencontrer un \0 ou un guillemet.
+** Puis l'ajoute dans la liste du lexeur avec le type STR
+*/
 int		get_str(t_env *env)
 {
 	char *str;
@@ -53,6 +66,11 @@ int		get_str(t_env *env)
 	return (1);
 }
 
+/*
+** Lis caractere par caractere le commentaire,
+** jusqu a rencontrer un \0 ou un \n.
+** Puis l'ajoute dans la liste du lexeur avec le type COMMENT
+*/
 int		get_comment(t_env *env)
 {
 	char *comment;
@@ -69,6 +87,12 @@ int		get_comment(t_env *env)
 	return (1);
 }
 
+/*
+** Determine le type provisoire de l'instruction ou du parametre
+** Lis caractere par caractere,
+** jusqu a rencontrer un whitespace ou un separateur (,).
+** Puis l'ajoute dans la liste du lexeur avec son type
+*/
 int		get_instruction(t_env *env)
 {
 	char	*instruction;

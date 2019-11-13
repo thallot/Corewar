@@ -12,6 +12,9 @@
 
 #include "../include/asm.h"
 
+/*
+** Verifie si l'instruction LD et ses parametres sont valides
+*/
 void	is_valid_ld(t_env *env)
 {
 	env->size += T_INSTRUCTION + T_OCP;
@@ -31,6 +34,9 @@ void	is_valid_ld(t_env *env)
 	env->size += get_size(env);
 }
 
+/*
+** Verifie si l'instruction ST et ses parametres sont valides
+*/
 void	is_valid_st(t_env *env)
 {
 	env->size += T_INSTRUCTION + T_OCP;
@@ -48,6 +54,9 @@ void	is_valid_st(t_env *env)
 	is_valid_param(env);
 }
 
+/*
+** Verifie si l'instruction ADD et ses parametres sont valides
+*/
 void	is_valid_add(t_env *env)
 {
 	env->size += T_INSTRUCTION + T_OCP;
@@ -70,6 +79,9 @@ void	is_valid_add(t_env *env)
 	is_valid_param(env);
 }
 
+/*
+** Verifie si l'instruction SUB et ses parametres sont valides
+*/
 void	is_valid_sub(t_env *env)
 {
 	env->size += T_INSTRUCTION + T_OCP;
@@ -92,6 +104,9 @@ void	is_valid_sub(t_env *env)
 	is_valid_param(env);
 }
 
+/*
+** Verifie si l'instruction AND et ses parametres sont valide
+*/
 void	is_valid_and(t_env *env)
 {
 	env->size += T_INSTRUCTION + T_OCP;

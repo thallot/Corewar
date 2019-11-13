@@ -12,6 +12,9 @@
 
 #include "../include/asm.h"
 
+/*
+** Identifie le charactere comme etant un whitespace
+*/
 int		is_blank(char c)
 {
 	if (c == ' ' || c == '\t' || c == '\n' || c == '\r'
@@ -20,6 +23,9 @@ int		is_blank(char c)
 	return (0);
 }
 
+/*
+** Identifie un charactere comme etant un separateur valide (',')
+*/
 int		is_separator(char c)
 {
 	if (c == ',')
@@ -27,6 +33,9 @@ int		is_separator(char c)
 	return (0);
 }
 
+/*
+** Fonction de debug, permet d'imprimer une liste (lexeur ou label)
+*/
 void	print_lst(t_lst *list)
 {
 	while (list)
@@ -37,6 +46,11 @@ void	print_lst(t_lst *list)
 	}
 }
 
+/*
+** Verifie les erreurs suivantes:
+** OPT == 0 -> 1 seul param, fichier en param s'ouvre et readable
+** OPT != 0 -> on a ajouté au moins un element au lexeur
+*/
 void	check_error_main(t_env *env, int argc, char **argv, int opt)
 {
 	if (opt == 0)
@@ -64,14 +78,21 @@ void	check_error_main(t_env *env, int argc, char **argv, int opt)
 	}
 }
 
+/*
+** FONCTION MAIN
+** Appel le parsing du fichier passé en parametre
+** Boucle de lecture du fichier .s -> stock chaque element dans une lst lexée
+** Appel la boucle de parsing
+** Puis les boucles d'ecriture
+*/
 int		main(int argc, char **argv)
 {
 	t_env *env;
 
 	if (!(env = (t_env *)ft_memalloc(sizeof(t_env))))
 		return (-1);
-	parsing_file_s(env, argv[1]);
 	check_error_main(env, argc, argv, 0);
+	parsing_file_s(env, argv[1]);
 	while (get_char(env->fd_s, env->buffer) > 0)
 	{
 		if (env->buffer[0] == '.')
@@ -90,11 +111,3 @@ int		main(int argc, char **argv)
 	printf("Writing output program to %s.cor\n", env->file_name);
 	return (exit_gc(env, 0));
 }
-
-/*
-** int my_destructor(void) __attribute__((destructor));
-** int my_destructor(void)
-** {
-**     while (2) ;
-** }
-*/
