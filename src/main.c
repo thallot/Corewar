@@ -112,29 +112,15 @@ int main(int argc, char **argv)
 		while (get_char(env->fd_s, env->buffer) > 0)
 		{
 			if (env->buffer[0] == '.' && !get_command(env))
-			{
-				ft_putendl("malloc error");
-				break ;
-			}
+				exit(exit_gc(env, -1));
 			if (env->buffer[0] == '"' && !get_str(env))
-			{
-				ft_putendl("malloc error");
-				break ;
-			}
+				exit(exit_gc(env, -1));
 			if (env->buffer[0] == '#' && !get_comment(env))
-			{
-				ft_putendl("malloc error");
-				break ;
-			}
+				exit(exit_gc(env, -1));
 			if (!is_blank(env->buffer[0]) && !get_instruction(env))
-			{
-				ft_putendl("malloc error");
-				break ;
-			}
+				exit(exit_gc(env, -1));
 		}
-		// print_lst(env->list);
 		loop_parser(env);
-		// print_lst(env->label);
 		w_header(env);
 		w_core(env);
 		printf("Writing output program to %s.cor\n", env->file_name);

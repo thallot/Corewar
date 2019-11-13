@@ -32,9 +32,11 @@ void    del_garbage_collector(t_env *env)
 
 int     exit_gc(t_env *env, int ret)
 {
-    del_garbage_collector(env);
-    ft_memdel((void**)&env);
-    return (ret);
+  if (ret == -1)
+    ft_putendl("Malloc error");
+  del_garbage_collector(env);
+  ft_memdel((void**)&env);
+  return (ret);
 }
 
 t_gc	*add_list_gc(t_env *env, void *data)
