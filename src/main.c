@@ -111,14 +111,14 @@ int main(int argc, char **argv)
 		}
 		while (get_char(env->fd_s, env->buffer) > 0)
 		{
-			if (env->buffer[0] == '.' && !get_command(env))
-				exit(exit_gc(env, -1));
-			if (env->buffer[0] == '"' && !get_str(env))
-				exit(exit_gc(env, -1));
-			if (env->buffer[0] == '#' && !get_comment(env))
-				exit(exit_gc(env, -1));
-			if (!is_blank(env->buffer[0]) && !get_instruction(env))
-				exit(exit_gc(env, -1));
+			if (env->buffer[0] == '.')
+				get_command(env);
+			if (env->buffer[0] == '"')
+				get_str(env);
+			if (env->buffer[0] == '#')
+				get_comment(env);
+			if (!is_blank(env->buffer[0]))
+				get_instruction(env);
 		}
 		loop_parser(env);
 		w_header(env);
