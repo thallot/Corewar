@@ -20,7 +20,7 @@ OBJDIR = obj
 SRCDIR = src
 
 SC = $(addsuffix .c, main get_asm garbage_collector parsing is_valid_instru_one\
-	byte_ope file_parser gc_functions)
+	byte_ope file_parser gc_functions ft_tab_one ft_tab_two)
 
 SRCS = $(addprefix $(SRCDIR)/, $(SC))
 OBJS = $(addprefix $(OBJDIR)/, $(SC:.c=.o))
