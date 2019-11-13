@@ -12,6 +12,9 @@
 
 #include "../include/asm.h"
 
+/*
+** Retourne le type du parametre actuellement present dans le buffer
+*/
 int		get_type(t_env *env)
 {
 	int type;
@@ -29,6 +32,9 @@ int		get_type(t_env *env)
 	return (type);
 }
 
+/*
+**
+*/
 void	add_elem(t_env *env, int type, char *instruction, char last_char)
 {
 	int instruction_type;
