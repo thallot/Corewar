@@ -6,14 +6,14 @@
 /*   By: edillenb <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 13:53:40 by edillenb          #+#    #+#             */
-/*   Updated: 2019/11/13 13:58:16 by edillenb         ###   ########.fr       */
+/*   Updated: 2019/11/13 15:31:04 by edillenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/asm.h"
 #include <stdlib.h>
 
-void    *ft_memalloc_gc(size_t size, t_env *env)
+void	*ft_memalloc_gc(size_t size, t_env *env)
 {
 	char *ptr;
 
@@ -24,10 +24,10 @@ void    *ft_memalloc_gc(size_t size, t_env *env)
 	return (ptr);
 }
 
-char    *ft_strdup_gc(const char *s1, t_env *env)
+char	*ft_strdup_gc(const char *s1, t_env *env)
 {
-	int     i;
-	char    *dest;
+	int		i;
+	char	*dest;
 
 	i = 0;
 	while (s1[i])
@@ -42,10 +42,10 @@ char    *ft_strdup_gc(const char *s1, t_env *env)
 	return (dest);
 }
 
-char    *ft_strjoin_gc(char *s1, char const *s2, t_env *env)
+char	*ft_strjoin_gc(char *s1, char const *s2, t_env *env)
 {
-	char    *str;
-	size_t  size;
+	char	*str;
+	size_t	size;
 
 	str = NULL;
 	if (s2)
@@ -81,6 +81,6 @@ char	*ft_strndup_gc(t_env *env, const char *s1, size_t n)
 		i++;
 	}
 	dest[i] = '\0';
-    add_list_gc(env, dest);
+	add_list_gc(env, dest);
 	return (dest);
 }

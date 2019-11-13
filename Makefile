@@ -19,8 +19,8 @@ LIBFT = libft/libft.a
 OBJDIR = obj
 SRCDIR = src
 
-SC = $(addsuffix .c, main get_asm garbage_collector parsing ft_tab_four\
-	ft_tab_three byte_ope file_parser gc_functions)
+SC = $(addsuffix .c, main get_asm garbage_collector parsing byte_ope \
+	file_parser gc_functions ft_tab_one ft_tab_two ft_tab_three ft_tab_four)
 
 SRCS = $(addprefix $(SRCDIR)/, $(SC))
 OBJS = $(addprefix $(OBJDIR)/, $(SC:.c=.o))

@@ -159,6 +159,9 @@ void	is_valid_command(t_env *env);
 void	is_valid_str(t_env *env);
 void	is_valid_label(t_env *env);
 void	is_valid_registre(t_env *env);
+void	is_valid_add(t_env *env);
+void	is_valid_sub(t_env *env);
+void	is_valid_and(t_env *env);
 void	is_valid_live(t_env *env);
 void	is_valid_ld(t_env *env);
 void	is_valid_st(t_env *env);
@@ -173,6 +176,7 @@ void	is_valid_lldi(t_env *env);
 void	is_valid_lfork(t_env *env);
 void	is_valid_aff(t_env *env);
 void	is_valid_label_call(t_env *env);
+void	is_valid_label_definition(t_env *env);
 
 int is_valid_separator(t_env *env, char *instr, int one, int two);
 int is_valid_param(t_env *env);
