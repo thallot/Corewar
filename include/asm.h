@@ -17,7 +17,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdio.h>
-# include "../libft/libft.h"
+# include "../lib/libft/libft.h"
 # include "../lib/printf/includes/ft_printf.h"
 # define TYPE_INSTRUCTION_LIVE 1
 # define TYPE_INSTRUCTION_LD 2

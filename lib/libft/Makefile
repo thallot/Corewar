@@ -123,7 +123,7 @@ clean:
 
 fclean: clean
 	@rm -rf $(NAME) $(EXE)
-	@echo "$(_GREEN)[OK]$(_RED) Supression de $(_WHITE)$(NAME)\n"
+	@echo "$(_GREEN)[OK]$(_RED) Supression de $(_WHITE)$(NAME)"
 
 re: fclean all
 	@echo "$(_GREEN)[OK]$(_BLUE) Succes $(_WHITE)"

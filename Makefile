@@ -50,8 +50,8 @@ $(NAME): lib $(OBJS) $(INCLS)
 	@echo "$(GREEN)[OK] $(GREY)Compilation de $(WHITE)$(NAME)\n"
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c
-		@mkdir -p obj
-	  @$(CC) $(CFLAGS) -c -o $@ $< && printf "$(GREEN)[OK] $(GREY)Generation de $(WHITE)%-50s\r" "$@" || \
+	@mkdir -p obj
+	@$(CC) $(CFLAGS) -c -o $@ $< && printf "$(GREEN)[OK] $(GREY)Generation de $(WHITE)%-50s\r" "$@" || \
 		(echo "$(_RED)[ERREUR]$(_GRAY) Une est erreur est survenue sur $(WHITE)$<$(RED), $(WHITE)$(NAME)$(RED) non compilé(e)\n" && exit 1)
 
 lib: menu_lib $(LIBFTPRINTF) $(LIBFT)
@@ -81,7 +81,8 @@ clean:
 
 fclean: clean
 	@echo "$(GREEN)[OK]$(RED) Supression de $(WHITE)$(NAME)"
-	@make fclean -C libft
+	@make fclean -C lib/libft
+	@make fclean -C lib/printf
 	@rm -f $(NAME)
 
 re: fclean all
