@@ -6,7 +6,7 @@
 /*   By: jjaegle <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/06 09:42:52 by jjaegle           #+#    #+#             */
-/*   Updated: 2019/11/13 16:45:52 by jjaegle          ###   ########.fr       */
+/*   Updated: 2019/11/14 15:34:46 by jjaegle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,8 +188,8 @@ int					nb_alive(t_listp *players);
 char				*get_param(t_process *process, unsigned char memory[]
 		, size_t size);
 int					get_params(t_process *process, unsigned char *memory
-		,unsigned char encoded, int nb);
-int					get_size(char opcode, int param);
+		, int nb, enum e_bool d2);
+int					get_size(char opcode, int param, enum e_bool d2);
 char				get_encoded(t_process *process, unsigned char memory[]);
 int					is_register(int tab[], int size);
 int					val_record(t_process *process, int rec, int opt);

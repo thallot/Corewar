@@ -6,7 +6,7 @@
 /*   By: jjaegle <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 15:52:01 by jjaegle           #+#    #+#             */
-/*   Updated: 2019/11/14 15:31:38 by jjaegle          ###   ########.fr       */
+/*   Updated: 2019/11/14 15:35:04 by jjaegle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int		get_params(t_process *process, unsigned char *memory
 {
 	int		i;
 	int		size;
-	unsigned char encoded
+	unsigned char encoded;
 
 	i = 0;
 	encoded = get_encoded(process, memory);
