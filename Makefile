@@ -14,7 +14,8 @@ NAME = assembler
 
 CFLAGS = -Wall -Werror -Wextra -g -fsanitize=address
 CC = gcc
-LIBFT = libft/libft.a
+LIBFT = lib/libft/libft.a
+LIBFTPRINTF = lib/printf/libftprintf.a
 
 OBJDIR = obj
 SRCDIR = src
@@ -44,7 +45,7 @@ all: $(NAME)
 
 $(NAME): lib $(OBJS) $(INCLS)
 	@echo "$(BOLD)$(GREY)~~~~~~~~~~~~ Generation ~~~~~~~~~~~~"
-	@$(CC) $(CFLAGS) $(LIBFT) $(OBJS) -o $(NAME)
+	@$(CC) $(CFLAGS) $(LIBFTPRINTF) $(LIBFT) $(OBJS) -o $(NAME)
 	@echo "$(GREEN)[OK] $(GREY)Tous les objets de $(WHITE)$(NAME) $(GREY)sont generes !\r"
 	@echo "$(GREEN)[OK] $(GREY)Compilation de $(WHITE)$(NAME)\n"
 
@@ -53,13 +54,17 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.c
 	  @$(CC) $(CFLAGS) -c -o $@ $< && printf "$(GREEN)[OK] $(GREY)Generation de $(WHITE)%-50s\r" "$@" || \
 		(echo "$(_RED)[ERREUR]$(_GRAY) Une est erreur est survenue sur $(WHITE)$<$(RED), $(WHITE)$(NAME)$(RED) non compilé(e)\n" && exit 1)
 
-lib: menu_lib $(LIBFT)
+lib: menu_lib $(LIBFTPRINTF) $(LIBFT)
 
 menu_lib: FORCE
 	@echo "$(BOLD)$(_BLUE)~~~~~~~~~~~~ Library ~~~~~~~~~~~~~~~"
 
+$(LIBFTPRINTF): FORCE
+	@make -C lib/printf/
+	@echo "$(NOCOLOR)"
+
 $(LIBFT): FORCE
-	@make -C libft/
+	@make -C lib/libft/
 	@echo "$(NOCOLOR)"
 
 FORCE:
@@ -68,7 +73,9 @@ clean:
 	@echo "$(BOLD)$(RED)~~~~~~~~~~~~ Delete ~~~~~~~~~~~~~~~~"
 	@echo "$(GREEN)[OK]$(RED) Supression des objets de $(WHITE)$(NAME)"
 	@echo "$(GREEN)[OK]$(RED) Supression des objets de $(WHITE)libft.a"
-	@make clean -C libft
+	@echo "$(GREEN)[OK]$(RED) Supression des objets de $(WHITE)libftprintf.a"
+	@make clean -C lib/libft
+	@make clean -C lib/printf
 	@rm -f $(OBJS)
 	@rm -rf $(OBJDIR)
 
@@ -79,4 +86,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re libft/libft.a
+.PHONY: all clean fclean re lib

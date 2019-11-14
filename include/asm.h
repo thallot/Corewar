@@ -18,6 +18,7 @@
 # include <stdlib.h>
 # include <stdio.h>
 # include "../libft/libft.h"
+# include "../lib/printf/includes/ft_printf.h"
 # define TYPE_INSTRUCTION_LIVE 1
 # define TYPE_INSTRUCTION_LD 2
 # define TYPE_INSTRUCTION_ST 3
@@ -201,7 +202,7 @@ void				w_core(t_env *env);
 /*
 *********************************** Utils.c ************************************
 */
-int					get_type(t_env *env);
+int					get_type_param(t_env *env);
 void				add_elem(t_env *env, int type, char *inst, char last_char);
 int					is_instruction_next(char *str);
 int					is_instruction(char *str);

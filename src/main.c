@@ -43,8 +43,8 @@ void	print_lst(t_lst *list)
 {
 	while (list)
 	{
-		printf("%-15s", list->name);
-		printf("SIZE : %d\n", list->type);
+		ft_printf("%-15s", list->name);
+		ft_printf("SIZE : %d\n", list->type);
 		list = list->next;
 	}
 }
@@ -61,23 +61,23 @@ void	check_error_main(t_env *env, int argc, char **argv, int opt)
 	{
 		if (argc != 2)
 		{
-			printf("Wrong params number\n");
+			ft_printf("Wrong params number\n");
 			exit(exit_gc(env, 1));
 		}
 		if ((env->fd_s = open(argv[1], O_RDONLY)) <= 0)
 		{
-			printf(".S FILE DOES NOT EXIST\n");
+			ft_printf(".S FILE DOES NOT EXIST\n");
 			exit(exit_gc(env, 1));
 		}
 		if (read(env->fd_s, 0, 0) < 0)
 		{
-			printf("Not a valid file\n");
+			ft_printf("Not a valid file\n");
 			exit(exit_gc(env, 1));
 		}
 	}
 	else if (!env->list)
 	{
-		printf("Not a valid file\n");
+		ft_printf("Not a valid file\n");
 		exit(exit_gc(env, 1));
 	}
 }
@@ -113,6 +113,6 @@ int		main(int argc, char **argv)
 	loop_parser(env);
 	w_header(env);
 	w_core(env);
-	printf("Writing output program to %s.cor\n", env->file_name);
+	ft_printf("Writing output program to %s.cor\n", env->file_name);
 	return (exit_gc(env, 0));
 }

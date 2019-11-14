@@ -59,7 +59,7 @@ int		loop_parser(t_env *env)
 			env->parsing[env->list->type](env);
 		else if (env->list->type != TYPE_COMMENT)
 		{
-			printf("Element inconnu : %s\n", env->list->name);
+			ft_printf("Element inconnu : %s\n", env->list->name);
 			exit(exit_gc(env, 1));
 		}
 		env->list = env->list->next;

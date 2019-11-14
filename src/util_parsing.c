@@ -31,7 +31,7 @@ int		get_size(t_env *env)
 		return (2);
 	if (env->list->type == TYPE_DIRECT_4)
 		return (4);
-	printf("Mauvais type de parametre dans get_size sur %s (type : %d)", \
+	ft_printf("Mauvais type de parametre dans get_size sur %s (type : %d)", \
 	env->list->name, env->list->type);
 	exit(exit_gc(env, 1));
 }
@@ -44,7 +44,7 @@ int		get_size(t_env *env)
 
 void	print_error(t_env *env, char *instr, int nb)
 {
-	printf("Erreur de type de parametre pour l'instruction %s, \
+	ft_printf("Erreur de type de parametre pour l'instruction %s, \
 	parametre %d : [%s]\n", instr, nb, env->list->name);
 	exit(exit_gc(env, 1));
 }
@@ -58,7 +58,7 @@ int		is_valid_separator(t_env *env, char *instr, int one, int two)
 {
 	if (env->list->type != TYPE_VIRGULE)
 	{
-		printf("Erreur de formatage pour l'instruction %s, \
+		ft_printf("Erreur de formatage pour l'instruction %s, \
 		pas de separateur dans le %de et le %de parametre", instr, one, two);
 		exit(exit_gc(env, 1));
 	}
@@ -107,6 +107,6 @@ void	is_valid_label_call(t_env *env)
 		}
 		env->label = env->label->next;
 	}
-	printf("Le label %s n'existe pas\n", i + env->list->name);
+	ft_printf("Le label %s n'existe pas\n", i + env->list->name);
 	exit(exit_gc(env, 1));
 }

@@ -106,7 +106,7 @@ int		get_instruction(t_env *env)
 
 	last_char = 0;
 	instruction = NULL;
-	type = get_type(env);
+	type = get_type_param(env);
 	while (!is_blank(env->buffer[0]) && !is_separator(env->buffer[0]))
 	{
 		instruction = ft_strjoin_gc(instruction, env->buffer, env);

@@ -17,7 +17,7 @@
 ** son premier caractere
 */
 
-int		get_type(t_env *env)
+int		get_type_param(t_env *env)
 {
 	int type;
 
