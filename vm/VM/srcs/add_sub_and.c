@@ -37,7 +37,9 @@ void			cb_add(void *pvm, void *pproc)
 	registre[0] = *(int *)process->records[process->param[0].value - 1];
 	registre[1] = *(int *)process->records[process->param[1].value - 1];
 	registre[2] = registre[0] + registre[1];
-	process->records[process->param[1].value - 1] = registre[2];
+	process->records[process->param[2].value - 1] = registre[2];
+	if (!registre[2])
+		process->carry = !process->carry;
 	ft_printf("CBST : valeur add = %d\n", change_endian(src, REG_SIZE));
 }
 
@@ -55,8 +57,6 @@ t_result		ft_add(t_env *vm, t_process *process)
 		return (NULL);
 	if (process->param[0].size != T_REG || process->param[1].size != T_REG || process->param[2].size != T_REG)
 		return (NULL);
-	if (!process->param[2].value)
-		process->carry = !process->carry;
 	process->active = true;
 	process->delay = 10 - 1;
 	return (cb_add);
