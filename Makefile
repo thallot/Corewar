@@ -43,7 +43,7 @@ BOLD= \033[1m
 
 all: $(NAME)
 
-$(NAME): lib $(OBJS) $(INCLS)
+$(NAME): $(LIBFTPRINTF) $(LIBFT) $(OBJS) $(INCLS)
 	@echo "$(BOLD)$(GREY)~~~~~~~~~~~~ Generation ~~~~~~~~~~~~"
 	@$(CC) $(CFLAGS) $(LIBFTPRINTF) $(LIBFT) $(OBJS) -o $(NAME)
 	@echo "$(GREEN)[OK] $(GREY)Tous les objets de $(WHITE)$(NAME) $(GREY)sont generes !\r"

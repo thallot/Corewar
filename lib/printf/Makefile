@@ -66,6 +66,7 @@ BOLD= \033[1m
 all: $(NAME)
 
 $(NAME): $(OBJS)
+		@echo "$(BOLD)$(_BLUE)~~~~~~~~~~~~ Printf ~~~~~~~~~~~~~~~~"
 	@echo "$(GREEN)[OK] $(_BLUE)Tous les objets de $(WHITE)$(NAME) $(_BLUE)sont generes !\r"
 	@echo "$(GREEN)[OK] $(_BLUE)Compilation de $(WHITE)$(NAME)"
 	@ar rc $(NAME) $(OBJS)

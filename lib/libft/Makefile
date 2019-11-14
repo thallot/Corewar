@@ -109,6 +109,7 @@ OBJECTS	= $(SRC:.c=.o)
 all: $(NAME)
 
 $(NAME): $(OBJECTS)
+	@echo "$(BOLD)$(_BLUE)~~~~~~~~~~~~ Libft ~~~~~~~~~~~~~~~~~"
 	@echo "$(_GREEN)[OK] $(_BLUE)Tous les objets de $(_WHITE)$(NAME) $(_BLUE)sont generes !\r"
 	@ar rc $(NAME) $(OBJECTS) || printf "\n$(_RED)[ERREUR]$(_GREY) Une est erreur est survenue $(_WHITE)$(NAME)\n"
 	@ranlib $(NAME)
