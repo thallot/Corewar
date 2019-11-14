@@ -43,7 +43,7 @@ enum				e_bool{true, false};
 enum				e_live{waiting, alive, dead};
 
 /*
-**t_result est un type representant un ptr sur fonction prenant 2 void* 
+**t_result est un type representant un ptr sur fonction prenant 2 void*
 */
 
 typedef void		(*t_result)(void*, void*);

@@ -13,15 +13,15 @@
 #include "vm.h"
 
 /*
-**Les processeurs sont stockes dans la VM sous forme de liste, t_listp, chaque 
-**nouveauprocess est mis en tete de liste de maniere a ce que le dernier 
+**Les processeurs sont stockes dans la VM sous forme de liste, t_listp, chaque
+**nouveau process est mis en tete de liste de maniere a ce que le dernier
 **cree sois le premier a jouer.
 */
 
 /*
 **les processeurs sont crees pour chaque processus joueur, ils representent
 **l'environnement mis a disposition du processus pour jouer avec les registres
-**le PC et le carry. 
+**le PC et le carry.
 **un processeur peut etre actif ou non, il s'active l'orsque le pc rencontre
 **un opcode, quand il est actif il ne se deplace plus dans la memoire le temps
 **, delay, qu'il realise son operation.
