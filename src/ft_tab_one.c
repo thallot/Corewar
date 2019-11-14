@@ -90,7 +90,7 @@ void	is_valid_registre(t_env *env)
 	int i;
 
 	i = ft_atoi(&(env->list->name)[1]);
-	if (i >= 0 && i <= 16)
+	if (i >= 1 && i <= 16)
 		return ;
 	ft_printf("Erreur de formatage du registre [%s]\n", env->list->name);
 	exit(exit_gc(env, 1));
