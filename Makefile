@@ -12,7 +12,7 @@
 
 NAME = assembler
 
-CFLAGS = -Wall -Werror -Wextra -g -fsanitize=address
+CFLAGS = -Wall -Werror -Wextra
 CC = gcc
 LIBFT = lib/libft/libft.a
 LIBFTPRINTF = lib/printf/libftprintf.a

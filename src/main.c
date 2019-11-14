@@ -116,3 +116,11 @@ int		main(int argc, char **argv)
 	ft_printf("Writing output program to %s.cor\n", env->file_name);
 	return (exit_gc(env, 0));
 }
+
+/*
+** int my_destructor(void) __attribute__((destructor));
+** int my_destructor(void)
+** {
+**    while (2) ;
+**}
+*/
