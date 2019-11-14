@@ -26,28 +26,27 @@ void			cb_st(void *pvm, void *pproc)
 	ft_printf("CBST : valeur storer = %d\n", change_endian(src, REG_SIZE));
 }
 
-void			cb_add(void *pvm, void *pproc)
+static void			cb_add(void *pvm, void *pproc)
 {
 	t_env		*vm;
 	t_process	*process;
-	int registre[2];
+	int registre[3];
 
 	vm = (t_env*)pvm;
 	process = (t_process*)pproc;
 	registre[0] = *(int *)process->records[process->param[0].value - 1];
 	registre[1] = *(int *)process->records[process->param[1].value - 1];
 	registre[2] = registre[0] + registre[1];
-	process->records[process->param[2].value - 1] = registre[2];
+	ft_memcpy(process->records[process->param[2].value - 1], (void*)&registre[2], REG_SIZE);
 	if (!registre[2])
 		process->carry = !process->carry;
-	ft_printf("CBST : valeur add = %d\n", change_endian(src, REG_SIZE));
+	ft_printf("CBST : valeur r[2] = %d | carry : %d \n", registre[2], process->carry);
 }
 
 t_result		ft_add(t_env *vm, t_process *process)
 {
 	unsigned char	encoded;
 	unsigned char	*mem;
-	unsigned char	*idx;
 	int				start;
 
 	start = process->pc;
