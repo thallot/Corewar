@@ -17,7 +17,7 @@
 # include "op.h"
 # include <stdio.h>
 
-# define NB_INSTR 4
+# define NB_INSTR 5
 
 # define UNINIT -2
 # define UNDEF -1
@@ -176,6 +176,7 @@ t_result			ft_live(t_env *vm, t_process *process);
 t_result				ft_st(t_env *vm, t_process *process);
 void					cb_st(void *pvm, void *pproc);
 t_result				ft_add(t_env *vm, t_process *process);
+t_result		ft_sub(t_env *vm, t_process *process);
 
 /*
 **----------------------------------Tools------------------------------
