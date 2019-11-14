@@ -6,7 +6,7 @@
 /*   By: jjaegle <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 15:52:01 by jjaegle           #+#    #+#             */
-/*   Updated: 2019/11/13 16:43:48 by jjaegle          ###   ########.fr       */
+/*   Updated: 2019/11/14 15:31:38 by jjaegle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int		val_record(t_process *process, int registre,int opt)
 **de l'instruction en cours
 */
 
-int			get_size(char encoded, int param)
+int			get_size(char encoded, int param, enum e_bool d2)
 {
 	unsigned char	ret;
 
@@ -42,7 +42,11 @@ int			get_size(char encoded, int param)
 	if (ret == REG_CODE)
 		return (T_REG);
 	else if (ret == DIR_CODE)
-		return (DIR_SIZE);
+	{
+		if (d2 == false)
+			return (DIR_SIZE);
+		return (IND_SIZE);
+	}
 	else if (ret == IND_CODE)
 		return (IND_SIZE);
 	return (UNDEF);
@@ -53,13 +57,15 @@ int			get_size(char encoded, int param)
 */
 
 int		get_params(t_process *process, unsigned char *memory
-		, unsigned char encoded, int nb)
+		, int nb, enum e_bool d2)
 {
 	int		i;
 	int		size;
+	unsigned char encoded
 
 	i = 0;
-	size = get_size(encoded, FIRST);
+	encoded = get_encoded(process, memory);
+	size = get_size(encoded, FIRST, d2);
 	while (i < nb)
 	{
 		process->param[i].ptr = get_param(process, memory,  size);
@@ -70,9 +76,9 @@ int		get_params(t_process *process, unsigned char *memory
 			return (EXIT_FAILURE);
 		i++;
 		if (i == 1)
-			size = get_size(encoded, SECND);
+			size = get_size(encoded, SECND, d2);
 		else if (i == 2)
-			size = get_size(encoded, THIRD);
+			size = get_size(encoded, THIRD, d2);
 	}
 	return (EXIT_SUCCESS);
 }

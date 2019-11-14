@@ -6,7 +6,7 @@
 /*   By: jjaegle <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 16:28:29 by jjaegle           #+#    #+#             */
-/*   Updated: 2019/11/13 16:48:34 by jjaegle          ###   ########.fr       */
+/*   Updated: 2019/11/14 15:32:13 by jjaegle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,15 +88,13 @@ static void		cb_ld(void *pvm, void *pproc)
 
 t_result		ft_ld(t_env *vm, t_process *process)
 {
-	unsigned char	encoded;
 	unsigned char	*mem;
 	unsigned char	*idx;
 	int				start;
 
 	start = process->pc;
 	mem = vm->memory;
-	encoded = get_encoded(process, mem);
-	if(get_params(process, mem, encoded, 2))
+	if(get_params(process, mem, 2, false))
 		return (NULL);
 	if (process->param[1].size != T_REG || process->param[0].size == T_REG)
 		return (NULL);
@@ -127,15 +125,13 @@ t_result		ft_ld(t_env *vm, t_process *process)
 
 t_result	ft_st(t_env *vm, t_process *process)
 {
-	unsigned char	encoded;
 	unsigned char	*memory;
 	unsigned char	*dest;
 	int				start;
 
 	start = process->pc;
 	memory = vm->memory;
-	encoded = get_encoded(process, memory);
-	if(get_params(process, memory, encoded, 2))
+	if(get_params(process, memory, 2, false))
 		return (NULL);
 	if (process->param[0].size != T_REG || process->param[1].size == DIR_SIZE)
 		return (NULL);

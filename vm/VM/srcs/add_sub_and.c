@@ -6,7 +6,7 @@
 /*   By: jjaegle <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 16:32:27 by jjaegle           #+#    #+#             */
-/*   Updated: 2019/11/13 16:50:55 by jjaegle          ###   ########.fr       */
+/*   Updated: 2019/11/14 15:32:50 by jjaegle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,12 @@ static void			cb_add(void *pvm, void *pproc)
 
 t_result		ft_add(t_env *vm, t_process *process)
 {
-	unsigned char	encoded;
 	unsigned char	*mem;
 	int				start;
 
 	start = process->pc;
 	mem = vm->memory;
-	encoded = get_encoded(process, mem);
-	if (get_params(process, mem, encoded, 3))
+	if (get_params(process, mem, 3, false))
 		return (NULL);
 	if (process->param[0].size != T_REG || process->param[1].size != T_REG || process->param[2].size != T_REG)
 		return (NULL);
@@ -80,14 +78,12 @@ static void			cb_sub(void *pvm, void *pproc)
 
 t_result		ft_sub(t_env *vm, t_process *process)
 {
-	unsigned char	encoded;
 	unsigned char	*mem;
 	int				start;
 
 	start = process->pc;
 	mem = vm->memory;
-	encoded = get_encoded(process, mem);
-	if (get_params(process, mem, encoded, 3))
+	if (get_params(process, mem, 3, false))
 		return (NULL);
 	if (process->param[0].size != T_REG || process->param[1].size != T_REG || process->param[2].size != T_REG)
 		return (NULL);
