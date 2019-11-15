@@ -19,6 +19,9 @@ static t_result		(*instr[NB_INSTR])(t_env *vm, t_process *process) =
 	ft_st,
 	ft_add,
 	ft_sub,
+	ft_and,
+	ft_or,
+	ft_xor,
 };
 
 void		process_play(t_listp *players, t_env *vm)

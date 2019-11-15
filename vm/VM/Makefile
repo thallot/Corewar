@@ -25,7 +25,9 @@ SC = vm.c \
 	 play.c \
 	 ld_st_live.c \
 	 tools2.c \
-	 add_sub_and.c \
+	 add_sub.c \
+	 and_or.c \
+	 xor_zjmp.c \
 
 LIBFT = ../libft
 
