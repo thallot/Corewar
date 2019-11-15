@@ -6,7 +6,7 @@
 #    By: tbrizon <tbrizon@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/15 17:09:42 by tbrizon           #+#    #+#              #
-#    Updated: 2019/11/13 16:37:41 by jjaegle          ###   ########.fr        #
+#    Updated: 2019/11/15 16:00:16 by edillenb         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,7 @@ SC = vm.c \
 	 add_sub.c \
 	 and_or.c \
 	 xor_zjmp.c \
+	 ldi_sti.c
 
 LIBFT = ../libft
 

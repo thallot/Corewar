@@ -80,6 +80,7 @@ int		get_params(t_process *process, unsigned char *memory
 		else if (i == 2)
 			size = get_size(encoded, THIRD, d2);
 	}
+	printf("success\n");
 	return (EXIT_SUCCESS);
 }
 

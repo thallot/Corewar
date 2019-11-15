@@ -62,10 +62,10 @@ t_result		ft_xor(t_env *vm, t_process *process)
 static void			cb_zjmp(void *pvm, void *pproc)
 {
 	(void)pvm;
-  (void)pproc;
+	(void)pproc;
 
-	result = change_endian(process->param[0].ptr, IND_SIZE) % 4096;
-	ft_printf("ZJMP : param = %d\n", result);
+	// result = change_endian(process->param[0].ptr, IND_SIZE) % 4096;
+	// ft_printf("ZJMP : param = %d\n", result);
 }
 
 t_result		ft_zjmp(t_env *vm, t_process *process)
@@ -77,7 +77,8 @@ t_result		ft_zjmp(t_env *vm, t_process *process)
     process->pc++;
   	process->param[0].ptr = get_param(process, vm->memory, IND_SIZE);
   	process->param[0].size = IND_SIZE;
-
+	result = change_endian(process->param[0].ptr, IND_SIZE) % 4096;
+	ft_printf("ZJMP : param = %d\n", result);
   	process->active = true;
   	process->delay = 2 - 1;
   	return (cb_zjmp);
