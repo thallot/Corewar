@@ -44,9 +44,7 @@ static void			cb_and(void *pvm, void *pproc)
 t_result		ft_and(t_env *vm, t_process *process)
 {
 	unsigned char	*mem;
-	int				start;
 
-	start = process->pc;
 	mem = vm->memory;
 	if (get_params(process, mem, 3, false))
 		return (NULL);
