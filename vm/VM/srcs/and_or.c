@@ -53,7 +53,7 @@ t_result		ft_and(t_env *vm, t_process *process)
 	if (process->param[2].size != T_REG)
 		return (NULL);
 	process->active = true;
-	process->delay = 10 - 1;
+	process->delay = 6 - 1;
 	return (cb_and);
 }
 
@@ -98,6 +98,6 @@ t_result		ft_or(t_env *vm, t_process *process)
 	if (process->param[2].size != T_REG)
 		return (NULL);
 	process->active = true;
-	process->delay = 10 - 1;
+	process->delay = 6 - 1;
 	return (cb_or);
 }
