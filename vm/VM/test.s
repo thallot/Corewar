@@ -6,7 +6,7 @@
 #		xor %5, r1, r4
 		add r5,r5,r5
 		label: live %1
-		zjmp %42
+		zjmp %11111
 #		live %:label
 #		and %:label, r1, r4
 #		ld	%-10,r3
