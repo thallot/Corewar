@@ -71,7 +71,7 @@ static void			cb_zjmp(void *pvm, void *pproc)
 	process = (t_process*)pproc;
 	start = process->pc;
 	result = change_endian(process->param[0].ptr, IND_SIZE);
-	process->pc = get_adress(process->pc, result, true);
+	process->pc = get_adress(process->pc, result, false);
 	ft_printf("ZJMP | pc : %d->%d (+%d)\n", start, process->pc, (process->pc - start));
 }
 
