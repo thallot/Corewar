@@ -70,8 +70,8 @@ static void			cb_zjmp(void *pvm, void *pproc)
 	vm = (t_env*)pvm;
 	process = (t_process*)pproc;
 	start = process->pc;
-	result = change_endian(process->param[0].ptr, IND_SIZE) % 4096;
-	process->pc = get_adress(process->pc, result, false);
+	result = change_endian(process->param[0].ptr, IND_SIZE);
+	process->pc = get_adress(process->pc, result, true);
 	ft_printf("ZJMP | pc : %d->%d (+%d)\n", start, process->pc, (process->pc - start));
 }
 
