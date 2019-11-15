@@ -40,7 +40,7 @@ static void			cb_add(void *pvm, void *pproc)
 	ft_memcpy(process->records[process->param[2].value - 1], (void*)&registre[2], REG_SIZE);
 	if (!registre[2])
 		process->carry = !process->carry;
-	ft_printf("ADD : valeur r[2] = %d | carry : %d \n", registre[2], process->carry);
+	ft_printf("AND RESULT : %d \n", *(int*)process->records[process->param[2].value - 1]);
 }
 
 t_result		ft_add(t_env *vm, t_process *process)
