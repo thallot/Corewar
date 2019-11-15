@@ -4,8 +4,8 @@
 #		ld	5, r2
 #		ld	%0,r3
 #		xor %5, r1, r4
+		add r5,r5,r5
 		label: live %1
-		zjmp %:label
 		zjmp %42
 #		live %:label
 #		and %:label, r1, r4
