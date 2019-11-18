@@ -52,6 +52,8 @@ t_result		ft_add(t_env *vm, t_process *process)
 	mem = vm->memory;
 	if (get_params(process, mem, 3, false))
 		return (NULL);
+	if (process->param[0].type == UNDEF || process->param[1].type == UNDEF || process->param[2].type == UNDEF)
+		return (NULL);
 	if (process->param[0].size != T_REG || process->param[1].size != T_REG || process->param[2].size != T_REG)
 		return (NULL);
 	process->active = true;

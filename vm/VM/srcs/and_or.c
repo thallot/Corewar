@@ -48,8 +48,16 @@ t_result		ft_and(t_env *vm, t_process *process)
 	mem = vm->memory;
 	if (get_params(process, mem, 3, false))
 		return (NULL);
-	if (process->param[2].size != T_REG)
+	if (process->param[0].type == UNDEF || process->param[1].type == UNDEF || process->param[2].type == UNDEF)
+	{
+		printf("UNDEF\n");
 		return (NULL);
+	}
+	if (process->param[2].size != T_REG)
+	{
+		printf("NO REG\n");
+		return (NULL);
+	}
 	process->active = true;
 	process->delay = 6 - 1;
 	return (cb_and);

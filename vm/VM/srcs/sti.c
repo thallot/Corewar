@@ -23,11 +23,22 @@ static void			cb_sti(void *pvm, void *pproc)
   process = (t_process*)pproc;
   param[0] = *(int*)process->records[process->param[0].value - 1];
   param[0] = change_endian(&(param[0]), 4);
-  param[1] = process->param[1].value;
-	param[2] = process->param[2].value;
+  if (process->param[1].type == REG_CODE)
+    param[1] = *(int*)process->records[process->param[1].value - 1];
+  else
+    param[1] = process->param[1].value;
+  if (process->param[2].type == REG_CODE)
+    param[2] = *(int*)process->records[process->param[2].value - 1];
+  else
+	 param[2] = process->param[2].value;
   result = param[1] + param[2];
   if (result != 0)
     result = result % 4096;
+  else
+  {
+    result = 0;
+    process->carry = !process->carry;
+  }
   ft_memcpy((void*)&(vm->memory[result]), (void*)&param[0], 4);
   printf("P0 : %d | P1 : %d | P2:  %d\n", param[0], param[1], param[2]);
 }

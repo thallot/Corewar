@@ -65,6 +65,8 @@ t_result		ft_and(t_env *vm, t_process *process)
 	// process->pc++;
 	if (get_params(process, mem, 3, false))
 		return (NULL);
+	if (process->param[0].type == UNDEF || process->param[1].type == UNDEF || process->param[2].type == UNDEF)
+		return (NULL);
 	printf("P0 %d | P1 %d | P2 %d\n", process->param[0].type, process->param[1].type, process->param[2].type);
 	process->param[0].size = REG_SIZE;
 	ft_printf("AND : param = %d\n", change_endian(process->param[0].ptr, REG_SIZE));
