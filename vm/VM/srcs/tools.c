@@ -30,8 +30,6 @@ int		change_endian(void *var, int size)
 {
 	int		ret;
 
-	if (!var)
-		return (0);
 	ret = 0;
 	ft_memcpy(&ret, var, size);
 	ft_memrev(&ret, size);

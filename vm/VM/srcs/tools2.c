@@ -90,12 +90,12 @@ int		get_params(t_process *process, unsigned char *memory
 	while (i < nb)
 	{
 		process->param[i].ptr = get_param(process, memory,  size);
+		if (!(process->param[i].ptr))
+			return (EXIT_FAILURE);
 		process->param[i].size = size;
 		process->param[i].value = change_endian(process->param[i].ptr, size);
 		process->param[i].type = type;
 	//	ft_printf("GPs : value %d = %d\n", i, process->param[i].value);
-		if (!(process->param[i].ptr))
-			return (EXIT_FAILURE);
 		i++;
 		if (i == 1)
 		{
