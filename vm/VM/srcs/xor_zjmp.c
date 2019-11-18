@@ -47,6 +47,7 @@ static void			cb_xor(void *pvm, void *pproc)
 t_result		ft_xor(t_env *vm, t_process *process)
 {
 	unsigned char	*mem;
+	unsigned char	*idx;
 	int				start;
 
 	start = process->pc;

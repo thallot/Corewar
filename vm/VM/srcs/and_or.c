@@ -47,6 +47,7 @@ static void			cb_and(void *pvm, void *pproc)
 t_result		ft_and(t_env *vm, t_process *process)
 {
 	unsigned char	*mem;
+	unsigned char	*idx;
 
 	mem = vm->memory;
 	if (get_params(process, mem, 3, false))
@@ -109,6 +110,7 @@ static void			cb_or(void *pvm, void *pproc)
 t_result		ft_or(t_env *vm, t_process *process)
 {
 	unsigned char	*mem;
+	unsigned char	*idx;
 	int				start;
 
 	start = process->pc;
