@@ -100,6 +100,7 @@ t_result		ft_ld(t_env *vm, t_process *process)
 		return (NULL);
 	if (process->param[1].size != T_REG || process->param[0].size == T_REG)
 		return (NULL);
+	printf("LD | P0 %d | P1 %d | P2 %d\n", process->param[0].type, process->param[1].type, process->param[2].type);
 	if (process->param[0].size == IND_SIZE)
 	{
 		idx = &mem[get_adress(start, process->param[0].value, false)];

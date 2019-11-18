@@ -70,6 +70,7 @@ t_result		ft_and(t_env *vm, t_process *process)
 		process->param[1].value = change_endian(idx, REG_SIZE);
 		process->param[1].size = REG_SIZE;
 	}
+	printf("P0 %d | P1 %d | P2 %d\n", process->param[0].type, process->param[1].type, process->param[2].type);
 	process->active = true;
 	process->delay = 6 - 1;
 	return (cb_and);

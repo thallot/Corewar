@@ -52,6 +52,12 @@ int			get_size(char encoded, int param, enum e_bool d2)
 	return (UNDEF);
 }
 
+/*
+**permet de retourner le type du prochain parametre a aller recuperer, si le
+**masque ne correspond pas, retourne une valeure UNDEFINED qui marquera la fin
+**de l'instruction en cours
+*/
+
 int			get_type(char encoded, int param)
 {
 	unsigned char	ret;
