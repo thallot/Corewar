@@ -12,7 +12,7 @@
 
 #include "vm.h"
 
-static void			cb_ldi(void *pvm, void *pproc)
+static void			cb_sti(void *pvm, void *pproc)
 {
   t_env		*vm;
   t_process	*process;
@@ -25,22 +25,18 @@ static void			cb_ldi(void *pvm, void *pproc)
   printf(" P0 : %d | P1:  %d\n", param[0], param[1]);
 }
 
-t_result		ft_ldi(t_env *vm, t_process *process)
+t_result		ft_sti(t_env *vm, t_process *process)
 {
 	unsigned char	*mem;
 	int				start;
 
-  printf("ENTER LDI\n");
 	start = process->pc;
 	mem = vm->memory;
-  printf("1\n");
 	if (get_params(process, mem, 3, false))
 		return (NULL);
-	if (process->param[2].size != T_REG)
+	if (process->param[0].size != T_REG)
 		return (NULL);
-  printf("2\n");
 	process->active = true;
 	process->delay = 25 - 1;
-  printf("3\n");
 	return (cb_ldi);
 }

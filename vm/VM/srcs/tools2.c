@@ -45,13 +45,32 @@ int			get_size(char encoded, int param, enum e_bool d2)
 	{
 		if (d2 == false)
 			return (DIR_SIZE);
-		return (IND_SIZE);
+		return (DIR_SIZE);
 	}
 	else if (ret == IND_CODE)
 		return (IND_SIZE);
 	return (UNDEF);
 }
 
+int			get_type(char encoded, int param)
+{
+	unsigned char	ret;
+
+	ret = 0;
+	if (param == FIRST)
+		ret = (encoded >> 6) & 0x03;
+	else if (param == SECND)
+		ret = ((encoded << 2) >> 6) & 0x03;
+	else if (param == THIRD)
+		ret = ((encoded << 4) >> 6) & 0x03;
+	if (ret == REG_CODE)
+		return (REG_CODE);
+	else if (ret == DIR_CODE)
+		return (DIR_CODE);
+	else if (ret == IND_CODE)
+		return (IND_CODE);
+	return (UNDEF);
+}
 /*
 **get_params recupere tout les parametres d'une instruction
 */
@@ -61,25 +80,36 @@ int		get_params(t_process *process, unsigned char *memory
 {
 	int		i;
 	int		size;
+	int type;
 	unsigned char encoded;
 
 	i = 0;
 	encoded = get_encoded(process, memory);
 	size = get_size(encoded, FIRST, d2);
+	type = get_type(encoded, FIRST);
 	while (i < nb)
 	{
 		process->param[i].ptr = get_param(process, memory,  size);
 		process->param[i].size = size;
 		process->param[i].value = change_endian(process->param[i].ptr, size);
+		process->param[i].type = type;
 	//	ft_printf("GPs : value %d = %d\n", i, process->param[i].value);
 		if (!(process->param[i].ptr))
 			return (EXIT_FAILURE);
 		i++;
 		if (i == 1)
+		{
 			size = get_size(encoded, SECND, d2);
+			type = get_type(encoded, SECND);
+		}
 		else if (i == 2)
+		{
 			size = get_size(encoded, THIRD, d2);
+			type = get_type(encoded, THIRD);
+		}
+
 	}
+	printf("success\n");
 	return (EXIT_SUCCESS);
 }
 
