@@ -35,11 +35,10 @@ static void			cb_sti(void *pvm, void *pproc)
   printf("PROCESS : %d \n", process->pc);
   param[0] = *(int*)process->records[process->param[0].value - 1];
   printf("REG VALUE : %d\n", param[0]);
+  param[0] = change_endian((void *)&param[0], 4);
   if (process->param[1].type == REG_CODE)
     param[1] = *(int*)process->records[process->param[1].value - 1];
-  else if (process->param[1].type == DIR_CODE)
-    param[1] = process->param[1].value;
-  else if (process->param[1].type == IND_CODE)
+  else
     param[1] = process->param[1].value;
   if (process->param[2].type == REG_CODE)
     param[2] = *(int*)process->records[process->param[2].value - 1];
