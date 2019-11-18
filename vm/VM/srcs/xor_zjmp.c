@@ -64,12 +64,10 @@ static void			cb_zjmp(void *pvm, void *pproc)
 {
 	t_env		*vm;
 	t_process	*process;
-	int start;
 	int result;
 
 	vm = (t_env*)pvm;
 	process = (t_process*)pproc;
-	start = process->pc;
 	result = change_endian(process->param[0].ptr, IND_SIZE);
 	if (result != 0)
 		process->pc = (result % 4096);
@@ -77,7 +75,7 @@ static void			cb_zjmp(void *pvm, void *pproc)
 			process->pc = 0;
 	if (process->pc > 128)
 		process->pc = 4096 - process->pc;
-	ft_printf("ZJMP Result : %d | pc : %d->%d (+%d)\n", result, start, process->pc, (process->pc - start));
+	ft_printf("ZJMP Result : %d \n", process->pc);
 }
 
 t_result		ft_zjmp(t_env *vm, t_process *process)
