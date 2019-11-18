@@ -53,8 +53,10 @@ t_result		ft_live(t_env *vm, t_process *process)
 	process->param[0].ptr = get_param(process, vm->memory, REG_SIZE);
 	process->param[0].size = REG_SIZE;
 	ft_printf("LIVE : param = %d\n", change_endian(process->param[0].ptr, REG_SIZE));
+	ft_printf("LIVE : param = %d\n", change_endian(process->param[0].ptr, 4));
 	process->active = true;
 	process->delay = 10 - 1;
+	// dump_memory(vm->memory);
 	return (cb_live);
 }
 
@@ -80,7 +82,7 @@ static void		cb_ld(void *pvm, void *pproc)
 **est un direct ou un indirect, le deuxieme est forcement un registre.
 **on utilise un pointeur generique pour recuperer l'adresse ou charger notre
 **registre, si p1 est un indirecte :
-**on va remplir notre notre registre a  partir l'adresse 
+**on va remplir notre notre registre a  partir l'adresse
 **(PC + P1 % IDX_MOD) % MEM_SIZE
 **sinon on remplit notre registre avec les 4 octets suivant l'encodeur
 **si p1 = 0, modifie le carry
@@ -115,10 +117,10 @@ t_result		ft_ld(t_env *vm, t_process *process)
 }
 
 /*
-**store la valeure du registre contenu dans p1 a l'adresse represente par p2 
+**store la valeure du registre contenu dans p1 a l'adresse represente par p2
 **si c'est un indirecte sinon dans le registre specifie. ca n'est jamais un
 **direct.
-**si c'est un registre un store d'un registre a un autre sans effectuer de 
+**si c'est un registre un store d'un registre a un autre sans effectuer de
 **memrev, sinon on se rend a ladresse (PC + p2 % IDX_MOD) % MEM_SIZE et on y
 ** charge le contenu du registre.
 */
