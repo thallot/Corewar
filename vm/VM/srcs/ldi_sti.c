@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ldi.c                                              :+:      :+:    :+:   */
+/*   ldi_sti.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: thallot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -20,44 +20,58 @@ static void			cb_ldi(void *pvm, void *pproc)
 {
     t_env		*vm;
     t_process	*process;
-    unsigned char *idx;
-    int         param[2];
+    int         idx;
     int         address;
     void		*dest;
     unsigned char *mem;
     int         start;
 
-
     vm = (t_env*)pvm;
     process = (t_process*)pproc;
     start = process->pc;
     mem = vm->memory;
-    // ci-dessous ajouter des variations en fonction du type (REG/IND/DIR) atm on imagine que ce sont des DIR2
-    param[0] = process->param[0].value;
-    param[1] = process->param[1].value;
     address = process->param[0].value + process->param[1].value;
-    idx = &mem[get_adress(start, address, false)];
-    ft_printf("param[0] = %d\n", process->param[0].value);
-    ft_printf("param[1] = %d\n", process->param[1].value);
-    ft_printf("address = %d\n", address);
-    dest = process->records[process->param[2].value];
-    ft_memcpy(dest, idx, REG_SIZE);
-    ft_printf(" P0 : %d | P1:  %d\n", param[0], param[1]);
-    ft_printf("r2 contient : %s\n", process->records[1]);
+    idx = change_endian(&mem[get_adress(0, address, false)], 4);
+    dest = process->records[process->param[2].value - 1];
+    ft_memcpy(dest, (void*)&idx, REG_SIZE);
+    ft_printf("What's in the register? -> %d\n", *(int*)process->records[process->param[2].value - 1]);
+}
+
+void            set_param_values(unsigned char *mem, t_process *process)
+{
+    unsigned char   *idx;
+    int             start;
+
+    start = process->pc;
+    if (process->param[0].type == IND_CODE)
+    {
+        idx = &mem[get_adress(start, process->param[0]. value, false)];
+        process->param[0].value = change_endian(idx, REG_SIZE);
+        process->param[0].size = REG_SIZE;
+    }
+    else if (process->param[0].type == REG_CODE)
+    {
+        process->param[0].value = *(int*)process->records[process->param[0].value - 1];
+        process->param[0].size = REG_SIZE;
+    }
+    if (process->param[1].type == REG_CODE)
+    {
+        process->param[1].value = *(int*)process->records[process->param[1].value - 1];
+        process->param[1].size = REG_SIZE;
+    }
 }
 
 t_result		ft_ldi(t_env *vm, t_process *process)
 {
     unsigned char	*mem;
-    int				start;
 
     printf("ENTER LDI\n");
-    start = process->pc;
     mem = vm->memory;
     if (get_params(process, mem, 3, true))
         return (NULL);
     if (process->param[2].size != T_REG || process->param[1].size == T_IND)
         return (NULL);
+    set_param_values(mem, process);
     process->active = true;
     process->delay = 25 - 1;
     return (cb_ldi);
