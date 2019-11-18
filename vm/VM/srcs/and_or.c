@@ -50,7 +50,6 @@ t_result		ft_and(t_env *vm, t_process *process)
 		return (NULL);
 	if (process->param[2].size != T_REG)
 		return (NULL);
-	printf("P0 %zu | P1 %zu | P2 %zu\n", process->param[0].type, process->param[1].type, process->param[2].type);
 	process->active = true;
 	process->delay = 6 - 1;
 	return (cb_and);

@@ -19,7 +19,6 @@ static void			cb_sti(void *pvm, void *pproc)
   int param[3];
   int result;
 
-  printf("ENTER CALLBACK STI\n");
   vm = (t_env*)pvm;
   process = (t_process*)pproc;
   param[0] = *(int*)process->records[process->param[0].value - 1];
@@ -38,15 +37,14 @@ t_result		ft_sti(t_env *vm, t_process *process)
 	unsigned char	*mem;
 	int				start;
 
-  printf("ENTER STI\n");
 	start = process->pc;
 	mem = vm->memory;
-  printf(" START : %d\n", start);
 	if (get_params(process, mem, 3, true))
 		return (NULL);
 	if (process->param[0].type != REG_CODE)
 		return (NULL);
-  printf(" PC : %d\n", process->pc);
+  if (process->param[0].type == UNDEF || process->param[1].type == UNDEF || process->param[2].type == UNDEF)
+  	return (NULL);
 	process->active = true;
 	process->delay = 25 - 1;
 	return (cb_sti);

@@ -59,8 +59,8 @@ typedef struct		s_param
 {
 	char			*ptr;
 	int				value;
-	size_t			size;
-	size_t			type;
+	int			size;
+	int			type;
 }					t_param;
 
 /*
