@@ -41,6 +41,9 @@ static void			cb_xor(void *pvm, void *pproc)
   ft_printf("XOR RESULT : %d \n", *(int*)process->records[process->param[2].value - 1]);
 }
 
+/*
+** XOR prends en parametre T_REG | T_DIR | T_IND, T_REG | T_IND | T_DIR, T_REG
+*/
 t_result		ft_xor(t_env *vm, t_process *process)
 {
 	unsigned char	*mem;
@@ -52,6 +55,20 @@ t_result		ft_xor(t_env *vm, t_process *process)
 		return (NULL);
 	if (process->param[2].size != T_REG)
 		return (NULL);
+	if (process->param[0].type == IND_CODE)
+	{
+		idx = &mem[get_adress(process->pc_instru, process->param[1].value, false)];
+		process->param[0].ptr = (char*)idx;
+		process->param[0].value = change_endian(idx, REG_SIZE);
+		process->param[0].size = REG_SIZE;
+	}
+	if (process->param[1].type == IND_CODE)
+	{
+		idx = &mem[get_adress(process->pc_instru, process->param[1].value, false)];
+		process->param[1].ptr = (char*)idx;
+		process->param[1].value = change_endian(idx, REG_SIZE);
+		process->param[1].size = REG_SIZE;
+	}
 	process->active = true;
 	process->delay = 6 - 1;
 	return (cb_xor);

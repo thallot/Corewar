@@ -75,6 +75,7 @@ typedef struct		s_process
 	enum e_bool		active;
 	char			records[REG_NUMBER][REG_SIZE];
 	int				pc;
+	int				pc_instru;
 	enum e_bool		carry;
 	int				delay;
 	enum e_live		state;

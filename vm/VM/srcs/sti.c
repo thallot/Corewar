@@ -12,6 +12,17 @@
 
 #include "vm.h"
 
+/*
+** STI additionne la valeur des deux dernier parametres (p1 et p2),
+** et ecrit le contenue du registre passe en parametre (p0) a ladresse resultante
+** de la somme de p1 et p2
+** Si le p1 est un indirect,
+** on va chercher la valeur present a p1.value + pc_instru
+** Dans tous les cas on additionne la valeur de p1 et p2
+** Puis on va a l addresse resultante de cette somme,
+** et on y ecrit la valeur contenue dans le registre passe en parametre 0 (p0)
+*/
+
 static void			cb_sti(void *pvm, void *pproc)
 {
   t_env		*vm;
@@ -46,14 +57,18 @@ static void			cb_sti(void *pvm, void *pproc)
   printf("P0 : %d | P1 : %d | P2:  %d\n", param[0], param[1], param[2]);
 }
 
+
+/*
+** STI prends en parametre T_REG, T_REG | T_DIR | T_IND, T_DIR | T_REG
+*/
+
 t_result		ft_sti(t_env *vm, t_process *process)
 {
 	unsigned char	*mem;
   unsigned char	*idx;
-	int				start;
 
   printf("ENTER STI\n");
-	start = process->pc;
+	process->pc_instru = process->pc;
 	mem = vm->memory;
 	if (get_params(process, mem, 3, true))
 		return (NULL);
@@ -64,7 +79,7 @@ t_result		ft_sti(t_env *vm, t_process *process)
   printf("NO EXIT \n");
   if (process->param[1].type == IND_CODE)
   {
-    idx = &mem[get_adress(start, process->param[1].value, false)];
+    idx = &mem[get_adress(process->pc_instru, process->param[1].value, false)];
     process->param[1].ptr = (char*)idx;
 		process->param[1].value = change_endian(idx, REG_SIZE);
 		process->param[1].size = REG_SIZE;
