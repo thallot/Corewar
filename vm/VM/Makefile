@@ -41,7 +41,7 @@ HEADER = ../includes
 
 CC = gcc $(CFLAGS)
 
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
 
 SRCS = $(addprefix $(D_SRCS)/,$(SC))
 

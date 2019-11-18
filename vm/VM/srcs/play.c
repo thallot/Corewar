@@ -51,7 +51,7 @@ void		process_play(t_listp *players, t_env *vm)
 				player->active = false;
 			}
 		}
-		ft_printf("cycle++\n");
+		ft_printf("cycle++ | cycle : %d\n", player->pc );
 		players = players->next;
 	}
 }

@@ -106,7 +106,7 @@ void			lets_play(t_env *vm, t_listp *players)
 	{
 		process_play(players, vm);
 		rules.cycle++;
-		if (!(rules.cycle % rules.cycle_to_die))
+		if (!rules.cycle_to_die || !(rules.cycle % rules.cycle_to_die))
 			whos_living(players, vm, &rules);
 		/*
 		if (visu)
