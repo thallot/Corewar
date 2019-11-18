@@ -21,15 +21,18 @@ static void			cb_sti(void *pvm, void *pproc)
 
   vm = (t_env*)pvm;
   process = (t_process*)pproc;
+  printf("PROCESS : %d \n", process->pc);
   param[0] = *(int*)process->records[process->param[0].value - 1];
-  param[0] = change_endian(&(param[0]), 4);
+  printf("REG VALUE : %d\n", param[0]);
   if (process->param[1].type == REG_CODE)
     param[1] = *(int*)process->records[process->param[1].value - 1];
-  else
+  else if (process->param[1].type == DIR_CODE)
+    param[1] = process->param[1].value;
+  else if (process->param[1].type == IND_CODE)
     param[1] = process->param[1].value;
   if (process->param[2].type == REG_CODE)
     param[2] = *(int*)process->records[process->param[2].value - 1];
-  else
+  else if (process->param[2].type == DIR_CODE)
 	 param[2] = process->param[2].value;
   result = param[1] + param[2];
   if (result != 0)
@@ -46,16 +49,27 @@ static void			cb_sti(void *pvm, void *pproc)
 t_result		ft_sti(t_env *vm, t_process *process)
 {
 	unsigned char	*mem;
+  unsigned char	*idx;
 	int				start;
 
+  printf("ENTER STI\n");
 	start = process->pc;
 	mem = vm->memory;
 	if (get_params(process, mem, 3, true))
 		return (NULL);
-	if (process->param[0].type != REG_CODE)
+	if (process->param[0].type != REG_CODE || process->param[2].type == IND_CODE)
 		return (NULL);
   if (process->param[0].type == UNDEF || process->param[1].type == UNDEF || process->param[2].type == UNDEF)
   	return (NULL);
+  printf("NO EXIT \n");
+  if (process->param[1].type == IND_CODE)
+  {
+    idx = &mem[get_adress(start, process->param[1].value, false)];
+    process->param[1].ptr = (char*)idx;
+		process->param[1].value = change_endian(idx, REG_SIZE);
+		process->param[1].size = REG_SIZE;
+    printf(" IND VALUE : %d\n", process->param[1].value);
+  }
 	process->active = true;
 	process->delay = 25 - 1;
 	return (cb_sti);

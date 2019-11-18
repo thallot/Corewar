@@ -29,7 +29,8 @@ SC = vm.c \
 	 and_or.c \
 	 xor_zjmp.c \
 	 ldi_sti.c \
-	 sti.c
+	 sti.c \
+	 fork.c \
 
 LIBFT = ../libft
 

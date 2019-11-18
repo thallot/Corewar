@@ -107,7 +107,6 @@ int		get_params(t_process *process, unsigned char *memory
 			size = get_size(encoded, THIRD, d2);
 			type = get_type(encoded, THIRD);
 		}
-
 	}
 	printf("success\n");
 	return (EXIT_SUCCESS);

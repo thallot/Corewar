@@ -66,18 +66,18 @@ static void			cb_zjmp(void *pvm, void *pproc)
 {
 	t_env		*vm;
 	t_process	*process;
-	int result;
+	int address;
 
 	vm = (t_env*)pvm;
 	process = (t_process*)pproc;
-	result = change_endian(process->param[0].ptr, IND_SIZE);
-	printf(" RESULT : %d\n", result);
-	if (result != 0)
+	address = change_endian(process->param[0].ptr, IND_SIZE);
+	printf(" address : %d\n", address);
+	if (address != 0)
 	{
-		if (result >= 61440)
-			process->pc -= 4096 - (result % 4096) + 3;
+		if (address >= 4096)
+			process->pc -= 4096 - (address % 4096) + 3;
 		else
-			process->pc = (result % 4096) % 128;
+			process->pc = (address % 4096) % 128;
 	}
 	else
 			process->pc = 0;

@@ -25,6 +25,7 @@ static t_result		(*instr[NB_INSTR])(t_env *vm, t_process *process) =
 	ft_zjmp,
 	ft_ldi,
 	ft_sti,
+	ft_fork,
 };
 
 void		process_play(t_listp *players, t_env *vm)
