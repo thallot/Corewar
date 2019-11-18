@@ -45,7 +45,7 @@ int			get_size(char encoded, int param, enum e_bool d2)
 	{
 		if (d2 == false)
 			return (DIR_SIZE);
-		return (DIR_SIZE);
+		return (IND_SIZE);
 	}
 	else if (ret == IND_CODE)
 		return (IND_SIZE);

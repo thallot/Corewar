@@ -28,7 +28,8 @@ SC = vm.c \
 	 add_sub.c \
 	 and_or.c \
 	 xor_zjmp.c \
-	 ldi_sti.c
+	 ldi_sti.c \
+	 sti.c
 
 LIBFT = ../libft
 

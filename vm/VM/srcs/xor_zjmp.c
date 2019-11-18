@@ -69,8 +69,14 @@ static void			cb_zjmp(void *pvm, void *pproc)
 	vm = (t_env*)pvm;
 	process = (t_process*)pproc;
 	result = change_endian(process->param[0].ptr, IND_SIZE);
+	printf(" RESULT : %d\n", result);
 	if (result != 0)
-		process->pc = (result % 4096);
+	{
+		if (result >= 61440)
+			process->pc -= 4096 - (result % 4096) + 3;
+		else
+			process->pc = (result % 4096) % 128;
+	}
 	else
 			process->pc = 0;
 	if (process->pc > 128)

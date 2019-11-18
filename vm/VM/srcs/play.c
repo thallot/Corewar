@@ -23,7 +23,8 @@ static t_result		(*instr[NB_INSTR])(t_env *vm, t_process *process) =
 	ft_or,
 	ft_xor,
 	ft_zjmp,
-	ft_ldi
+	ft_ldi,
+	ft_sti,
 };
 
 void		process_play(t_listp *players, t_env *vm)

@@ -17,7 +17,7 @@
 # include "op.h"
 # include <stdio.h>
 
-# define NB_INSTR 10
+# define NB_INSTR 11
 
 # define UNINIT -2
 # define UNDEF -1
@@ -183,6 +183,7 @@ t_result		ft_or(t_env *vm, t_process *process);
 t_result		ft_xor(t_env *vm, t_process *process);
 t_result		ft_zjmp(t_env *vm, t_process *process);
 t_result		ft_ldi(t_env *vm, t_process *process);
+t_result		ft_sti(t_env *vm, t_process *process);
 
 /*
 **----------------------------------Tools------------------------------
