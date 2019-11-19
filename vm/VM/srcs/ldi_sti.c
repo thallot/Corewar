@@ -6,7 +6,7 @@
 /*   By: thallot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/14 15:02:09 by thallot           #+#    #+#             */
-/*   Updated: 2019/11/14 15:02:10 by thallot          ###   ########.fr       */
+/*   Updated: 2019/11/19 16:40:26 by jjaegle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,21 +51,11 @@ void            set_param_values(unsigned char *mem, t_process *process)
     {
         idx = &mem[get_adress(start, process->param[0].value, false)];
         process->param[0].value = change_endian(idx, REG_SIZE);
-        //ligne ci-dessous necessaire?
-        process->param[0].size = REG_SIZE;
-    }
+	}
     else if (process->param[0].type == REG_CODE)
-    {
         process->param[0].value = *(int*)process->records[process->param[0].value - 1];
-        //ligne ci-dessous necessaire?
-        process->param[0].size = REG_SIZE;
-    }
     if (process->param[1].type == REG_CODE)
-    {
         process->param[1].value = *(int*)process->records[process->param[1].value - 1];
-        // ligne ci-dessous necessaire?
-        process->param[1].size = REG_SIZE;
-    }
 }
 
 /*
@@ -85,7 +75,7 @@ t_result		ft_ldi(t_env *vm, t_process *process)
     ft_printf("PC = %c", mem[process->pc]);
     if (get_params(process, mem, 3, true))
         return (NULL);
-    if (process->param[2].size != T_REG || process->param[1].size == T_IND)
+    if (process->param[2].type != T_REG || process->param[1].type == IND_CODE)
         return (NULL);
     set_param_values(mem, process);
     process->active = true;

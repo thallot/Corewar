@@ -6,7 +6,7 @@
 /*   By: thallot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/14 15:02:09 by thallot           #+#    #+#             */
-/*   Updated: 2019/11/14 15:02:10 by thallot          ###   ########.fr       */
+/*   Updated: 2019/11/19 16:40:48 by jjaegle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,6 @@ t_result		ft_sti(t_env *vm, t_process *process)
   {
     idx = &mem[get_adress(process->pc_instru, process->param[1].value, false)];
 		process->param[1].value = change_endian(idx, REG_SIZE);
-		process->param[1].size = REG_SIZE;
     printf(" IND VALUE : %d\n", process->param[1].value);
   }
 	process->active = true;

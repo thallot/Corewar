@@ -6,7 +6,7 @@
 /*   By: thallot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/15 10:49:09 by thallot           #+#    #+#             */
-/*   Updated: 2019/11/15 10:49:15 by thallot          ###   ########.fr       */
+/*   Updated: 2019/11/19 16:37:06 by jjaegle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,11 @@ static void			cb_and(void *pvm, void *pproc)
 
 	vm = (t_env*)pvm;
 	process = (t_process*)pproc;
-  if (process->param[0].size == T_REG)
+  if (process->param[0].type == T_REG)
     param[0] = *(int*)process->records[process->param[0].value - 1];
   else
     param[0] = process->param[0].value;
-  if (process->param[1].size == T_REG)
+  if (process->param[1].type == T_REG)
     param[1] = *(int*)process->records[process->param[1].value - 1];
   else
     param[1] = process->param[1].value;
@@ -53,16 +53,13 @@ t_result		ft_and(t_env *vm, t_process *process)
 	process->pc_instru = process->pc;
 	if (get_params(process, mem, 3, false))
 		return (NULL);
-	if (process->param[0].type == UNDEF || process->param[1].type == UNDEF || process->param[2].type == UNDEF)
-		return (NULL);
-	if (process->param[2].size != T_REG)
+	if (process->param[2].type != T_REG)
 		return (NULL);
 	if (process->param[0].type == IND_CODE)
 	{
 		idx = &mem[get_adress(process->pc_instru, process->param[0].value, false)];
 		process->param[0].ptr = (char*)idx;
 		process->param[0].value = change_endian(idx, REG_SIZE);
-		process->param[0].size = REG_SIZE;
 		printf ("VALUE : %d | \n", process->param[0].value);
 	}
 	if (process->param[1].type == IND_CODE)
@@ -70,7 +67,6 @@ t_result		ft_and(t_env *vm, t_process *process)
 		idx = &mem[get_adress(process->pc_instru, process->param[1].value, false)];
 		process->param[1].ptr = (char*)idx;
 		process->param[1].value = change_endian(idx, REG_SIZE);
-		process->param[1].size = REG_SIZE;
 	}
 	printf("P0 %d | P1 %d | P2 %d\n", process->param[0].type, process->param[1].type, process->param[2].type);
 	process->active = true;
@@ -93,11 +89,11 @@ static void			cb_or(void *pvm, void *pproc)
 	vm = (t_env*)pvm;
 	process = (t_process*)pproc;
 	process->pc_instru = process->pc;
-  if (process->param[0].size == T_REG)
+  if (process->param[0].type == T_REG)
     param[0] = *(int*)process->records[process->param[0].value - 1];
   else
     param[0] = process->param[0].value;
-  if (process->param[1].size == T_REG)
+  if (process->param[1].type == T_REG)
     param[1] = *(int*)process->records[process->param[1].value - 1];
   else
     param[1] = process->param[1].value;
@@ -122,21 +118,19 @@ t_result		ft_or(t_env *vm, t_process *process)
 	mem = vm->memory;
 	if (get_params(process, mem, 3, false))
 		return (NULL);
-	if (process->param[2].size != T_REG)
+	if (process->param[2].type != T_REG)
 		return (NULL);
 	if (process->param[0].type == IND_CODE)
 	{
 		idx = &mem[get_adress(process->pc_instru, process->param[1].value, false)];
 		process->param[0].ptr = (char*)idx;
 		process->param[0].value = change_endian(idx, REG_SIZE);
-		process->param[0].size = REG_SIZE;
 	}
 	if (process->param[1].type == IND_CODE)
 	{
 		idx = &mem[get_adress(process->pc_instru, process->param[1].value, false)];
 		process->param[1].ptr = (char*)idx;
 		process->param[1].value = change_endian(idx, REG_SIZE);
-		process->param[1].size = REG_SIZE;
 	}
 	process->active = true;
 	process->delay = 6 - 1;

@@ -6,7 +6,7 @@
 /*   By: jjaegle <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/06 09:41:43 by jjaegle           #+#    #+#             */
-/*   Updated: 2019/11/09 20:10:10 by jjaegle          ###   ########.fr       */
+/*   Updated: 2019/11/19 13:44:04 by jjaegle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ int			main(int ac, char *av[])
 	if (create_process(&env))
 		write(2, "Malloc error\n", 13);
 	else
-		lets_play(&env, env.player);
+		lets_play(&env);
 	(void)ac;
 	return (0);
 }
