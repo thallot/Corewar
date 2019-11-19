@@ -65,9 +65,9 @@ int visu_core(t_visu *visu)
       wprintw(memory, "\n");
     if (is_process_position(visu, i))
     {
-      attron(A_UNDERLINE);
-      wprintw(memory, " [%02x]", visu->vm->memory[i]);
-      attroff(A_UNDERLINE);
+      wattron(memory, A_STANDOUT);
+      wprintw(memory, " %02x", visu->vm->memory[i]);
+      wattroff(memory, A_STANDOUT);
     }
     else
       wprintw(memory, " %02x", visu->vm->memory[i]);
