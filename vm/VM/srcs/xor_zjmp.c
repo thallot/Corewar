@@ -48,9 +48,8 @@ t_result		ft_xor(t_env *vm, t_process *process)
 {
 	unsigned char	*mem;
 	unsigned char	*idx;
-	int				start;
 
-	start = process->pc;
+	process->pc_instru = process->pc;
 	mem = vm->memory;
 	if (get_params(process, mem, 3, false))
 		return (NULL);
@@ -77,7 +76,7 @@ t_result		ft_xor(t_env *vm, t_process *process)
 
 /*
 ** Saute jusqu a l adresse passée en parametre
-** Si result >= 61440 l address est surement negative,
+** Si result >= 4095 l address est surement negative,
 ** et fais reference a un label.
 */
 static void			cb_zjmp(void *pvm, void *pproc)

@@ -42,7 +42,7 @@ static void			cb_sti(void *pvm, void *pproc)
     param[1] = process->param[1].value;
   if (process->param[2].type == REG_CODE)
     param[2] = *(int*)process->records[process->param[2].value - 1];
-  else if (process->param[2].type == DIR_CODE)
+  else
 	 param[2] = process->param[2].value;
   result = param[1] + param[2];
   if (result != 0)
@@ -79,7 +79,6 @@ t_result		ft_sti(t_env *vm, t_process *process)
   if (process->param[1].type == IND_CODE)
   {
     idx = &mem[get_adress(process->pc_instru, process->param[1].value, false)];
-    process->param[1].ptr = (char*)idx;
 		process->param[1].value = change_endian(idx, REG_SIZE);
 		process->param[1].size = REG_SIZE;
     printf(" IND VALUE : %d\n", process->param[1].value);

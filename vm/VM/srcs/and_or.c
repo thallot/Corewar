@@ -50,6 +50,7 @@ t_result		ft_and(t_env *vm, t_process *process)
 	unsigned char	*idx;
 
 	mem = vm->memory;
+	process->pc_instru = process->pc;
 	if (get_params(process, mem, 3, false))
 		return (NULL);
 	if (process->param[0].type == UNDEF || process->param[1].type == UNDEF || process->param[2].type == UNDEF)
@@ -58,10 +59,11 @@ t_result		ft_and(t_env *vm, t_process *process)
 		return (NULL);
 	if (process->param[0].type == IND_CODE)
 	{
-		idx = &mem[get_adress(process->pc_instru, process->param[1].value, false)];
+		idx = &mem[get_adress(process->pc_instru, process->param[0].value, false)];
 		process->param[0].ptr = (char*)idx;
 		process->param[0].value = change_endian(idx, REG_SIZE);
 		process->param[0].size = REG_SIZE;
+		printf ("VALUE : %d | \n", process->param[0].value);
 	}
 	if (process->param[1].type == IND_CODE)
 	{
@@ -89,6 +91,7 @@ static void			cb_or(void *pvm, void *pproc)
 
 	vm = (t_env*)pvm;
 	process = (t_process*)pproc;
+	process->pc_instru = process->pc;
   if (process->param[0].size == T_REG)
     param[0] = *(int*)process->records[process->param[0].value - 1];
   else
