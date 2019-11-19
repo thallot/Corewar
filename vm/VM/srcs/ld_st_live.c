@@ -6,7 +6,7 @@
 /*   By: jjaegle <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 16:28:29 by jjaegle           #+#    #+#             */
-/*   Updated: 2019/11/19 16:33:33 by jjaegle          ###   ########.fr       */
+/*   Updated: 2019/11/19 16:49:18 by jjaegle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,9 @@ static void		cb_live(void *pvm, void *pproc)
 t_result		ft_live(t_env *vm, t_process *process)
 {
 	process->pc++;
-	process->param[0].ptr = get_param(process, vm->memory, REG_SIZE, false);
+	ft_printf("oui\n");
+	process->param[0].ptr = get_param(process, vm->memory, DIR_CODE, false);
+	ft_printf("oui\n");
 	ft_printf("LIVE : param = %d\n", change_endian(process->param[0].ptr, REG_SIZE));
 	ft_printf("LIVE : param = %d\n", change_endian(process->param[0].ptr, 4));
 	process->active = true;
