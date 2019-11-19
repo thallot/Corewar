@@ -112,5 +112,6 @@ void			lets_play(t_env *vm, t_listp *players)
 		if (visu)
 			visu(warriors name, arene (4096) with value, arena);*/
 	}
+	dump_memory(vm->memory);
 	(void)players;
 }

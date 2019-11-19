@@ -83,6 +83,7 @@ t_result		ft_and(t_env *vm, t_process *process)
 ** et stock le resultat dans le 3e parametre aui est un registre.
 ** les 2 premier parametre sont code sur 2 octets
 */
+
 static void			cb_or(void *pvm, void *pproc)
 {
 	t_env		*vm;

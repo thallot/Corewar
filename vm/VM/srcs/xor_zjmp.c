@@ -89,26 +89,32 @@ static void			cb_zjmp(void *pvm, void *pproc)
 	process = (t_process*)pproc;
 	address = change_endian(process->param[0].ptr, IND_SIZE);
 	printf(" address : %d\n", address);
-	if (address != 0)
-	{
-		if (address >= 4096)
-			process->pc -= 4096 - (address % 4096) + 3;
-		else
-			process->pc = (address % 4096) % 128;
-	}
-	else
-			process->pc = 0;
-	if (process->pc > 128)
-		process->pc = 4096 - process->pc;
+	printf(" address VALUE : %d\n", process->param[0].value);
+	printf(" process instru : %d\n", process->param[0].value);
+	address = get_adress(process->pc_instru, process->param[0].value, false);
+	process->pc = address;
+	// if (address != 0)
+	// {
+	// 	if (address >= 4096)
+	// 		process->pc -= 4096 - (address % 4096) + 3;
+	// 	else
+	// 		process->pc = (address % 4096) % 128;
+	// }
+	// else
+	// 		process->pc = 0;
+	// if (process->pc > 128)
+	// 	process->pc = 4096 - process->pc;
 	ft_printf("ZJMP Result : %d \n", process->pc);
 }
 
 t_result		ft_zjmp(t_env *vm, t_process *process)
 {
+	process->pc_instru = process->pc;
 	process->pc++;
   if (process->carry == true)
   {
   	process->param[0].ptr = get_param(process, vm->memory, IND_SIZE);
+		process->param[0].value = (short int)change_endian(process->param[0].ptr, IND_SIZE);
   	process->param[0].size = IND_SIZE;
   	process->active = true;
   	process->delay = 20 - 1;
