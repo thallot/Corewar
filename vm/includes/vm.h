@@ -6,7 +6,7 @@
 /*   By: jjaegle <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/06 09:42:52 by jjaegle           #+#    #+#             */
-/*   Updated: 2019/11/14 15:34:46 by jjaegle          ###   ########.fr       */
+/*   Updated: 2019/11/14 17:32:28 by jjaegle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include "op.h"
 # include <stdio.h>
 
-# define NB_INSTR 5
+# define NB_INSTR 12
 
 # define UNINIT -2
 # define UNDEF -1
@@ -176,7 +176,8 @@ t_result			ft_live(t_env *vm, t_process *process);
 t_result				ft_st(t_env *vm, t_process *process);
 void					cb_st(void *pvm, void *pproc);
 t_result				ft_add(t_env *vm, t_process *process);
-t_result		ft_sub(t_env *vm, t_process *process);
+t_result				ft_sub(t_env *vm, t_process *process);
+t_result				ft_fork(t_env *vm, t_process *process);
 
 /*
 **----------------------------------Tools------------------------------
@@ -195,5 +196,6 @@ int					is_register(int tab[], int size);
 int					val_record(t_process *process, int rec, int opt);
 int					change_endian(void *var, int size);
 int					get_adress(int start, int ind, enum e_bool l);
+int					clean_process(t_listp *list);
 
 #endif

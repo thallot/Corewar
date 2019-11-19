@@ -6,7 +6,7 @@
 /*   By: jjaegle <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/06 09:39:24 by jjaegle           #+#    #+#             */
-/*   Updated: 2019/11/13 16:00:21 by jjaegle          ###   ########.fr       */
+/*   Updated: 2019/11/14 16:59:29 by jjaegle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@
 
 # define REG_NUMBER				16
 
-# define CYCLE_TO_DIE			20 //1536
+# define CYCLE_TO_DIE			1536
 # define CYCLE_DELTA				50
 # define NBR_LIVE				21
 # define MAX_CHECKS				10

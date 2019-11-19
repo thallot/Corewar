@@ -6,11 +6,23 @@
 /*   By: jjaegle <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 11:53:59 by jjaegle           #+#    #+#             */
-/*   Updated: 2019/11/13 15:04:39 by jjaegle          ###   ########.fr       */
+/*   Updated: 2019/11/14 16:38:23 by jjaegle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
+
+int			clean_process(t_listp *list)
+{
+	t_listp	*next;
+
+	while (list && (next = list->next))
+	{
+		free(list);
+		list = next;
+	}
+	return (EXIT_SUCCESS);
+}
 
 int			nb_alive(t_listp *players)
 {

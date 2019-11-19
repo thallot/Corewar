@@ -6,7 +6,7 @@
 /*   By: jjaegle <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/07 16:18:03 by jjaegle           #+#    #+#             */
-/*   Updated: 2019/11/07 16:30:18 by jjaegle          ###   ########.fr       */
+/*   Updated: 2019/11/14 16:10:34 by jjaegle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void		dump_memory(unsigned char memory[])
 	int		i;
 
 	i = 0;
-	while (i < MEM_SIZE)
+	while (i < 250)
 		ft_printf("|%02x", memory[i++]);
 	ft_putchar('\n');
 }

@@ -6,7 +6,7 @@
 /*   By: jjaegle <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 15:52:01 by jjaegle           #+#    #+#             */
-/*   Updated: 2019/11/14 15:35:04 by jjaegle          ###   ########.fr       */
+/*   Updated: 2019/11/14 16:53:53 by jjaegle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,11 +69,11 @@ int		get_params(t_process *process, unsigned char *memory
 	while (i < nb)
 	{
 		process->param[i].ptr = get_param(process, memory,  size);
+		if (!(process->param[i].ptr))
+			return (EXIT_FAILURE);
 		process->param[i].size = size;
 		process->param[i].value = change_endian(process->param[i].ptr, size);
 	//	ft_printf("GPs : value %d = %d\n", i, process->param[i].value);
-		if (!(process->param[i].ptr))
-			return (EXIT_FAILURE);
 		i++;
 		if (i == 1)
 			size = get_size(encoded, SECND, d2);

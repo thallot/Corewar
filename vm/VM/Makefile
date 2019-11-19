@@ -6,7 +6,7 @@
 #    By: tbrizon <tbrizon@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/15 17:09:42 by tbrizon           #+#    #+#              #
-#    Updated: 2019/11/13 16:37:41 by jjaegle          ###   ########.fr        #
+#    Updated: 2019/11/14 16:35:47 by jjaegle          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,6 +26,7 @@ SC = vm.c \
 	 ld_st_live.c \
 	 tools2.c \
 	 add_sub_and.c \
+	 fork_lfork.c \
 
 LIBFT = ../libft
 

@@ -6,7 +6,7 @@
 /*   By: jjaegle <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 16:28:29 by jjaegle           #+#    #+#             */
-/*   Updated: 2019/11/14 15:32:13 by jjaegle          ###   ########.fr       */
+/*   Updated: 2019/11/14 16:52:57 by jjaegle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,8 +131,10 @@ t_result	ft_st(t_env *vm, t_process *process)
 
 	start = process->pc;
 	memory = vm->memory;
+	ft_printf("oui\n");
 	if(get_params(process, memory, 2, false))
 		return (NULL);
+	ft_printf("non\n");
 	if (process->param[0].size != T_REG || process->param[1].size == DIR_SIZE)
 		return (NULL);
 	if (process->param[1].size == T_REG)
