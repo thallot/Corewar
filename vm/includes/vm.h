@@ -6,7 +6,7 @@
 /*   By: jjaegle <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/06 09:42:52 by jjaegle           #+#    #+#             */
-/*   Updated: 2019/11/14 15:34:46 by jjaegle          ###   ########.fr       */
+/*   Updated: 2019/11/14 17:32:28 by jjaegle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,5 +204,6 @@ int					is_register(int tab[], int size);
 int					val_record(t_process *process, int rec, int opt);
 int					change_endian(void *var, int size);
 int					get_adress(int start, int ind, enum e_bool l);
+int					clean_process(t_listp *list);
 
 #endif
