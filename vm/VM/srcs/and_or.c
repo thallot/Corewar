@@ -37,8 +37,8 @@ static void			cb_and(void *pvm, void *pproc)
   ft_memcpy(process->records[process->param[2].value - 1], (void*)&param[2], REG_SIZE);
   if (!param[2])
 		process->carry = !process->carry;
-	ft_printf("AND | Param0 : %d | Param1 : %d\n", param[0], param[1]);
-  ft_printf("AND RESULT : %d \n", *(int*)process->records[process->param[2].value - 1]);
+	// ft_printf("AND | Param0 : %d | Param1 : %d\n", param[0], param[1]);
+  // ft_printf("AND RESULT : %d \n", *(int*)process->records[process->param[2].value - 1]);
 }
 
 /*
@@ -63,7 +63,7 @@ t_result		ft_and(t_env *vm, t_process *process)
 		process->param[0].ptr = (char*)idx;
 		process->param[0].value = change_endian(idx, REG_SIZE);
 		process->param[0].size = REG_SIZE;
-		printf ("VALUE : %d | \n", process->param[0].value);
+		// printf ("VALUE : %d | \n", process->param[0].value);
 	}
 	if (process->param[1].type == IND_CODE)
 	{
@@ -72,7 +72,7 @@ t_result		ft_and(t_env *vm, t_process *process)
 		process->param[1].value = change_endian(idx, REG_SIZE);
 		process->param[1].size = REG_SIZE;
 	}
-	printf("P0 %d | P1 %d | P2 %d\n", process->param[0].type, process->param[1].type, process->param[2].type);
+	// printf("P0 %d | P1 %d | P2 %d\n", process->param[0].type, process->param[1].type, process->param[2].type);
 	process->active = true;
 	process->delay = 6 - 1;
 	return (cb_and);
@@ -105,8 +105,8 @@ static void			cb_or(void *pvm, void *pproc)
   ft_memcpy(process->records[process->param[2].value - 1], (void*)&param[2], REG_SIZE);
   if (!param[2])
 		process->carry = !process->carry;
-	ft_printf("OR | Param0 : %d | Param1 : %d\n", param[0], param[1]);
-  ft_printf("OR RESULT : %d \n", *(int*)process->records[process->param[2].value - 1]);
+	// ft_printf("OR | Param0 : %d | Param1 : %d\n", param[0], param[1]);
+  // ft_printf("OR RESULT : %d \n", *(int*)process->records[process->param[2].value - 1]);
 }
 
 /*

@@ -144,6 +144,13 @@ typedef struct		s_rules
 	enum e_bool		someone_alive;
 }					t_rules;
 
+typedef struct		s_visu
+{
+	t_listp			*process;
+	t_env				*vm;
+	t_rules     *rules;
+}					t_visu;
+
 /*
 **--------------------------------Fn_champ----------------------------
 */
@@ -206,4 +213,8 @@ int					change_endian(void *var, int size);
 int					get_adress(int start, int ind, enum e_bool l);
 int					clean_process(t_listp *list);
 
+/*
+**----------------------------------Visu------------------------------
+*/
+int visu_core(t_visu *visu);
 #endif

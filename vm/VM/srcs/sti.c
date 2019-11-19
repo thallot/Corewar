@@ -32,9 +32,9 @@ static void			cb_sti(void *pvm, void *pproc)
 
   vm = (t_env*)pvm;
   process = (t_process*)pproc;
-  printf("PROCESS : %d \n", process->pc);
+  // printf("PROCESS : %d \n", process->pc);
   param[0] = *(int*)process->records[process->param[0].value - 1];
-  printf("REG VALUE : %d\n", param[0]);
+  // printf("REG VALUE : %d\n", param[0]);
   param[0] = change_endian((void *)&param[0], 4);
   if (process->param[1].type == REG_CODE)
     param[1] = *(int*)process->records[process->param[1].value - 1];
@@ -53,7 +53,7 @@ static void			cb_sti(void *pvm, void *pproc)
     process->carry = !process->carry;
   }
   ft_memcpy((void*)&(vm->memory[result]), (void*)&param[0], 4);
-  printf("P0 : %d | P1 : %d | P2:  %d\n", param[0], param[1], param[2]);
+  // printf("P0 : %d | P1 : %d | P2:  %d\n", param[0], param[1], param[2]);
 }
 
 
@@ -66,7 +66,7 @@ t_result		ft_sti(t_env *vm, t_process *process)
 	unsigned char	*mem;
   unsigned char	*idx;
 
-  printf("ENTER STI\n");
+  // printf("ENTER STI\n");
 	process->pc_instru = process->pc;
 	mem = vm->memory;
 	if (get_params(process, mem, 3, true))
@@ -75,13 +75,13 @@ t_result		ft_sti(t_env *vm, t_process *process)
 		return (NULL);
   if (process->param[0].type == UNDEF || process->param[1].type == UNDEF || process->param[2].type == UNDEF)
   	return (NULL);
-  printf("NO EXIT \n");
+  // printf("NO EXIT \n");
   if (process->param[1].type == IND_CODE)
   {
     idx = &mem[get_adress(process->pc_instru, process->param[1].value, false)];
 		process->param[1].value = change_endian(idx, REG_SIZE);
 		process->param[1].size = REG_SIZE;
-    printf(" IND VALUE : %d\n", process->param[1].value);
+    // printf(" IND VALUE : %d\n", process->param[1].value);
   }
 	process->active = true;
 	process->delay = 25 - 1;

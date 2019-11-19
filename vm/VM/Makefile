@@ -32,6 +32,7 @@ SC = vm.c \
 	 ldi_sti.c \
 	 sti.c \
 	 fork_lfork.c \
+	 visu.c \
 
 LIBFT = ../libft
 
@@ -45,7 +46,7 @@ HEADER = ../includes
 
 CC = gcc $(CFLAGS)
 
-CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address -lncurses
 
 SRCS = $(addprefix $(D_SRCS)/,$(SC))
 

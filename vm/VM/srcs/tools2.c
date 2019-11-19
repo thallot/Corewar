@@ -114,7 +114,7 @@ int		get_params(t_process *process, unsigned char *memory
 			type = get_type(encoded, THIRD);
 		}
 	}
-	printf("success\n");
+	// printf("success\n");
 	return (EXIT_SUCCESS);
 }
 

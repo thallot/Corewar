@@ -44,7 +44,7 @@ void		process_play(t_listp *players, t_env *vm)
 				player->callback = instr[opcode](vm, player);
 			else
 				player->pc = (player->pc == MEM_SIZE - 1) ? 0 : player->pc + 1;
-			ft_printf("player->pc = %d\n", player->pc);
+			// ft_printf("player->pc = %d\n", player->pc);
 		}
 		else if (player->state != dead)
 		{
@@ -54,9 +54,7 @@ void		process_play(t_listp *players, t_env *vm)
 				player->active = false;
 			}
 		}
-		ft_printf("cycle++ | PC : %d\n", player->pc );
 		players = players->next;
-		ft_printf("i");
 	}
 	ft_putchar('\n');
 }

@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "vm.h"
+#include <ncurses.h>
 
 static void		initialise_rules(t_rules *rules)
 {
@@ -43,19 +44,19 @@ static void		check_nbr_lives(t_rules *rules)
 **Si il restait un survivant lors de la derniere verif alors il est le vainqueur
 */
 
-static void		print_result(t_info_champ champs[], int *ll, int nblive
-		, t_rules *rules)
-{
-	int		i;
-
-	i = *ll;
-	ft_printf("nblive = %d ll = %d\n", nblive, *ll);
-	if (nblive == 1)
-		ft_printf("le joueur %d(%s) a gagne\n", champs[i].num, champs[i].name);
-	else
-		ft_printf("No winner for today... Only looser\n");
-	rules->someone_alive = false;
-}
+// static void		print_result(t_info_champ champs[], int *ll, int nblive
+// 		, t_rules *rules)
+// {
+// 	// int		i;
+//
+// 	// i = *ll;
+// 	// ft_printf("nblive = %d ll = %d\n", nblive, *ll);
+// 	// if (nblive == 1)
+// 		// ft_printf("le joueur %d(%s) a gagne\n", champs[i].num, champs[i].name);
+// 	// else
+// 		// ft_printf("No winner for today... Only looser\n");
+// 	// rules->someone_alive = false;
+// }
 
 /*
 **whos_living est appele tout les CTD, fais le tour des players et verifie
@@ -77,14 +78,14 @@ static void		whos_living(t_listp *players, t_env *vm, t_rules *rules)
 		else if (players->process.state == waiting)
 		{
 			players->process.state = dead;
-			ft_printf("A process is dead :'(\n");
+			// ft_printf("A process is dead :'(\n");
 		}
 		players = players->next;
 	}
 	if (nb_alive(p))
 		check_nbr_lives(rules);
-	else
-		print_result(vm->tab_champ.champs, &vm->lastlive, vm->nblive, rules);
+	// else
+		// print_result(vm->tab_champ.champs, &vm->lastlive, vm->nblive, rules);
 	if (vm->nblive > 1)
 	{
 		vm->nblive = 0;
@@ -100,23 +101,25 @@ static void		whos_living(t_listp *players, t_env *vm, t_rules *rules)
 void			lets_play(t_env *vm, t_listp *players)
 {
 	t_rules			rules;
+	t_visu			visu;
 
 	initialise_rules(&rules);
-	while (rules.someone_alive == true && (int)rules.cycle != vm->dump - 1)
+	visu.rules = &rules;
+	visu.vm = vm;
+	visu.process = players;
+	while (rules.someone_alive == true && (int)rules.cycle != vm->dump - 1 && (!rules.cycle || getch()))
 	{
+		visu_core(&visu);
 		process_play(vm->player, vm);
 		rules.cycle++;
 		if (!rules.cycle_to_die || !(rules.cycle % rules.cycle_to_die))
 			whos_living(players, vm, &rules);
 		if (!(rules.cycle % rules.cycle_to_die))
 			whos_living(vm->player, vm, &rules);
-		ft_printf("cycle %d, vm->player.pc = %d\n", rules.cycle, vm->player->process.pc);
+		// ft_printf("cycle %d, vm->player.pc = %d\n", rules.cycle, vm->player->process.pc);
 		/*
 		if (visu)
 			visu(warriors name, arene (4096) with value, arena);*/
 	}
-	dump_memory(vm->memory);
-	if ((int)rules.cycle == vm->dump - 1)
-		dump_memory(vm->memory);
 	(void)players;
 }

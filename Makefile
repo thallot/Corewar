@@ -12,7 +12,7 @@
 
 NAME = assembler
 
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -Wall -Werror -Wextra -lncurses
 CC = gcc
 LIBFT = lib/libft/libft.a
 LIBFTPRINTF = lib/printf/libftprintf.a
