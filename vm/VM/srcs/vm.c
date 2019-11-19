@@ -58,7 +58,7 @@ static int	get_next_args(char **av[])
 static int	pars_args(char **av[], t_env *env)
 {
 	int		ret;
-	
+
 	while (*(*av)++ && **av && (ret = get_next_args(av)))
 	{
 		if (ret == DUMP)

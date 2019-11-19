@@ -6,7 +6,7 @@
 /*   By: jjaegle <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 11:23:02 by jjaegle           #+#    #+#             */
-/*   Updated: 2019/11/09 19:54:53 by jjaegle          ###   ########.fr       */
+/*   Updated: 2019/11/14 17:42:34 by jjaegle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,15 +102,21 @@ void			lets_play(t_env *vm, t_listp *players)
 	t_rules			rules;
 
 	initialise_rules(&rules);
-	while (rules.someone_alive == true)
+	while (rules.someone_alive == true && (int)rules.cycle != vm->dump - 1)
 	{
-		process_play(players, vm);
+		process_play(vm->player, vm);
 		rules.cycle++;
-		if (!(rules.cycle % rules.cycle_to_die))
+		if (!rules.cycle_to_die || !(rules.cycle % rules.cycle_to_die))
 			whos_living(players, vm, &rules);
+		if (!(rules.cycle % rules.cycle_to_die))
+			whos_living(vm->player, vm, &rules);
+		ft_printf("cycle %d, vm->player.pc = %d\n", rules.cycle, vm->player->process.pc);
 		/*
 		if (visu)
 			visu(warriors name, arene (4096) with value, arena);*/
 	}
+	dump_memory(vm->memory);
+	if ((int)rules.cycle == vm->dump - 1)
+		dump_memory(vm->memory);
 	(void)players;
 }

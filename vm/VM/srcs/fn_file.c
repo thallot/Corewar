@@ -25,7 +25,7 @@ static int	has_magic(char *str, int len)
 	{
 		mask = 0;
 		mask = str[i];
-		mask <<= (32 - 8); 
+		mask <<= (32 - 8);
 		mask >>= (8 * i);
 		ret |= mask;
 		i++;
@@ -49,11 +49,11 @@ int			extract_info(char *file, t_info_champ *champ)
 		lseek(fd, 2192, SEEK_SET);
 		ret = read(fd, buf, CHAMP_MAX_SIZE + 1);
 		buf[ret] = '\0';
-		if (buf[CHAMP_MAX_SIZE])
-		{
-			close(fd);
-			return (BIG);
-		}
+		// if (buf[CHAMP_MAX_SIZE])
+		// {
+		// 	close(fd);
+		// 	return (BIG);
+		// }
 		ft_memcpy(champ->instr, buf, ret);
 	}
 	close(fd);

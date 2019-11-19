@@ -6,7 +6,7 @@
 /*   By: jjaegle <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 16:32:27 by jjaegle           #+#    #+#             */
-/*   Updated: 2019/11/14 15:32:50 by jjaegle          ###   ########.fr       */
+/*   Updated: 2019/11/14 16:49:17 by jjaegle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void			cb_st(void *pvm, void *pproc)
 	ft_memrev(src, REG_SIZE);
 	ft_memcpy(process->param[1].ptr, src, REG_SIZE);
 	ft_printf("CBST : valeur storer = %d\n", change_endian(src, REG_SIZE));
+	dump_memory(vm->memory);
 }
 
 static void			cb_add(void *pvm, void *pproc)
@@ -51,6 +52,8 @@ t_result		ft_add(t_env *vm, t_process *process)
 	start = process->pc;
 	mem = vm->memory;
 	if (get_params(process, mem, 3, false))
+		return (NULL);
+	if (process->param[0].type == UNDEF || process->param[1].type == UNDEF || process->param[2].type == UNDEF)
 		return (NULL);
 	if (process->param[0].size != T_REG || process->param[1].size != T_REG || process->param[2].size != T_REG)
 		return (NULL);
