@@ -4,7 +4,10 @@
 	live:	st r1, 6
 		live %4
 #fork %-10
-		add r2, r3, r9
+		xor r2, r3, r9
+		xor %3, 15, r3
+		xor r2, r3, r9
+		xor	r3, %10, r3
 		zjmp %:live
 #		ld	5, r2
 #		ld	42,r3

@@ -6,7 +6,7 @@
 /*   By: thallot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/15 12:05:18 by thallot           #+#    #+#             */
-/*   Updated: 2019/11/19 16:38:32 by jjaegle          ###   ########.fr       */
+/*   Updated: 2019/11/20 11:47:42 by jjaegle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,24 +21,27 @@ static void			cb_xor(void *pvm, void *pproc)
 {
 	t_env		*vm;
 	t_process	*process;
-  int param[3];
+	int			i;
+	int			param[3];
 
 	vm = (t_env*)pvm;
 	process = (t_process*)pproc;
-  if (process->param[0].type == T_REG)
-    param[0] = *(int*)process->records[process->param[0].value - 1];
-  else
-    param[0] = process->param[0].value;
-  if (process->param[1].type == T_REG)
-    param[1] = *(int*)process->records[process->param[1].value - 1];
-  else
-    param[1] = process->param[1].value;
-  param[2] = param[0] ^ param[1];
-  ft_memcpy(process->records[process->param[2].value - 1], (void*)&param[2], REG_SIZE);
-  if (!param[2])
+	i = 0;
+	while (i < 2)
+	{
+		if (process->param[i].type == T_REG)
+			param[i] = *(int*)process->records[process->param[i].value - 1];
+		else
+			param[i] = process->param[i].value;
+		i++;
+	}
+	param[2] = param[0] ^ param[1];
+	ft_memcpy(process->records[process->param[2].value - 1], (void*)&param[2]
+		  , REG_SIZE);
+	if (!param[2])
 		process->carry = !process->carry;
 	ft_printf("XOR | Param0 : %d | Param1 : %d\n", param[0], param[1]);
-  ft_printf("XOR RESULT : %d \n", *(int*)process->records[process->param[2].value - 1]);
+	ft_printf("XOR RESULT : %d \n", *(int*)process->records[process->param[2].value - 1]);
 }
 
 /*
@@ -49,25 +52,22 @@ t_result		ft_xor(t_env *vm, t_process *process)
 {
 	unsigned char	*mem;
 	unsigned char	*idx;
+	int				i;
 
 	process->pc_instru = process->pc;
 	mem = vm->memory;
+	i = -1;
 	if (get_params(process, mem, 3, false))
 		return (NULL);
 	if (process->param[2].type != T_REG)
 		return (NULL);
-	if (process->param[0].type == IND_CODE)
-	{
-		idx = &mem[get_adress(process->pc_instru, process->param[1].value, false)];
-		process->param[0].ptr = (char*)idx;
-		process->param[0].value = change_endian(idx, REG_SIZE);
-	}
-	if (process->param[1].type == IND_CODE)
-	{
-		idx = &mem[get_adress(process->pc_instru, process->param[1].value, false)];
-		process->param[1].ptr = (char*)idx;
-		process->param[1].value = change_endian(idx, REG_SIZE);
-	}
+	while (++i < 2)
+		if (process->param[i].type == IND_CODE)
+		{
+			idx = &mem[get_adress(process->pc_instru, process->param[i].value, false)];
+			process->param[i].ptr = (char*)idx;
+			process->param[i].value = change_endian(idx, REG_SIZE);
+		}
 	process->active = true;
 	process->delay = 6 - 1;
 	return (cb_xor);
