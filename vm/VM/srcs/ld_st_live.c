@@ -6,7 +6,7 @@
 /*   By: jjaegle <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 16:28:29 by jjaegle           #+#    #+#             */
-/*   Updated: 2019/11/19 16:49:18 by jjaegle          ###   ########.fr       */
+/*   Updated: 2019/11/20 15:49:46 by jjaegle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ t_result		ft_live(t_env *vm, t_process *process)
 	ft_printf("LIVE : param = %d\n", change_endian(process->param[0].ptr, 4));
 	process->active = true;
 	process->delay = 10 - 1;
-	// dump_memory(vm->memory);
 	return (cb_live);
 }
 
@@ -70,9 +69,17 @@ static void		cb_ld(void *pvm, void *pproc)
 	t_env		*vm;
 	t_process	*process;
 	void		*dest;
+	enum e_bool	lg;
 
 	vm = (t_env*)pvm;
 	process = (t_process*)pproc;
+	lg = (vm->memory[process->pc_instru] == 2) ? false : true;
+	ft_printf("adresse = %d\n", get_adress(process->pc_instru, process->param[0].value, lg));
+	set_param_value(vm->memory, process, 1, lg);
+	if (!process->param[0].value)
+		process->carry = 1;
+	else
+		process->carry = 0;
 	dest = process->records[process->param[1].value];
 	ft_memcpy(dest, process->param[0].ptr, REG_SIZE);
 	ft_printf("r%d = %d, carry = %d\n", process->param[1].value, process->param[0].value, process->carry);
@@ -92,26 +99,13 @@ static void		cb_ld(void *pvm, void *pproc)
 t_result		ft_ld(t_env *vm, t_process *process)
 {
 	unsigned char	*mem;
-	unsigned char	*idx;
-	int				start;
 
-	start = process->pc;
+	process->pc_instru = process->pc;
 	mem = vm->memory;
 	if(get_params(process, mem, 2, false))
 		return (NULL);
 	if (process->param[1].type != T_REG || process->param[0].type == T_REG)
 		return (NULL);
-	printf("LD | P0 %d | P1 %d | P2 %d\n", process->param[0].type, process->param[1].type, process->param[2].type);
-	if (process->param[0].type == IND_CODE)
-	{
-		idx = &mem[get_adress(start, process->param[0].value, false)];
-		ft_printf("adress = %d\n",get_adress(start, process->param[0].value, false));
-		process->param[0].ptr = (char*)idx;
-		process->param[0].value = change_endian(idx, REG_SIZE);
-		ft_printf("LD : value = %d\n", process->param[0].value);
-	}
-	if (!process->param[0].value)
-		process->carry = !process->carry;
 	process->active = true;
 	process->delay = 5 - 1;
 	return (cb_ld);

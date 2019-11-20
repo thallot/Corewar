@@ -6,7 +6,7 @@
 /*   By: jjaegle <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 16:02:40 by jjaegle           #+#    #+#             */
-/*   Updated: 2019/11/19 16:01:47 by jjaegle          ###   ########.fr       */
+/*   Updated: 2019/11/20 15:45:50 by jjaegle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ static t_result		(*instr[NB_INSTR])(t_env *vm, t_process *process) =
 	ft_ldi,
 	ft_sti,
 	ft_fork,
+	ft_ld,
+	ft_ldi,
 	ft_lfork,
 };
 
