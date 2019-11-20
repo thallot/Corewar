@@ -27,8 +27,8 @@ static void			cb_and(void *pvm, void *pproc)
 	vm = (t_env*)pvm;
 	process = (t_process*)pproc;
 	i = 0;
-	set_param_value(vm->memory, process, 1);
-	set_param_value(vm->memory, process, 2);
+	set_param_value(vm->memory, process, 1, false);
+	set_param_value(vm->memory, process, 2, false);
 	res = process->param[0].value & process->param[1].value;
 	ft_memcpy(process->records[process->param[2].value - 1], &res, REG_SIZE);
 	process->carry = res == 0 ? 1 : 0;
@@ -72,8 +72,8 @@ static void			cb_or(void *pvm, void *pproc)
 	vm = (t_env*)pvm;
 	process = (t_process*)pproc;
 	i = 0;
-	set_param_value(vm->memory, process, 1);
-	set_param_value(vm->memory, process, 2);
+	set_param_value(vm->memory, process, 1, false);
+	set_param_value(vm->memory, process, 2, false);
 	res = process->param[0].value | process->param[1].value;
 	ft_memcpy(process->records[process->param[2].value - 1], &res, REG_SIZE);
 	process->carry = res == 0 ? 1 : 0;
