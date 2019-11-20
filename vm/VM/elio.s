@@ -4,9 +4,10 @@
 #               ld      5, r2
 #               ld      %0,r3
 #               xor %5, r1, r4
-                label: live %1
+                un: live %1
 				deux: live %8
-				ldi :label, %1, r2
+				ldi %:deux, %1, r2
+				sti r2, %:un, %1
 #               zjmp %:label
 #               zjmp %42
 #               live %:label
