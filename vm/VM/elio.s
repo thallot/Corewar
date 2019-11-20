@@ -8,6 +8,7 @@
 				deux: live %8
 				ldi %:deux, %1, r2
 				sti r2, %:un, %1
+				xor :un, %2, r3
 #               zjmp %:label
 #               zjmp %42
 #               live %:label

@@ -22,25 +22,18 @@ static void			cb_xor(void *pvm, void *pproc)
 	t_env		*vm;
 	t_process	*process;
 	int			i;
-	int			param[3];
+	int			res;
 
 	vm = (t_env*)pvm;
 	process = (t_process*)pproc;
 	i = 0;
-	while (i < 2)
-	{
-		if (process->param[i].type == T_REG)
-			param[i] = *(int*)process->records[process->param[i].value - 1];
-		else
-			param[i] = process->param[i].value;
-		i++;
-	}
-	param[2] = param[0] ^ param[1];
-	ft_memcpy(process->records[process->param[2].value - 1], (void*)&param[2]
-		  , REG_SIZE);
-	if (!param[2])
+	set_param_value(vm->memory, process, 1);
+	set_param_value(vm->memory, process, 2);
+	res = process->param[0].value ^ process->param[1].value;
+	ft_memcpy(process->records[process->param[2].value - 1], &res, REG_SIZE);
+	if (!res)
 		process->carry = !process->carry;
-	ft_printf("XOR | Param0 : %d | Param1 : %d\n", param[0], param[1]);
+	ft_printf("XOR | Param0 : %d | Param1 : %d\n", process->param[0].value, process->param[1].value);
 	ft_printf("XOR RESULT : %d \n", *(int*)process->records[process->param[2].value - 1]);
 }
 
@@ -51,7 +44,6 @@ static void			cb_xor(void *pvm, void *pproc)
 t_result		ft_xor(t_env *vm, t_process *process)
 {
 	unsigned char	*mem;
-	unsigned char	*idx;
 	int				i;
 
 	process->pc_instru = process->pc;
@@ -61,13 +53,6 @@ t_result		ft_xor(t_env *vm, t_process *process)
 		return (NULL);
 	if (process->param[2].type != T_REG)
 		return (NULL);
-	while (++i < 2)
-		if (process->param[i].type == IND_CODE)
-		{
-			idx = &mem[get_adress(process->pc_instru, process->param[i].value, false)];
-			process->param[i].ptr = (char*)idx;
-			process->param[i].value = change_endian(idx, REG_SIZE);
-		}
 	process->active = true;
 	process->delay = 6 - 1;
 	return (cb_xor);
