@@ -31,8 +31,7 @@ static void			cb_xor(void *pvm, void *pproc)
 	set_param_value(vm->memory, process, 2);
 	res = process->param[0].value ^ process->param[1].value;
 	ft_memcpy(process->records[process->param[2].value - 1], &res, REG_SIZE);
-	if (!res)
-		process->carry = !process->carry;
+	process->carry = res == 0 ? 1 : 0;
 	ft_printf("XOR | Param0 : %d | Param1 : %d\n", process->param[0].value, process->param[1].value);
 	ft_printf("XOR RESULT : %d \n", *(int*)process->records[process->param[2].value - 1]);
 }

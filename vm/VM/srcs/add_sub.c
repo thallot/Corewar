@@ -40,8 +40,7 @@ static void			cb_add(void *pvm, void *pproc)
 	registre[2] = registre[0] + registre[1];
 	ft_memcpy(process->records[process->param[2].value - 1]
 			, (void*)&registre[2], REG_SIZE);
-	if (!registre[2])
-		process->carry = !process->carry;
+	process->carry = registre[2] == 0 ? 1 : 0;
 	ft_printf("ADD RESULT : %d carry = %d\n", *(int*)process->records[process->param[2].value - 1], process->carry);
 }
 
@@ -75,8 +74,7 @@ static void			cb_sub(void *pvm, void *pproc)
 	registre[2] = registre[0] - registre[1];
 	ft_memcpy(process->records[process->param[2].value - 1]
 			, (void*)&registre[2], REG_SIZE);
-	if (!registre[2])
-		process->carry = !process->carry;
+	process->carry = registre[2] == 0 ? 1 : 0;
 	ft_printf("SUB : valeur r[2] = %d | carry : %d \n", registre[2], process->carry);
 }
 
