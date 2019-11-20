@@ -113,7 +113,7 @@ int			main(int ac, char *av[])
 	else
 		lets_play(&env, env.player);
 	(void)ac;
-	endwin();
+	endwin(); 
 	return (0);
 }
 

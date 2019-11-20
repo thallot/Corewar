@@ -38,6 +38,8 @@ static void get_speed(t_visu *visu)
     }
     else if (c == 27)
     {
+      ft_memdel((void **)&(visu->memory));
+      ft_memdel((void **)&(visu->info));
       endwin();
       exit(0);
     }
@@ -51,10 +53,14 @@ static void print_player(t_visu *visu, WINDOW *info)
 
   nb_player = visu->vm->tab_champ.nb_champ;
   i = 0;
-  mvwprintw(info, 1, (COLS / 6) - 14, "Players (%d) : ", visu->vm->tab_champ.nb_champ);
+  wattron(info, A_UNDERLINE);
+  mvwprintw(info, 1, (COLS / 6) - 14, "PLAYERS (%d) :", visu->vm->tab_champ.nb_champ);
+  wattroff(info, A_UNDERLINE);
   while (i < nb_player)
   {
+    wattron(info, COLOR_PAIR(i + 1));
     mvwprintw(info, 3 + i, (COLS / 6) - 14, "%s (Number : %d)", visu->vm->tab_champ.champs[i].name, visu->vm->tab_champ.champs[i].num);
+    wattroff(info, COLOR_PAIR(i + 1));
     i++;
   }
 }
@@ -72,7 +78,7 @@ static void print_nb_process(t_visu *visu, WINDOW *info)
       i++;
     tmp = tmp->next;
   }
-  mvwprintw(info, 15, 3, "Process number : %d", i);
+  mvwprintw(info, 18, 3, "Process number : %d", i);
 }
 
 static int is_process_position(t_visu *visu, int i)
@@ -93,14 +99,21 @@ void print_info(t_visu *visu, WINDOW *info)
 {
   print_player(visu, info);
   print_nb_process(visu, info);
-  mvwprintw(info, 11, 3, "Cycle : %d", visu->rules->cycle);
-  mvwprintw(info, 12, 3, "Cycle to die : %d", CYCLE_TO_DIE);
-  mvwprintw(info, 13, 3, "Cycle delta : %d", CYCLE_DELTA);
+  mvwprintw(info, 17, 3, "Cycle : %d", visu->rules->cycle);
+  wattron(info, A_UNDERLINE);
+  mvwprintw(info, 10, (COLS / 6) - 14, "RULES :");
+  mvwprintw(info, 16, (COLS / 6) - 14, "INFOS :");
+  mvwprintw(info, 20, (COLS / 6) - 14, "PARAMS :");
+  wattroff(info, A_UNDERLINE);
+  mvwprintw(info, 11, 3, "CYCLE_TO_DIE : %d", CYCLE_TO_DIE);
+  mvwprintw(info, 12, 3, "CYCLE_DELTA : %d", CYCLE_DELTA);
+  mvwprintw(info, 13, 3, "NBR_LIVE : %d", NBR_LIVE);
+  mvwprintw(info, 14, 3, "MAX_CHECKS : %d", MAX_CHECKS);
   if (visu->pause)
-    mvwprintw(info, 17, 3, "Pause : ON ");
+    mvwprintw(info, 21, 3, "Pause : ON ");
   else
-    mvwprintw(info, 17, 3, "Pause : OFF");
-  mvwprintw(info, 18, 3, "Speed : %d", 1000 - visu->speed);
+    mvwprintw(info, 21, 3, "Pause : OFF");
+  mvwprintw(info, 22, 3, "Speed : %d", 1000 - visu->speed);
 }
 
 void init_visu(t_visu *visu, t_rules *rules, t_env *vm, t_listp *players)

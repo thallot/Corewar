@@ -108,11 +108,12 @@ void			lets_play(t_env *vm, t_listp *players)
 	while (rules.someone_alive == true && (int)rules.cycle != vm->dump - 1 && (!rules.cycle || visu.pause == 0))
 	{
 		visu.process = players;
+		visu.rules = &rules;
 		visu_core(&visu, 0);
 		process_play(vm->player, vm);
 		rules.cycle++;
-		if (!rules.cycle_to_die || !(rules.cycle % rules.cycle_to_die))
-			whos_living(players, vm, &rules);
+		// if (!rules.cycle_to_die || !(rules.cycle % rules.cycle_to_die))
+		// 	whos_living(players, vm, &rules);
 		if (!(rules.cycle % rules.cycle_to_die))
 			whos_living(vm->player, vm, &rules);
 
@@ -121,5 +122,7 @@ void			lets_play(t_env *vm, t_listp *players)
 		if (visu)
 			visu(warriors name, arene (4096) with value, arena);*/
 	}
+	ft_memdel((void **)&(visu.memory));
+	ft_memdel((void **)&(visu.info));
 	(void)players;
 }
