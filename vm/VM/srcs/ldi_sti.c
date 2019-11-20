@@ -6,29 +6,11 @@
 /*   By: thallot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/14 15:02:09 by thallot           #+#    #+#             */
-/*   Updated: 2019/11/19 16:40:26 by jjaegle          ###   ########.fr       */
+/*   Updated: 2019/11/20 15:44:53 by jjaegle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
-
-/*
-** remplace les valeurs initiales des parametres par leur valeur effective
-** en se basant sur leur type
-*/
-
-void            set_param_value(unsigned char *mem, t_process *process, int i)
-{
-    unsigned char   *idx;
-
-    if (process->param[i - 1].type == IND_CODE)
-    {
-        idx = &mem[get_adress(process->pc_instru, (short)process->param[i - 1].value, false)];
-        process->param[i - 1].value = change_endian(idx, REG_SIZE);
-    }
-    else if (process->param[i - 1].type == REG_CODE)
-        process->param[i - 1].value = *(int*)process->records[(short)process->param[i - 1].value - 1];
-}
 
 /*
 ** CALLBACK LDI
@@ -39,21 +21,28 @@ void            set_param_value(unsigned char *mem, t_process *process, int i)
 
 static void			cb_ldi(void *pvm, void *pproc)
 {
-    t_process	*process;
-    int         idx;
-    int         address;
-    void		*dest;
-    unsigned char *mem;
+    t_process		*process;
+    int				idx;
+    int				address;
+    void			*dest;
+    unsigned char	*mem;
+	enum e_bool		lg;
 
     process = (t_process*)pproc;
     mem = ((t_env*)pvm)->memory;
-    set_param_value(mem, process, 1);
-    set_param_value(mem, process, 2);
+	lg = (mem[process->pc_instru] == 10) ? false : true;
+    set_param_value(mem, process, 1, lg);
+    set_param_value(mem, process, 2, lg);
     address = process->param[0].value + process->param[1].value;
-    idx = change_endian(&mem[get_adress(process->pc_instru, address, false)], REG_SIZE);
+    idx = change_endian(&mem[get_adress(process->pc_instru, address
+				, lg)], REG_SIZE);
     dest = process->records[process->param[2].value - 1];
     ft_memcpy(dest, (void*)&idx, REG_SIZE);
-    ft_printf("What's in the register after LDI? -> %d\n", *(int*)process->records[process->param[2].value - 1]);
+	if (lg == true && !(*(int*)dest))
+		process->carry = 1;
+	else if (lg == false)
+		process->carry = 0;
+    ft_printf("What's in the register after LDI? -> %d, caeey = %d\n", *(int*)process->records[process->param[2].value - 1], process->carry);
 }
 
 /*
@@ -105,8 +94,8 @@ static void			cb_sti(void *pvm, void *pproc)
   vm = (t_env*)pvm;
   process = (t_process*)pproc;
   mem = vm->memory;
-  set_param_value(mem, process, 2);
-  set_param_value(mem, process, 3);
+  set_param_value(mem, process, 2, false);
+  set_param_value(mem, process, 3, false);
   address = process->param[1].value + process->param[2].value;
   idx = change_endian(&mem[get_adress(process->pc_instru, address, false)], REG_SIZE);
   reg = change_endian(&process->records[process->param[0].value - 1], REG_SIZE);

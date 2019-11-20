@@ -6,7 +6,7 @@
 /*   By: jjaegle <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 15:52:01 by jjaegle           #+#    #+#             */
-/*   Updated: 2019/11/19 16:26:11 by jjaegle          ###   ########.fr       */
+/*   Updated: 2019/11/20 14:57:48 by jjaegle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,36 +22,6 @@ int		val_record(t_process *process, int registre,int opt)
 	return (ret);
 }
 
-/*
-**permet de retourner le type du prochain parametre a aller recuperer, si le
-**masque ne correspond pas, retourne une valeure UNDEFINED qui marquera la fin
-**de l'instruction en cours
-*/
-/*
-int			get_size(char encoded, int param, enum e_bool d2)
-{
-	unsigned char	ret;
-
-	ret = 0;
-	if (param == FIRST)
-		ret = (encoded >> 6) & 0x03;
-	else if (param == SECND)
-		ret = ((encoded << 2) >> 6) & 0x03;
-	else if (param == THIRD)
-		ret = ((encoded << 4) >> 6) & 0x03;
-	if (ret == REG_CODE)
-		return (T_REG);
-	else if (ret == DIR_CODE)
-	{
-		if (d2 == false)
-			return (DIR_SIZE);
-		return (IND_SIZE);
-	}
-	else if (ret == IND_CODE)
-		return (IND_SIZE);
-	return (UNDEF);
-}
-*/
 /*
 **permet de retourner le type du prochain parametre a aller recuperer, si le
 **masque ne correspond pas, retourne une valeure UNDEFINED qui marquera la fin
@@ -91,29 +61,20 @@ int		get_params(t_process *process, unsigned char *memory
 
 	i = 0;
 	encoded = get_encoded(process, memory);
-	//size = get_size(encoded, FIRST, d2);
 	type = get_type(encoded, FIRST);
 	while (i < nb)
 	{
 		process->param[i].ptr = get_param(process, memory,  type, d2);
 		if (!(process->param[i].ptr))
 			return (EXIT_FAILURE);
-		//process->param[i].size = size;
 		process->param[i].value = change_endian(process->param[i].ptr
 				, get_size(type, d2));
 		process->param[i].type = type;
-	//	ft_printf("GPs : value %d = %d\n", i, process->param[i].value);
 		i++;
 		if (i == 1)
-		{
-		//	size = get_size(encoded, SECND, d2);
 			type = get_type(encoded, SECND);
-		}
 		else if (i == 2)
-		{
-		//	size = get_size(encoded, THIRD, d2);
 			type = get_type(encoded, THIRD);
-		}
 	}
 	printf("success\n");
 	return (EXIT_SUCCESS);

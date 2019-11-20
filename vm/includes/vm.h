@@ -6,7 +6,7 @@
 /*   By: jjaegle <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/06 09:42:52 by jjaegle           #+#    #+#             */
-/*   Updated: 2019/11/19 16:28:59 by jjaegle          ###   ########.fr       */
+/*   Updated: 2019/11/20 15:47:13 by jjaegle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include "op.h"
 # include <stdio.h>
 
-# define NB_INSTR 13
+# define NB_INSTR 15
 
 # define UNINIT -2
 # define UNDEF -1
@@ -59,7 +59,6 @@ typedef struct		s_param
 {
 	char			*ptr;
 	int				value;
-//	int				size;
 	int				type;
 }					t_param;
 
@@ -204,7 +203,9 @@ char				get_encoded(t_process *process, unsigned char memory[]);
 int					is_register(int tab[], int size);
 int					val_record(t_process *process, int rec, int opt);
 int					change_endian(void *var, int size);
-int					get_adress(int start, int ind, enum e_bool l);
+int					get_adress(int start, short ind, enum e_bool l);
 int					clean_process(t_listp *list);
+void				set_param_value(unsigned char *mem, t_process *process
+		, int i, enum e_bool lg);
 
 #endif
