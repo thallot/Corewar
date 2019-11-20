@@ -6,7 +6,7 @@
 /*   By: jjaegle <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/06 09:42:52 by jjaegle           #+#    #+#             */
-/*   Updated: 2019/11/14 17:32:28 by jjaegle          ###   ########.fr       */
+/*   Updated: 2019/11/19 16:28:59 by jjaegle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include "op.h"
 # include <stdio.h>
 
-# define NB_INSTR 12
+# define NB_INSTR 13
 
 # define UNINIT -2
 # define UNDEF -1
@@ -59,8 +59,8 @@ typedef struct		s_param
 {
 	char			*ptr;
 	int				value;
-	int			size;
-	int			type;
+//	int				size;
+	int				type;
 }					t_param;
 
 /*
@@ -165,7 +165,7 @@ int					extract_info(char *file, t_info_champ *champ);
 **----------------------------------Fn game------------------------
 */
 
-void				lets_play(t_env *vm, t_listp *players);
+void				lets_play(t_env *vm);
 int					create_process(t_env *vm);
 void				process_play(t_listp *players, t_env *vm);
 
@@ -173,19 +173,20 @@ void				process_play(t_listp *players, t_env *vm);
 **-------------------------------Instructions---------------------
 */
 
-t_result				ft_ld(t_env *vm, t_process *process);
+t_result			ft_ld(t_env *vm, t_process *process);
 t_result			ft_live(t_env *vm, t_process *process);
-t_result				ft_st(t_env *vm, t_process *process);
-void					cb_st(void *pvm, void *pproc);
-t_result				ft_add(t_env *vm, t_process *process);
-t_result		ft_sub(t_env *vm, t_process *process);
-t_result		ft_and(t_env *vm, t_process *process);
-t_result		ft_or(t_env *vm, t_process *process);
-t_result		ft_xor(t_env *vm, t_process *process);
-t_result		ft_zjmp(t_env *vm, t_process *process);
-t_result		ft_ldi(t_env *vm, t_process *process);
-t_result		ft_sti(t_env *vm, t_process *process);
-t_result		ft_fork(t_env *vm, t_process *process);
+t_result			ft_st(t_env *vm, t_process *process);
+void				cb_st(void *pvm, void *pproc);
+t_result			ft_add(t_env *vm, t_process *process);
+t_result			ft_sub(t_env *vm, t_process *process);
+t_result			ft_and(t_env *vm, t_process *process);
+t_result			ft_or(t_env *vm, t_process *process);
+t_result			ft_xor(t_env *vm, t_process *process);
+t_result			ft_zjmp(t_env *vm, t_process *process);
+t_result			ft_ldi(t_env *vm, t_process *process);
+t_result			ft_sti(t_env *vm, t_process *process);
+t_result			ft_fork(t_env *vm, t_process *process);
+t_result			ft_lfork(t_env *vm, t_process *process);
 
 /*
 **----------------------------------Tools------------------------------
@@ -195,10 +196,10 @@ int					print_error(int err, char *av[]);
 void				dump_memory(unsigned char memory[]);
 int					nb_alive(t_listp *players);
 char				*get_param(t_process *process, unsigned char memory[]
-		, size_t size);
+		, int type, enum e_bool d2);
 int					get_params(t_process *process, unsigned char *memory
 		, int nb, enum e_bool d2);
-int					get_size(char opcode, int param, enum e_bool d2);
+int					get_size(int type, enum e_bool d2);
 char				get_encoded(t_process *process, unsigned char memory[]);
 int					is_register(int tab[], int size);
 int					val_record(t_process *process, int rec, int opt);

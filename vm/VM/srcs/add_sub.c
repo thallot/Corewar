@@ -6,7 +6,7 @@
 /*   By: jjaegle <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 16:32:27 by jjaegle           #+#    #+#             */
-/*   Updated: 2019/11/14 16:49:17 by jjaegle          ###   ########.fr       */
+/*   Updated: 2019/11/20 11:07:17 by jjaegle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,24 +24,25 @@ void			cb_st(void *pvm, void *pproc)
 	ft_memrev(src, REG_SIZE);
 	ft_memcpy(process->param[1].ptr, src, REG_SIZE);
 	ft_printf("CBST : valeur storer = %d\n", change_endian(src, REG_SIZE));
-	dump_memory(vm->memory);
+	//dump_memory(vm->memory);
 }
 
 static void			cb_add(void *pvm, void *pproc)
 {
 	t_env		*vm;
 	t_process	*process;
-	int registre[3];
+	int			registre[3];
 
 	vm = (t_env*)pvm;
 	process = (t_process*)pproc;
 	registre[0] = *(int *)process->records[process->param[0].value - 1];
 	registre[1] = *(int *)process->records[process->param[1].value - 1];
 	registre[2] = registre[0] + registre[1];
-	ft_memcpy(process->records[process->param[2].value - 1], (void*)&registre[2], REG_SIZE);
+	ft_memcpy(process->records[process->param[2].value - 1]
+			, (void*)&registre[2], REG_SIZE);
 	if (!registre[2])
 		process->carry = !process->carry;
-	ft_printf("AND RESULT : %d \n", *(int*)process->records[process->param[2].value - 1]);
+	ft_printf("ADD RESULT : %d carry = %d\n", *(int*)process->records[process->param[2].value - 1], process->carry);
 }
 
 t_result		ft_add(t_env *vm, t_process *process)
@@ -53,9 +54,8 @@ t_result		ft_add(t_env *vm, t_process *process)
 	mem = vm->memory;
 	if (get_params(process, mem, 3, false))
 		return (NULL);
-	if (process->param[0].type == UNDEF || process->param[1].type == UNDEF || process->param[2].type == UNDEF)
-		return (NULL);
-	if (process->param[0].size != T_REG || process->param[1].size != T_REG || process->param[2].size != T_REG)
+	if (process->param[0].type != T_REG || process->param[1].type != T_REG
+			|| process->param[2].type != T_REG)
 		return (NULL);
 	process->active = true;
 	process->delay = 10 - 1;
@@ -73,7 +73,8 @@ static void			cb_sub(void *pvm, void *pproc)
 	registre[0] = *(int *)process->records[process->param[0].value - 1];
 	registre[1] = *(int *)process->records[process->param[1].value - 1];
 	registre[2] = registre[0] - registre[1];
-	ft_memcpy(process->records[process->param[2].value - 1], (void*)&registre[2], REG_SIZE);
+	ft_memcpy(process->records[process->param[2].value - 1]
+			, (void*)&registre[2], REG_SIZE);
 	if (!registre[2])
 		process->carry = !process->carry;
 	ft_printf("SUB : valeur r[2] = %d | carry : %d \n", registre[2], process->carry);
@@ -88,7 +89,8 @@ t_result		ft_sub(t_env *vm, t_process *process)
 	mem = vm->memory;
 	if (get_params(process, mem, 3, false))
 		return (NULL);
-	if (process->param[0].size != T_REG || process->param[1].size != T_REG || process->param[2].size != T_REG)
+	if (process->param[0].type != T_REG || process->param[1].type != T_REG
+			|| process->param[2].type != T_REG)
 		return (NULL);
 	process->active = true;
 	process->delay = 10 - 1;

@@ -6,7 +6,7 @@
 #    By: tbrizon <tbrizon@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/15 17:09:42 by tbrizon           #+#    #+#              #
-#    Updated: 2019/11/15 16:00:16 by edillenb         ###   ########.fr        #
+#    Updated: 2019/11/19 16:22:09 by jjaegle          ###   ########.fr        #
 #    Updated: 2019/11/14 16:35:47 by jjaegle          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
@@ -26,6 +26,7 @@ SC = vm.c \
 	 play.c \
 	 ld_st_live.c \
 	 tools2.c \
+	 tools3.c \
 	 add_sub.c \
 	 and_or.c \
 	 xor_zjmp.c \

@@ -6,7 +6,7 @@
 /*   By: thallot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/14 15:02:09 by thallot           #+#    #+#             */
-/*   Updated: 2019/11/14 15:02:10 by thallot          ###   ########.fr       */
+/*   Updated: 2019/11/19 16:40:26 by jjaegle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ void            set_param_value(unsigned char *mem, t_process *process, int i)
     }
     else if (process->param[i - 1].type == REG_CODE)
         process->param[i - 1].value = *(int*)process->records[(short)process->param[i - 1].value - 1];
-    process->param[i - 1].size = REG_SIZE;
 }
 
 /*

@@ -6,7 +6,7 @@
 /*   By: jjaegle <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 16:02:40 by jjaegle           #+#    #+#             */
-/*   Updated: 2019/11/14 17:45:03 by jjaegle          ###   ########.fr       */
+/*   Updated: 2019/11/19 16:01:47 by jjaegle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ static t_result		(*instr[NB_INSTR])(t_env *vm, t_process *process) =
 	ft_ldi,
 	ft_sti,
 	ft_fork,
+	ft_lfork,
 };
 
 void		process_play(t_listp *players, t_env *vm)
@@ -54,9 +55,7 @@ void		process_play(t_listp *players, t_env *vm)
 				player->active = false;
 			}
 		}
-		ft_printf("cycle++ | PC : %d\n", player->pc );
 		players = players->next;
-		ft_printf("i");
 	}
 	ft_putchar('\n');
 }

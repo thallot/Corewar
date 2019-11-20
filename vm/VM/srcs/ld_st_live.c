@@ -6,7 +6,7 @@
 /*   By: jjaegle <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 16:28:29 by jjaegle           #+#    #+#             */
-/*   Updated: 2019/11/14 16:52:57 by jjaegle          ###   ########.fr       */
+/*   Updated: 2019/11/19 16:49:18 by jjaegle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void		cb_live(void *pvm, void *pproc)
 
 	process = (t_process*)pproc;
 	vm = (t_env*)pvm;
-	arg = change_endian(process->param[0].ptr, process->param[0].size);
+	arg = change_endian(process->param[0].ptr, REG_SIZE);
 	ft_printf("CB_LIVE : arg = %d\n", arg);
 	if ((id = in_arraynb(arg, &vm->tab_champ)) != UNDEF)
 	{
@@ -50,8 +50,9 @@ static void		cb_live(void *pvm, void *pproc)
 t_result		ft_live(t_env *vm, t_process *process)
 {
 	process->pc++;
-	process->param[0].ptr = get_param(process, vm->memory, REG_SIZE);
-	process->param[0].size = REG_SIZE;
+	ft_printf("oui\n");
+	process->param[0].ptr = get_param(process, vm->memory, DIR_CODE, false);
+	ft_printf("oui\n");
 	ft_printf("LIVE : param = %d\n", change_endian(process->param[0].ptr, REG_SIZE));
 	ft_printf("LIVE : param = %d\n", change_endian(process->param[0].ptr, 4));
 	process->active = true;
@@ -98,16 +99,15 @@ t_result		ft_ld(t_env *vm, t_process *process)
 	mem = vm->memory;
 	if(get_params(process, mem, 2, false))
 		return (NULL);
-	if (process->param[1].size != T_REG || process->param[0].size == T_REG)
+	if (process->param[1].type != T_REG || process->param[0].type == T_REG)
 		return (NULL);
 	printf("LD | P0 %d | P1 %d | P2 %d\n", process->param[0].type, process->param[1].type, process->param[2].type);
-	if (process->param[0].size == IND_SIZE)
+	if (process->param[0].type == IND_CODE)
 	{
 		idx = &mem[get_adress(start, process->param[0].value, false)];
 		ft_printf("adress = %d\n",get_adress(start, process->param[0].value, false));
 		process->param[0].ptr = (char*)idx;
 		process->param[0].value = change_endian(idx, REG_SIZE);
-		process->param[0].size = REG_SIZE;
 		ft_printf("LD : value = %d\n", process->param[0].value);
 	}
 	if (!process->param[0].value)
@@ -138,13 +138,13 @@ t_result	ft_st(t_env *vm, t_process *process)
 	if(get_params(process, memory, 2, false))
 		return (NULL);
 	ft_printf("non\n");
-	if (process->param[0].size != T_REG || process->param[1].size == DIR_SIZE)
+	if (process->param[0].type != T_REG || process->param[1].type == DIR_CODE)
 		return (NULL);
-	if (process->param[1].size == T_REG)
+	if (process->param[1].type == T_REG)
 		dest = (unsigned char *)process->records[process->param[1].value];
 	else
 		dest = &memory[get_adress(start, process->param[1].value, false)];
-	if (process->param[1].size == T_REG)
+	if (process->param[1].type == T_REG)
 		ft_printf("ST : dest = registre %d\n", process->param[1].value);
 	else
 		ft_printf("ST : dest = decallage :%d\n", get_adress(start, process->param[1].value, false));
