@@ -2,6 +2,48 @@
 #include "vm.h"
 #include <ncurses.h>
 
+static void make_pause_exit(t_visu *visu, int opt)
+{
+  int c;
+
+  if (opt == 0)
+  {
+    if (visu->pause == 0)
+      timeout(visu->speed);
+    else
+      timeout(150000);
+    if ((c = getch()) == 32)
+      visu->pause = !visu->pause;
+  }
+}
+
+static void get_speed(t_visu *visu)
+{
+  int c;
+
+  while (visu->pause)
+  {
+    if ((c = getch()) == 32)
+      visu->pause = !visu->pause;
+    else if (c == 43)
+    {
+      visu->speed -= 10;
+      visu->speed <= 50 ? visu->speed = 50 : visu->speed;
+      visu_core(visu, 1);
+    }
+    else if (c == 45)
+    {
+      visu->speed += 10;
+      visu_core(visu, 1);
+    }
+    else if (c == 27)
+    {
+      endwin();
+      exit(0);
+    }
+  }
+}
+
 static void print_player(t_visu *visu, WINDOW *info)
 {
   int nb_player;
@@ -26,8 +68,9 @@ static void print_nb_process(t_visu *visu, WINDOW *info)
   i = 0;
   while (tmp)
   {
+    if (tmp->process.state != dead)
+      i++;
     tmp = tmp->next;
-    i++;
   }
   mvwprintw(info, 15, 3, "Process number : %d", i);
 }
@@ -39,30 +82,63 @@ static int is_process_position(t_visu *visu, int i)
   tmp = visu->process;
   while (tmp)
   {
-    if (tmp->process.pc == i)
+    if (tmp->process.pc == i && tmp->process.state != dead)
       return (1);
     tmp = tmp->next;
   }
   return (0);
 }
 
-int visu_core(t_visu *visu)
+void print_info(t_visu *visu, WINDOW *info)
+{
+  print_player(visu, info);
+  print_nb_process(visu, info);
+  mvwprintw(info, 11, 3, "Cycle : %d", visu->rules->cycle);
+  mvwprintw(info, 12, 3, "Cycle to die : %d", CYCLE_TO_DIE);
+  mvwprintw(info, 13, 3, "Cycle delta : %d", CYCLE_DELTA);
+  mvwprintw(info, 21, 3, "Pause : %d |", visu->pause);
+  mvwprintw(info, 22, 3, "Speed : %d |", 1000 - visu->speed);
+}
+
+void init_visu(t_visu *visu, t_rules *rules, t_env *vm, t_listp *players)
 {
   WINDOW *memory;
   WINDOW *info;
+
+  initscr();
+  while(1)
+  {
+      clear();
+      mvprintw(LINES/2, (COLS / 2) - 7, "Corewar");
+      refresh();
+      if (getch())
+        break ;
+  }
+  visu->rules = rules;
+  visu->vm = vm;
+  visu->process = players;
+  visu->pause = 0;
+  visu->speed = 100;
+  memory = subwin(stdscr, LINES, 192, 0, 0);
+  info = subwin(stdscr, LINES, (COLS / 3) - 10 , 0, (COLS - COLS / 3) - 2);
+  box(info, ACS_VLINE, ACS_HLINE);
+  visu->memory = memory;
+  visu->info = info;
+  clear();
+}
+
+void print_memory(t_visu *visu, WINDOW *memory)
+{
   int i;
 
   i = 0;
-  clear();
-  memory = subwin(stdscr, LINES, COLS / 2, 0, 0);
-  info = subwin(stdscr, LINES, COLS / 3 , 0, COLS - COLS / 3);
-  box(memory, ACS_VLINE, ACS_HLINE);
-  box(info, ACS_VLINE, ACS_HLINE);
   wprintw(memory, "\n");
   while (i < MEM_SIZE)
   {
-    if (i % 60 == 0)
-      wprintw(memory, "\n");
+    if (visu->vm->memory_visu[i] != 0)
+    {
+      wattron(memory, COLOR_PAIR(visu->vm->memory_visu[i]));
+    }
     if (is_process_position(visu, i))
     {
       wattron(memory, A_STANDOUT);
@@ -72,10 +148,30 @@ int visu_core(t_visu *visu)
     else
       wprintw(memory, " %02x", visu->vm->memory[i]);
     i++;
+    wattroff(memory, COLOR_PAIR(1));
   }
-  print_player(visu, info);
-  print_nb_process(visu, info);
-  mvwprintw(info, 11, 3, "Cycle : %d", visu->rules->cycle);
+}
+
+int visu_core(t_visu *visu, int opt)
+{
+  WINDOW *memory;
+  WINDOW *info;
+
+  start_color();
+  use_default_colors();
+  init_pair(1, COLOR_RED, COLOR_BLACK);
+  init_pair(2, COLOR_GREEN, COLOR_BLACK);
+  memory = visu->memory;
+  info = visu->info;
+  make_pause_exit(visu, opt);
+  clear();
+  noecho();
+  memory = subwin(stdscr, LINES, 192, 0, 0);
+  info = subwin(stdscr, LINES, (COLS / 3) - 10 , 0, (COLS - COLS / 3) - 2);
+  box(info, ACS_VLINE, ACS_HLINE);
+  print_memory(visu, memory);
+  print_info(visu, info);
   refresh();
+  get_speed(visu);
   return (0);
 }

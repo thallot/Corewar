@@ -53,6 +53,7 @@ static t_listp	*add_player(t_info_champ *champ, t_listp *al)
 int				create_process(t_env *vm)
 {
 	int			i;
+	int			j;
 	t_tabchamp	tab;
 	int			start;
 
@@ -66,6 +67,12 @@ int				create_process(t_env *vm)
 		vm->player->process.pc = start;
 		vm->player->process.active = false;
 		ft_memcpy(&vm->memory[start], tab.champs[i].instr, CHAMP_MAX_SIZE);
+		j = start;
+		while (j < start + CHAMP_MAX_SIZE)
+		{
+			vm->memory_visu[j] = i + 1;
+			j++;
+		}
 		start += MEM_SIZE / tab.nb_champ;
 		i++;
 	}

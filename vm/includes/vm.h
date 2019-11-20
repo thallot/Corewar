@@ -123,6 +123,7 @@ typedef struct		s_tabchamp
 typedef struct		s_env
 {
 	unsigned char	memory[MEM_SIZE];
+	unsigned char	memory_visu[MEM_SIZE];
 	int				dump;
 	t_tabchamp		tab_champ;
 	t_listp			*player;
@@ -149,6 +150,10 @@ typedef struct		s_visu
 	t_listp			*process;
 	t_env				*vm;
 	t_rules     *rules;
+	void			*memory;
+	void			*info;
+	int				pause;
+	int 			speed;
 }					t_visu;
 
 /*
@@ -216,5 +221,8 @@ int					clean_process(t_listp *list);
 /*
 **----------------------------------Visu------------------------------
 */
-int visu_core(t_visu *visu);
+void init_visu(t_visu *visu, t_rules *rules, t_env *vm, t_listp *players);
+int visu_core(t_visu *visu, int opt);
+
+
 #endif

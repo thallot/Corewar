@@ -104,15 +104,6 @@ int			main(int ac, char *av[])
 	t_env		env;
 	int			err;
 
-  newterm(getenv("TERM"), stdout, stdin);
-  while(1)
-	{
-      clear();
-      mvprintw(LINES/2, (COLS / 2) - 7, "Corewar");
-      refresh();
-      if (getch())
-				break ;
-  }
 	initialise_env(&env);
 	if ((err = pars_args(&av, &env)))
 		return (print_error(err, av));

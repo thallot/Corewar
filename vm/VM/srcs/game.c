@@ -104,18 +104,18 @@ void			lets_play(t_env *vm, t_listp *players)
 	t_visu			visu;
 
 	initialise_rules(&rules);
-	visu.rules = &rules;
-	visu.vm = vm;
-	visu.process = players;
-	while (rules.someone_alive == true && (int)rules.cycle != vm->dump - 1 && (!rules.cycle || getch()))
+	init_visu(&visu, &rules, vm, players);
+	while (rules.someone_alive == true && (int)rules.cycle != vm->dump - 1 && (!rules.cycle || visu.pause == 0))
 	{
-		visu_core(&visu);
+		visu.process = players;
+		visu_core(&visu, 0);
 		process_play(vm->player, vm);
 		rules.cycle++;
 		if (!rules.cycle_to_die || !(rules.cycle % rules.cycle_to_die))
 			whos_living(players, vm, &rules);
 		if (!(rules.cycle % rules.cycle_to_die))
 			whos_living(vm->player, vm, &rules);
+
 		// ft_printf("cycle %d, vm->player.pc = %d\n", rules.cycle, vm->player->process.pc);
 		/*
 		if (visu)
