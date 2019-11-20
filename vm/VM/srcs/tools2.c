@@ -139,14 +139,27 @@ char		*get_param(t_process *process, unsigned char memory[], size_t size)
 	return (ret);
 }
 
-int		get_adress(int start, int ind, enum e_bool l)
+int		get_adress(int start, short ind, enum e_bool l)
 {
 	int		ret;
+	int		sign;
 
+	sign = 0;
+	ft_printf("ind 1 = %d\n", ind);
+	if (ind < 0)
+	{
+		sign = 1;
+		ind = -ind;
+	}
 	ret = start;
 	if (l == false)
 		ind %= IDX_MOD;
+	if (sign)
+		ind = -ind;
+	ft_printf("ind 2 = %d\n", ind);
 	ret += ind;
+	ft_printf("ret 1 = %d\n", ret);
 	ret %= MEM_SIZE;
+	ft_printf("ret 1 = %d\n", ret);
 	return (ret);
 }
