@@ -6,7 +6,7 @@
 /*   By: jjaegle <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 11:23:02 by jjaegle           #+#    #+#             */
-/*   Updated: 2019/11/19 14:28:07 by jjaegle          ###   ########.fr       */
+/*   Updated: 2019/11/21 18:08:05 by jjaegle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,14 @@ static void		initialise_rules(t_rules *rules)
 
 static void		check_nbr_lives(t_rules *rules)
 {
-	if (rules->nb_live >= NBR_LIVE || rules->nb_check == MAX_CHECKS)
+	if (vm->cmpt_live >= NBR_LIVE || rules->nb_check == MAX_CHECKS)
 	{
 		rules->cycle_to_die -= CYCLE_DELTA;
 		rules->nb_check = 0;
 	}
 	else
 		rules->nb_check++;
-	rules->nb_live = 0;
+	vm->cmpt_live = 0;
 }
 
 /*
@@ -106,7 +106,8 @@ void			lets_play(t_env *vm)
 
 	initialise_rules(&rules);
 	init_visu(&visu, &rules, vm, vm->player);
-	while (rules.someone_alive == true && (int)rules.cycle != vm->dump - 1 && (!rules.cycle || visu.pause == 0))
+	while (rules.someone_alive == true && (int)rules.cycle != vm->dump - 1
+			&& (!rules.cycle || visu.pause == 0))
 	{
 		visu.process = vm->player;
 		visu_core(&visu, 0);

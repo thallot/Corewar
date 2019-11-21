@@ -6,7 +6,7 @@
 /*   By: jjaegle <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 16:02:40 by jjaegle           #+#    #+#             */
-/*   Updated: 2019/11/20 17:07:38 by jjaegle          ###   ########.fr       */
+/*   Updated: 2019/11/21 18:54:19 by jjaegle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,5 @@ void		process_play(t_listp *players, t_env *vm)
 			}
 		}
 		players = players->next;
-		// ft_printf("Joueur au pc => %d\n", player->pc);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: jjaegle <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/06 09:42:52 by jjaegle           #+#    #+#             */
-/*   Updated: 2019/11/20 16:43:17 by jjaegle          ###   ########.fr       */
+/*   Updated: 2019/11/21 18:08:02 by jjaegle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,7 @@ typedef struct		s_env
 	t_listp			*player;
 	int				lastlive;
 	int				nblive;
+	int				cmpt_live;
 }					t_env;
 
 /*
