@@ -31,14 +31,15 @@ static void			cb_lldi(void *pvm, void *pproc)
     idx = change_endian(&mem[get_adress(0, address, true)], 4);
     dest = process->records[process->param[2].value - 1];
     ft_memcpy(dest, (void*)&idx, REG_SIZE);
-    ft_printf("What's in the register after LLDI? -> %d\n", *(int*)process->records[process->param[2].value - 1]);
+    // ft_printf("What's in the register after LLDI? -> %d\n", *(int*)process->records[process->param[2].value - 1]);
 }
 
 t_result		ft_lldi(t_env *vm, t_process *process)
 {
     unsigned char	*mem;
 
-    printf("ENTER LDI\n");
+    // printf("ENTER LDI\n");
+    process->pc_instru = process->pc;
     mem = vm->memory;
     if (get_params(process, mem, 3, true))
         return (NULL);

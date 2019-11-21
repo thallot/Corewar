@@ -40,9 +40,9 @@ static void			cb_ldi(void *pvm, void *pproc)
     ft_memcpy(dest, (void*)&idx, REG_SIZE);
 	if (lg == true && !(*(int*)dest))
 		process->carry = 1;
-	else if (lg == false)
+	else if (lg == true)
 		process->carry = 0;
-    ft_printf("What's in the register after LDI? -> %d, caeey = %d\n", *(int*)process->records[process->param[2].value - 1], process->carry);
+    // ft_printf("What's in the register after LDI? -> %d, caeey = %d\n", *(int*)process->records[process->param[2].value - 1], process->carry);
 }
 
 /*
@@ -57,7 +57,7 @@ t_result		ft_ldi(t_env *vm, t_process *process)
 {
     unsigned char	*mem;
 
-    printf("ENTER LDI\n");
+    // printf("ENTER LDI\n");
     process->pc_instru = process->pc;
     mem = vm->memory;
     if (get_params(process, mem, 3, true))
@@ -88,7 +88,7 @@ static void			cb_sti(void *pvm, void *pproc)
   t_process     *process;
   unsigned char *mem;
   int           address;
-  int           reg;   
+  int           reg;
   //int           idx;
 
   vm = (t_env*)pvm;
@@ -98,14 +98,15 @@ static void			cb_sti(void *pvm, void *pproc)
   set_param_value(mem, process, 3, false);
   address = process->param[1].value + process->param[2].value;
   address = get_adress(process->pc_instru, address, false);
-  ft_printf("DEST = %d\n",address);
+  // ft_printf("DEST = %d\n",address);
   /*
   idx = change_endian(&mem[get_adress(process->pc_instru, address, false)], REG_SIZE);
   reg = change_endian(&process->records[process->param[0].value - 1], REG_SIZE);
   ft_memcpy(&(vm->memory[idx]), &reg, REG_SIZE);*/
   reg = change_endian(&process->records[process->param[0].value - 1], REG_SIZE);
   ft_memcpy(&(vm->memory[address]), &reg, REG_SIZE);
-  ft_printf("JUST WROTE THE FOLLOWING IN MEMORY : %d at address : %d\n", change_endian(&reg, REG_SIZE), address);
+  write_in_visu(process->pc_instru, address, vm);
+  // ft_printf("JUST WROTE THE FOLLOWING IN MEMORY : %d at address : %d\n", change_endian(&reg, REG_SIZE), address);
 }
 
 
@@ -117,7 +118,7 @@ t_result		ft_sti(t_env *vm, t_process *process)
 {
     unsigned char	*mem;
 
-    printf("ENTER STI\n");
+    // printf("ENTER STI\n");
     process->pc_instru = process->pc;
     mem = vm->memory;
     if (get_params(process, mem, 3, true))

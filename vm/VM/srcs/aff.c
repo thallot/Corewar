@@ -19,17 +19,18 @@ static void		cb_aff(void *pvm, void *pproc)
 
 	vm = (t_env*)pvm;
 	process = (t_process*)pproc;
-	ft_printf("AFF=> %c\n", *(int*)process->records[process->param[0].value - 1]
-			% 256);
+	// ft_printf("AFF=> %c\n", *(int*)process->records[process->param[0].value - 1]
+			// % 256);
 }
 
 t_result		ft_aff(t_env *vm, t_process *process)
 {
 	int		rec;
 
+	process->pc_instru = process->pc;
 	process->pc += 2;
 	rec = vm->memory[process->pc];
-	ft_printf("rec = %d\n", rec);
+	// ft_printf("rec = %d\n", rec);
 	if (rec < 1 || rec > 16)
 		return (NULL);
 	process->param[0].value = rec;

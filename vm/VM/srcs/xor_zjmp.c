@@ -32,8 +32,8 @@ static void			cb_xor(void *pvm, void *pproc)
 	res = process->param[0].value ^ process->param[1].value;
 	ft_memcpy(process->records[process->param[2].value - 1], &res, REG_SIZE);
 	process->carry = res == 0 ? 1 : 0;
-	ft_printf("XOR | Param0 : %d | Param1 : %d\n", process->param[0].value, process->param[1].value);
-	ft_printf("XOR RESULT : %d \n", *(int*)process->records[process->param[2].value - 1]);
+	// ft_printf("XOR | Param0 : %d | Param1 : %d\n", process->param[0].value, process->param[1].value);
+	// ft_printf("XOR RESULT : %d \n", *(int*)process->records[process->param[2].value - 1]);
 }
 
 /*
@@ -70,29 +70,27 @@ static void			cb_zjmp(void *pvm, void *pproc)
 
 	vm = (t_env*)pvm;
 	process = (t_process*)pproc;
+	if (process->carry == false)
+		return ;
 	address = change_endian(process->param[0].ptr, IND_SIZE);
-	printf(" address : %d\n", address);
-	printf(" address VALUE : %d\n", process->param[0].value);
-	printf(" process instru : %d\n", process->param[0].value);
+	// printf(" address : %d\n", address);
+	// printf(" address VALUE : %d\n", process->param[0].value);
+	// printf(" process instru : %d\n", process->param[0].value);
 	address = get_adress(process->pc_instru, process->param[0].value, false);
-	printf(" address : %d\n", address);
+	// printf(" address : %d\n", address);
 	process->pc = address;
-	ft_printf("ZJMP Result : %d \n", process->pc);
+	// ft_printf("ZJMP Result : %d \n", process->pc);
 }
 
 t_result		ft_zjmp(t_env *vm, t_process *process)
 {
 	process->pc_instru = process->pc;
 	process->pc++;
-	if (process->carry == true)
-	{
-		process->param[0].ptr = get_param(process, vm->memory, IND_CODE, false);
-		process->param[0].value = (short int)change_endian(process->param[0].ptr
-				, IND_SIZE);
-		ft_printf("ZJMP ind = %d\n", process->param[0].value);
-		process->active = true;
-		process->delay = 20 - 1;
-	  	return (cb_zjmp);
-	}
-	return (NULL);
+	process->param[0].ptr = get_param(process, vm->memory, IND_CODE, false);
+	process->param[0].value = (short int)change_endian(process->param[0].ptr
+			, IND_SIZE);
+	// ft_printf("ZJMP ind = %d\n", process->param[0].value);
+	process->active = true;
+	process->delay = 20 - 1;
+  	return (cb_zjmp);
 }
