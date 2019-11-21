@@ -40,7 +40,7 @@ void	is_valid_aff(t_env *env)
 	if (env->list->type != TYPE_REGISTRE)
 		print_error(env, "aff", 1);
 	env->size += get_size(env);
-	is_valid_param(env);
+	is_valid_param(env, "aff");
 }
 
 /*
@@ -54,7 +54,7 @@ void	is_valid_lfork(t_env *env)
 	env->list = env->list->next;
 	if (env->list->type != TYPE_DIRECT)
 		print_error(env, "lfork", 1);
-	is_valid_param(env);
+	is_valid_param(env, "lfork");
 	env->list->type = env->list->type
 		== TYPE_DIRECT ? TYPE_DIRECT_2 : env->list->type;
 	env->size += get_size(env);
@@ -72,7 +72,7 @@ void	is_valid_lldi(t_env *env)
 	if (env->list->type != TYPE_REGISTRE && env->list->type != TYPE_INDEX
 			&& env->list->type != TYPE_DIRECT && env->list->type != TYPE_LABEL)
 		print_error(env, "lldi", 1);
-	is_valid_param(env);
+	is_valid_param(env, "lldi");
 	env->list->type = env->list->type
 		== TYPE_DIRECT ? TYPE_DIRECT_2 : env->list->type;
 	env->size += get_size(env);
@@ -81,7 +81,7 @@ void	is_valid_lldi(t_env *env)
 	if (env->list->type != TYPE_INDEX
 			&& env->list->type != TYPE_DIRECT && env->list->type != TYPE_LABEL)
 		print_error(env, "lldi", 2);
-	is_valid_param(env);
+	is_valid_param(env, "lldi");
 	env->list->type = env->list->type
 		== TYPE_DIRECT ? TYPE_DIRECT_2 : env->list->type;
 	env->size += get_size(env);
@@ -90,7 +90,7 @@ void	is_valid_lldi(t_env *env)
 	if (env->list->type != TYPE_REGISTRE)
 		print_error(env, "lldi", 3);
 	env->size += get_size(env);
-	is_valid_param(env);
+	is_valid_param(env, "lldi");
 }
 
 /*
@@ -105,7 +105,7 @@ void	is_valid_lld(t_env *env)
 	if (env->list->type != TYPE_INDEX
 			&& env->list->type != TYPE_DIRECT && env->list->type != TYPE_LABEL)
 		print_error(env, "lld", 1);
-	is_valid_param(env);
+	is_valid_param(env, "lld");
 	env->list->type = env->list->type
 		== TYPE_DIRECT ? TYPE_DIRECT_4 : env->list->type;
 	env->size += get_size(env);
@@ -114,5 +114,5 @@ void	is_valid_lld(t_env *env)
 	if (env->list->type != TYPE_REGISTRE)
 		print_error(env, "lld", 2);
 	env->size += get_size(env);
-	is_valid_param(env);
+	is_valid_param(env, "lld");
 }
