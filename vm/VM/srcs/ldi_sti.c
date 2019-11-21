@@ -6,7 +6,7 @@
 /*   By: thallot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/14 15:02:09 by thallot           #+#    #+#             */
-/*   Updated: 2019/11/20 15:44:53 by jjaegle          ###   ########.fr       */
+/*   Updated: 2019/11/20 17:04:24 by jjaegle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ static void			cb_sti(void *pvm, void *pproc)
   unsigned char *mem;
   int           address;
   int           reg;   
-  int           idx;    
+  //int           idx;
 
   vm = (t_env*)pvm;
   process = (t_process*)pproc;
@@ -97,10 +97,15 @@ static void			cb_sti(void *pvm, void *pproc)
   set_param_value(mem, process, 2, false);
   set_param_value(mem, process, 3, false);
   address = process->param[1].value + process->param[2].value;
+  address = get_adress(process->pc_instru, address, false);
+  ft_printf("DEST = %d\n",address);
+  /*
   idx = change_endian(&mem[get_adress(process->pc_instru, address, false)], REG_SIZE);
   reg = change_endian(&process->records[process->param[0].value - 1], REG_SIZE);
-  ft_memcpy(&(vm->memory[idx]), &reg, REG_SIZE); 
-  ft_printf("JUST WROTE THE FOLLOWING IN MEMORY : %d at address : %d\n", change_endian(&(vm->memory[idx]), 4), idx);
+  ft_memcpy(&(vm->memory[idx]), &reg, REG_SIZE);*/
+  reg = change_endian(&process->records[process->param[0].value - 1], REG_SIZE);
+  ft_memcpy(&(vm->memory[address]), &reg, REG_SIZE);
+  ft_printf("JUST WROTE THE FOLLOWING IN MEMORY : %d at address : %d\n", change_endian(&reg, REG_SIZE), address);
 }
 
 

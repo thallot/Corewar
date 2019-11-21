@@ -6,7 +6,7 @@
 /*   By: jjaegle <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 16:02:40 by jjaegle           #+#    #+#             */
-/*   Updated: 2019/11/20 15:45:50 by jjaegle          ###   ########.fr       */
+/*   Updated: 2019/11/20 17:07:38 by jjaegle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ static t_result		(*instr[NB_INSTR])(t_env *vm, t_process *process) =
 	ft_ld,
 	ft_ldi,
 	ft_lfork,
+	ft_aff
 };
 
 void		process_play(t_listp *players, t_env *vm)
@@ -47,7 +48,6 @@ void		process_play(t_listp *players, t_env *vm)
 				player->callback = instr[opcode](vm, player);
 			else
 				player->pc = (player->pc == MEM_SIZE - 1) ? 0 : player->pc + 1;
-			ft_printf("player->pc = %d\n", player->pc);
 		}
 		else if (player->state != dead)
 		{
@@ -58,6 +58,6 @@ void		process_play(t_listp *players, t_env *vm)
 			}
 		}
 		players = players->next;
+		ft_printf("Joueur au pc => %d\n", player->pc);
 	}
-	ft_putchar('\n');
 }

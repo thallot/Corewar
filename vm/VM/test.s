@@ -11,6 +11,9 @@
 #		zjmp %:live
 #		ldi %295, %390, r1
 #		lldi %295, %390, r1
+		aff r1
+		aff r1
+		aff r1
 		ld	655, r2
 		lld	655,r3
 #ld	%0,r3
