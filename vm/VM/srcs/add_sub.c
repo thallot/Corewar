@@ -23,7 +23,7 @@ void			cb_st(void *pvm, void *pproc)
 	src = process->records[process->param[0].value - 1];
 	ft_memrev(src, REG_SIZE);
 	ft_memcpy(process->param[1].ptr, src, REG_SIZE);
-	ft_printf("CBST : valeur storer = %d\n", change_endian(src, REG_SIZE));
+	// ft_printf("CBST : valeur storer = %d\n", change_endian(src, REG_SIZE));
 	//dump_memory(vm->memory);
 }
 
@@ -41,7 +41,7 @@ static void			cb_add(void *pvm, void *pproc)
 	ft_memcpy(process->records[process->param[2].value - 1]
 			, (void*)&registre[2], REG_SIZE);
 	process->carry = registre[2] == 0 ? 1 : 0;
-	ft_printf("ADD RESULT : %d carry = %d\n", *(int*)process->records[process->param[2].value - 1], process->carry);
+	// ft_printf("ADD RESULT : %d carry = %d\n", *(int*)process->records[process->param[2].value - 1], process->carry);
 }
 
 t_result		ft_add(t_env *vm, t_process *process)
@@ -75,7 +75,7 @@ static void			cb_sub(void *pvm, void *pproc)
 	ft_memcpy(process->records[process->param[2].value - 1]
 			, (void*)&registre[2], REG_SIZE);
 	process->carry = registre[2] == 0 ? 1 : 0;
-	ft_printf("SUB : valeur r[2] = %d | carry : %d \n", registre[2], process->carry);
+	// ft_printf("SUB : valeur r[2] = %d | carry : %d \n", registre[2], process->carry);
 }
 
 t_result		ft_sub(t_env *vm, t_process *process)

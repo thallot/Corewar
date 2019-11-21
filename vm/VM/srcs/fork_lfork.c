@@ -38,9 +38,9 @@ t_result		ft_fork(t_env *vm, t_process *process)
 	process->pc++;
 	process->param[0].ptr = get_param(process, vm->memory, IND_CODE, false);
 	ad = (short)change_endian(process->param[0].ptr, IND_SIZE);
-	ft_printf("FORK : ad = %d\n", ad);
+	// ft_printf("FORK : ad = %d\n", ad);
 	ad = get_adress(start, ad, false);
-	ft_printf("FORK : ad = %d\n", ad);
+	// ft_printf("FORK : ad = %d\n", ad);
 	process->param[0].value = ad;
 	process->active = true;
 	process->delay = 800 - 1;
@@ -56,9 +56,9 @@ t_result		ft_lfork(t_env *vm, t_process *process)
 	process->pc++;
 	process->param[0].ptr = get_param(process, vm->memory, IND_CODE, false);
 	ad = (short)change_endian(process->param[0].ptr, IND_SIZE);
-	ft_printf("LFORK : ad = %d\n", ad);
+	// ft_printf("LFORK : ad = %d\n", ad);
 	ad = get_adress(start, ad, true);
-	ft_printf("LFORK : ad = %d\n", ad);
+	// ft_printf("LFORK : ad = %d\n", ad);
 	process->param[0].value = ad;
 	process->active = true;
 	process->delay = 800 - 1;

@@ -58,6 +58,6 @@ void		process_play(t_listp *players, t_env *vm)
 			}
 		}
 		players = players->next;
-		ft_printf("Joueur au pc => %d\n", player->pc);
+		// ft_printf("Joueur au pc => %d\n", player->pc);
 	}
 }

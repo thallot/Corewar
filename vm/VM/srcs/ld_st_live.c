@@ -26,11 +26,11 @@ static void		cb_live(void *pvm, void *pproc)
 	process = (t_process*)pproc;
 	vm = (t_env*)pvm;
 	arg = change_endian(process->param[0].ptr, REG_SIZE);
-	ft_printf("CB_LIVE : arg = %d\n", arg);
+	// ft_printf("CB_LIVE : arg = %d\n", arg);
 	if ((id = in_arraynb(arg, &vm->tab_champ)) != UNDEF)
 	{
-		ft_printf("Player %d(%s) is alive\n", vm->tab_champ.champs[id].num
-				, vm->tab_champ.champs[id].name);
+		// ft_printf("Player %d(%s) is alive\n", vm->tab_champ.champs[id].num
+				// , vm->tab_champ.champs[id].name);
 		if (vm->lastlive == UNDEF || id != vm->lastlive)
 			vm->nblive++;
 		vm->lastlive = id;
@@ -50,11 +50,11 @@ static void		cb_live(void *pvm, void *pproc)
 t_result		ft_live(t_env *vm, t_process *process)
 {
 	process->pc++;
-	ft_printf("oui\n");
+	// ft_printf("oui\n");
 	process->param[0].ptr = get_param(process, vm->memory, DIR_CODE, false);
-	ft_printf("oui\n");
-	ft_printf("LIVE : param = %d\n", change_endian(process->param[0].ptr, REG_SIZE));
-	ft_printf("LIVE : param = %d\n", change_endian(process->param[0].ptr, 4));
+	// ft_printf("oui\n");
+	// ft_printf("LIVE : param = %d\n", change_endian(process->param[0].ptr, REG_SIZE));
+	// ft_printf("LIVE : param = %d\n", change_endian(process->param[0].ptr, 4));
 	process->active = true;
 	process->delay = 10 - 1;
 	return (cb_live);
@@ -74,7 +74,7 @@ static void		cb_ld(void *pvm, void *pproc)
 	vm = (t_env*)pvm;
 	process = (t_process*)pproc;
 	lg = (vm->memory[process->pc_instru] == 2) ? false : true;
-	ft_printf("adresse = %d\n", get_adress(process->pc_instru, process->param[0].value, lg));
+	// ft_printf("adresse = %d\n", get_adress(process->pc_instru, process->param[0].value, lg));
 	set_param_value(vm->memory, process, 1, lg);
 	if (!process->param[0].value)
 		process->carry = 1;
@@ -82,7 +82,7 @@ static void		cb_ld(void *pvm, void *pproc)
 		process->carry = 0;
 	dest = process->records[process->param[1].value];
 	ft_memcpy(dest, process->param[0].ptr, REG_SIZE);
-	ft_printf("r%d = %d, carry = %d\n", process->param[1].value, process->param[0].value, process->carry);
+	// ft_printf("r%d = %d, carry = %d\n", process->param[1].value, process->param[0].value, process->carry);
 }
 
 /*
@@ -128,20 +128,20 @@ t_result	ft_st(t_env *vm, t_process *process)
 
 	start = process->pc;
 	memory = vm->memory;
-	ft_printf("oui\n");
+	// ft_printf("oui\n");
 	if(get_params(process, memory, 2, false))
 		return (NULL);
-	ft_printf("non\n");
+	// ft_printf("non\n");
 	if (process->param[0].type != T_REG || process->param[1].type == DIR_CODE)
 		return (NULL);
 	if (process->param[1].type == T_REG)
 		dest = (unsigned char *)process->records[process->param[1].value];
 	else
 		dest = &memory[get_adress(start, process->param[1].value, false)];
-	if (process->param[1].type == T_REG)
-		ft_printf("ST : dest = registre %d\n", process->param[1].value);
-	else
-		ft_printf("ST : dest = decallage :%d\n", get_adress(start, process->param[1].value, false));
+	// if (process->param[1].type == T_REG)
+		// ft_printf("ST : dest = registre %d\n", process->param[1].value);
+	// else
+		// ft_printf("ST : dest = decallage :%d\n", get_adress(start, process->param[1].value, false));
 	process->param[1].ptr = (char*)dest;
 	process->active = true;
 	process->delay = 5 - 1;

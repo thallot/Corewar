@@ -38,10 +38,16 @@ int			extract_info(char *file, t_info_champ *champ)
 	int		fd;
 	char	buf[CHAMP_MAX_SIZE + 2];
 	int		ret;
+	int size;
 
 	fd = open(file, O_RDONLY);
 	if (fd > -1)
 	{
+		lseek(fd, 136, SEEK_SET);
+		ret = read(fd, buf, 4);
+		buf[ret] = '\0';
+		size = change_endian((void *)&buf, 4);
+		champ->size = size;
 		lseek(fd, 4, SEEK_SET);
 		ret = read(fd, buf, PROG_NAME_LENGTH);
 		buf[ret] = '\0';
@@ -49,11 +55,11 @@ int			extract_info(char *file, t_info_champ *champ)
 		lseek(fd, 2192, SEEK_SET);
 		ret = read(fd, buf, CHAMP_MAX_SIZE + 1);
 		buf[ret] = '\0';
-		// if (buf[CHAMP_MAX_SIZE])
-		// {
-		// 	close(fd);
-		// 	return (BIG);
-		// }
+		if (size > CHAMP_MAX_SIZE)
+		{
+			close(fd);
+			return (BIG);
+		}
 		ft_memcpy(champ->instr, buf, ret);
 	}
 	close(fd);

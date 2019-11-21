@@ -99,6 +99,7 @@ typedef struct		s_listp
 typedef struct		s_info_champ
 {
 	int				num;
+	int 			size;
 	char			name[PROG_NAME_LENGTH + 1];
 	char			instr[CHAMP_MAX_SIZE + 1];
 }					t_info_champ;
@@ -122,6 +123,7 @@ typedef struct		s_tabchamp
 typedef struct		s_env
 {
 	unsigned char	memory[MEM_SIZE];
+	unsigned char	memory_visu[MEM_SIZE];
 	int				dump;
 	t_tabchamp		tab_champ;
 	t_listp			*player;
@@ -142,6 +144,18 @@ typedef struct		s_rules
 	int				nb_check;
 	enum e_bool		someone_alive;
 }					t_rules;
+
+typedef struct		s_visu
+{
+	t_listp			*process;
+	t_env				*vm;
+	t_rules     *rules;
+	void			*memory;
+	void			*info;
+	int				pause;
+	int 			speed;
+}					t_visu;
+
 
 /*
 **--------------------------------Fn_champ----------------------------
@@ -208,5 +222,11 @@ int					get_adress(int start, short ind, enum e_bool l);
 int					clean_process(t_listp *list);
 void				set_param_value(unsigned char *mem, t_process *process
 		, int i, enum e_bool lg);
+
+/*
+**----------------------------------Visu------------------------------
+*/
+void init_visu(t_visu *visu, t_rules *rules, t_env *vm, t_listp *players);
+int visu_core(t_visu *visu, int opt);
 
 #endif

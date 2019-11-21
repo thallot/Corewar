@@ -48,12 +48,14 @@ static void		print_result(t_info_champ champs[], int *ll, int nblive
 {
 	int		i;
 
+	(void)champs;
+	(void)nblive;
 	i = *ll;
-	ft_printf("nblive = %d ll = %d\n", nblive, *ll);
-	if (nblive == 1)
-		ft_printf("le joueur %d(%s) a gagne\n", champs[i].num, champs[i].name);
-	else
-		ft_printf("No winner for today... Only looser\n");
+	// ft_printf("nblive = %d ll = %d\n", nblive, *ll);
+	// if (nblive == 1)
+	// 	ft_printf("le joueur %d(%s) a gagne\n", champs[i].num, champs[i].name);
+	// else
+	// 	ft_printf("No winner for today... Only looser\n");
 	rules->someone_alive = false;
 }
 
@@ -77,7 +79,7 @@ static void		whos_living(t_listp *players, t_env *vm, t_rules *rules)
 		else if (players->process.state == waiting)
 		{
 			players->process.state = dead;
-			ft_printf("A process is dead :'(\n");
+			// ft_printf("A process is dead :'(\n");
 		}
 		players = players->next;
 	}
@@ -100,21 +102,26 @@ static void		whos_living(t_listp *players, t_env *vm, t_rules *rules)
 void			lets_play(t_env *vm)
 {
 	t_rules			rules;
+	t_visu			visu;
 
 	initialise_rules(&rules);
-	while (rules.someone_alive == true && (int)rules.cycle != vm->dump - 1)
+	init_visu(&visu, &rules, vm, vm->player);
+	while (rules.someone_alive == true && (int)rules.cycle != vm->dump - 1 && (!rules.cycle || visu.pause == 0))
 	{
+		visu.process = vm->player;
+		visu_core(&visu, 0);
 		process_play(vm->player, vm);
 		rules.cycle++;
-		/*if (!rules.cycle_to_die || !(rules.cycle % rules.cycle_to_die))
-			whos_living(players, vm, &rules);*/
+		// if (!rules.cycle_to_die || !(rules.cycle % rules.cycle_to_die))
+		// 	whos_living(players, vm, &rules);
 		if (!(rules.cycle % rules.cycle_to_die))
 			whos_living(vm->player, vm, &rules);
-		ft_printf("cycle %d, vm->player.pc = %d\n", rules.cycle, vm->player->process.pc);
+
+		// ft_printf("cycle %d, vm->player.pc = %d\n", rules.cycle, vm->player->process.pc);
 		/*
 		if (visu)
 			visu(warriors name, arene (4096) with value, arena);*/
 	}
-	if ((int)rules.cycle == vm->dump - 1)
-		dump_memory(vm->memory);
+	ft_memdel((void **)&(visu.memory));
+	ft_memdel((void **)&(visu.info));
 }
