@@ -68,7 +68,7 @@ int				create_process(t_env *vm)
 		vm->player->process.active = false;
 		ft_memcpy(&vm->memory[start], tab.champs[i].instr, CHAMP_MAX_SIZE);
 		j = start;
-		while (j < start + CHAMP_MAX_SIZE)
+		while (j < start + tab.champs[i].size)
 		{
 			vm->memory_visu[j] = i + 1;
 			j++;

@@ -100,6 +100,7 @@ typedef struct		s_listp
 typedef struct		s_info_champ
 {
 	int				num;
+	int				size;
 	char			name[PROG_NAME_LENGTH + 1];
 	char			instr[CHAMP_MAX_SIZE + 1];
 }					t_info_champ;
