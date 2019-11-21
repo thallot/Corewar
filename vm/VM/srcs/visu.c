@@ -89,7 +89,7 @@ static int is_process_position(t_visu *visu, int i)
   tmp = visu->process;
   while (tmp)
   {
-    if (tmp->process.pc == i && tmp->process.state != dead)
+    if (tmp->process.pc_instru == i && tmp->process.state != dead)
       return (1);
     tmp = tmp->next;
   }

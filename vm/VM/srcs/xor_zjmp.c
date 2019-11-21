@@ -70,6 +70,8 @@ static void			cb_zjmp(void *pvm, void *pproc)
 
 	vm = (t_env*)pvm;
 	process = (t_process*)pproc;
+	if (process->carry == false)
+		return ;
 	address = change_endian(process->param[0].ptr, IND_SIZE);
 	// printf(" address : %d\n", address);
 	// printf(" address VALUE : %d\n", process->param[0].value);
@@ -84,15 +86,11 @@ t_result		ft_zjmp(t_env *vm, t_process *process)
 {
 	process->pc_instru = process->pc;
 	process->pc++;
-	if (process->carry == true)
-	{
-		process->param[0].ptr = get_param(process, vm->memory, IND_CODE, false);
-		process->param[0].value = (short int)change_endian(process->param[0].ptr
-				, IND_SIZE);
-		// ft_printf("ZJMP ind = %d\n", process->param[0].value);
-		process->active = true;
-		process->delay = 20 - 1;
-	  	return (cb_zjmp);
-	}
-	return (NULL);
+	process->param[0].ptr = get_param(process, vm->memory, IND_CODE, false);
+	process->param[0].value = (short int)change_endian(process->param[0].ptr
+			, IND_SIZE);
+	// ft_printf("ZJMP ind = %d\n", process->param[0].value);
+	process->active = true;
+	process->delay = 20 - 1;
+  	return (cb_zjmp);
 }

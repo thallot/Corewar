@@ -39,6 +39,7 @@ t_result		ft_lldi(t_env *vm, t_process *process)
     unsigned char	*mem;
 
     // printf("ENTER LDI\n");
+    process->pc_instru = process->pc;
     mem = vm->memory;
     if (get_params(process, mem, 3, true))
         return (NULL);

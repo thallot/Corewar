@@ -120,6 +120,13 @@ int		get_adress(int start, short ind, enum e_bool l)
 	if (sign)
 		ind = -ind;
 	ret += ind;
-	ret %= MEM_SIZE;
+	if (ret < 0)
+	{
+		ret %= MEM_SIZE;
+		ret = MEM_SIZE + ret;
+	}
+	else
+		ret %= MEM_SIZE;
+	// printf("S:%d | I:%d | R :%d\n", start, ind, ret);
 	return (ret);
 }

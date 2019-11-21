@@ -40,7 +40,7 @@ static void			cb_ldi(void *pvm, void *pproc)
     ft_memcpy(dest, (void*)&idx, REG_SIZE);
 	if (lg == true && !(*(int*)dest))
 		process->carry = 1;
-	else if (lg == false)
+	else if (lg == true)
 		process->carry = 0;
     // ft_printf("What's in the register after LDI? -> %d, caeey = %d\n", *(int*)process->records[process->param[2].value - 1], process->carry);
 }
@@ -105,6 +105,7 @@ static void			cb_sti(void *pvm, void *pproc)
   ft_memcpy(&(vm->memory[idx]), &reg, REG_SIZE);*/
   reg = change_endian(&process->records[process->param[0].value - 1], REG_SIZE);
   ft_memcpy(&(vm->memory[address]), &reg, REG_SIZE);
+  write_in_visu(process->pc_instru, address, vm);
   // ft_printf("JUST WROTE THE FOLLOWING IN MEMORY : %d at address : %d\n", change_endian(&reg, REG_SIZE), address);
 }
 

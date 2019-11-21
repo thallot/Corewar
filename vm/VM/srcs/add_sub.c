@@ -23,6 +23,7 @@ void			cb_st(void *pvm, void *pproc)
 	src = process->records[process->param[0].value - 1];
 	ft_memrev(src, REG_SIZE);
 	ft_memcpy(process->param[1].ptr, src, REG_SIZE);
+	write_in_visu(process->pc_instru, (int)src, vm);
 	// ft_printf("CBST : valeur storer = %d\n", change_endian(src, REG_SIZE));
 	//dump_memory(vm->memory);
 }
@@ -50,6 +51,7 @@ t_result		ft_add(t_env *vm, t_process *process)
 	int				start;
 
 	start = process->pc;
+	process->pc_instru = process->pc;
 	mem = vm->memory;
 	if (get_params(process, mem, 3, false))
 		return (NULL);
@@ -84,6 +86,7 @@ t_result		ft_sub(t_env *vm, t_process *process)
 	int				start;
 
 	start = process->pc;
+	process->pc_instru = process->pc;
 	mem = vm->memory;
 	if (get_params(process, mem, 3, false))
 		return (NULL);

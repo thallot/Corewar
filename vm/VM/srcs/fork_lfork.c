@@ -34,6 +34,7 @@ t_result		ft_fork(t_env *vm, t_process *process)
 	int		ad;
 	int		start;
 
+	process->pc_instru = process->pc;
 	start = process->pc;
 	process->pc++;
 	process->param[0].ptr = get_param(process, vm->memory, IND_CODE, false);
@@ -52,6 +53,7 @@ t_result		ft_lfork(t_env *vm, t_process *process)
 	int		ad;
 	int		start;
 
+	process->pc_instru = process->pc;
 	start = process->pc;
 	process->pc++;
 	process->param[0].ptr = get_param(process, vm->memory, IND_CODE, false);
@@ -61,6 +63,6 @@ t_result		ft_lfork(t_env *vm, t_process *process)
 	// ft_printf("LFORK : ad = %d\n", ad);
 	process->param[0].value = ad;
 	process->active = true;
-	process->delay = 800 - 1;
+	process->delay = 1000 - 1;
 	return (cb_fork);
 }

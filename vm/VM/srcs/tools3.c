@@ -41,7 +41,17 @@ void            set_param_value(unsigned char *mem, t_process *process, int i
         process->param[i - 1].value = change_endian(idx, REG_SIZE);
     }
     else if (process->param[i - 1].type == REG_CODE)
-        process->param[i - 1].value = 
+        process->param[i - 1].value =
 			*(int*)process->records[(short)process->param[i - 1].value - 1];
 }
 
+void write_in_visu(int start, int dest, t_env *vm)
+{
+	int nb_champ;
+	int cpt;
+
+	nb_champ = vm->memory_visu[start];
+	cpt = 4;
+	while (cpt--)
+		vm->memory_visu[dest + cpt] = nb_champ;
+}

@@ -49,6 +49,7 @@ static void		cb_live(void *pvm, void *pproc)
 
 t_result		ft_live(t_env *vm, t_process *process)
 {
+	process->pc_instru = process->pc;
 	process->pc++;
 	// ft_printf("oui\n");
 	process->param[0].ptr = get_param(process, vm->memory, DIR_CODE, false);
@@ -70,9 +71,11 @@ static void		cb_ld(void *pvm, void *pproc)
 	t_process	*process;
 	void		*dest;
 	enum e_bool	lg;
+	int res;
 
 	vm = (t_env*)pvm;
 	process = (t_process*)pproc;
+	process->pc_instru = process->pc;
 	lg = (vm->memory[process->pc_instru] == 2) ? false : true;
 	// ft_printf("adresse = %d\n", get_adress(process->pc_instru, process->param[0].value, lg));
 	set_param_value(vm->memory, process, 1, lg);
@@ -80,8 +83,9 @@ static void		cb_ld(void *pvm, void *pproc)
 		process->carry = 1;
 	else
 		process->carry = 0;
-	dest = process->records[process->param[1].value];
-	ft_memcpy(dest, process->param[0].ptr, REG_SIZE);
+	dest = process->records[process->param[1].value - 1];
+	res = change_endian(process->param[0].ptr, REG_SIZE);
+	ft_memcpy(dest, (void *)&res, REG_SIZE);
 	// ft_printf("r%d = %d, carry = %d\n", process->param[1].value, process->param[0].value, process->carry);
 }
 
@@ -126,6 +130,7 @@ t_result	ft_st(t_env *vm, t_process *process)
 	unsigned char	*dest;
 	int				start;
 
+	process->pc_instru = process->pc;
 	start = process->pc;
 	memory = vm->memory;
 	// ft_printf("oui\n");

@@ -27,6 +27,7 @@ t_result		ft_aff(t_env *vm, t_process *process)
 {
 	int		rec;
 
+	process->pc_instru = process->pc;
 	process->pc += 2;
 	rec = vm->memory[process->pc];
 	// ft_printf("rec = %d\n", rec);

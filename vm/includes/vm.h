@@ -228,5 +228,6 @@ void				set_param_value(unsigned char *mem, t_process *process
 */
 void init_visu(t_visu *visu, t_rules *rules, t_env *vm, t_listp *players);
 int visu_core(t_visu *visu, int opt);
+void write_in_visu(int start, int dest, t_env *vm);
 
 #endif
