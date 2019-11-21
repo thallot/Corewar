@@ -6,7 +6,7 @@
 /*   By: thallot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/15 12:05:18 by thallot           #+#    #+#             */
-/*   Updated: 2019/11/20 11:47:42 by jjaegle          ###   ########.fr       */
+/*   Updated: 2019/11/20 16:52:59 by jjaegle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ t_result		ft_zjmp(t_env *vm, t_process *process)
 		process->param[0].ptr = get_param(process, vm->memory, IND_CODE, false);
 		process->param[0].value = (short int)change_endian(process->param[0].ptr
 				, IND_SIZE);
+		ft_printf("ZJMP ind = %d\n", process->param[0].value);
 		process->active = true;
 		process->delay = 20 - 1;
 	  	return (cb_zjmp);

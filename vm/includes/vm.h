@@ -6,7 +6,7 @@
 /*   By: jjaegle <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/06 09:42:52 by jjaegle           #+#    #+#             */
-/*   Updated: 2019/11/20 15:47:13 by jjaegle          ###   ########.fr       */
+/*   Updated: 2019/11/20 16:43:17 by jjaegle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include "op.h"
 # include <stdio.h>
 
-# define NB_INSTR 15
+# define NB_INSTR 16
 
 # define UNINIT -2
 # define UNDEF -1
@@ -39,7 +39,7 @@
 **--------------------------------Structures-----------------------
 */
 
-enum				e_bool{true, false};
+enum				e_bool{false, true};
 enum				e_live{waiting, alive, dead};
 
 /*
@@ -186,6 +186,7 @@ t_result			ft_ldi(t_env *vm, t_process *process);
 t_result			ft_sti(t_env *vm, t_process *process);
 t_result			ft_fork(t_env *vm, t_process *process);
 t_result			ft_lfork(t_env *vm, t_process *process);
+t_result			ft_aff(t_env *vm, t_process *process);
 
 /*
 **----------------------------------Tools------------------------------
