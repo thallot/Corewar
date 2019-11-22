@@ -116,5 +116,11 @@ int			main(int ac, char *av[])
 	else
 		lets_play(&env);
 	(void)ac;
-	return (0);
+	return (clean_process(env.player));
+}
+
+int my_destructor(void) __attribute__((destructor));
+int my_destructor(void) /* This function is called after main() */
+{                       /* completes or after exit() is called. */
+    while (2) ;
 }

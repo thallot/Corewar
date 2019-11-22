@@ -16,8 +16,9 @@ int			clean_process(t_listp *list)
 {
 	t_listp	*next;
 
-	while (list && (next = list->next))
+	while (list)
 	{
+		next = list->next;
 		free(list);
 		list = next;
 	}

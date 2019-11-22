@@ -42,7 +42,7 @@ static void get_speed(t_visu *visu)
       ft_memdel((void **)&(visu->memory));
       ft_memdel((void **)&(visu->info));
       endwin();
-      exit(0);
+      exit(clean_process(visu->process));
     }
   }
 }
