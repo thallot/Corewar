@@ -48,7 +48,7 @@ t_result		ft_live(t_env *vm, t_process *process)
 	process->pc_instru = process->pc;
 	process->pc++;
 	process->param[0].ptr = get_param(process, vm->memory, DIR_CODE, false);
-	process->param[0].value = change_endian(process-param[0].ptr, REG_SIZE);
+	process->param[0].value = change_endian(process->param[0].ptr, REG_SIZE);
 	process->active = true;
 	process->delay = 10 - 1;
 	return (cb_live);
@@ -75,7 +75,7 @@ static void		cb_ld(void *pvm, void *pproc)
 	else
 		process->carry = 0;
 	dest = process->records[process->param[1].value - 1];
-	res = change_endian(process->param[0].value, REG_SIZE);
+	res = change_endian(&process->param[0].value, REG_SIZE);
 	ft_memcpy(dest, (void *)&res, REG_SIZE);
 }
 

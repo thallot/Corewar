@@ -25,7 +25,7 @@ static void		initialise_rules(t_rules *rules)
 **Sinon si depuis MAX_CHECKS verif CTD n'a pas bouger, il decroit.
 */
 
-static void		check_nbr_lives(t_rules *rules)
+static void		check_nbr_lives(t_rules *rules, t_env *vm)
 {
 	if (vm->cmpt_live >= NBR_LIVE || rules->nb_check == MAX_CHECKS)
 	{
@@ -84,7 +84,7 @@ static void		whos_living(t_listp *players, t_env *vm, t_rules *rules)
 		players = players->next;
 	}
 	if (nb_alive(p))
-		check_nbr_lives(rules);
+		check_nbr_lives(rules, vm);
 	else
 		print_result(vm->tab_champ.champs, &vm->lastlive, vm->nblive, rules);
 	if (vm->nblive > 1)

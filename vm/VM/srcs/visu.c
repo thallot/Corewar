@@ -108,7 +108,7 @@ void print_info(t_visu *visu, WINDOW *info)
   wattroff(info, A_UNDERLINE);
   mvwprintw(info, 11, 3, "CYCLE_TO_DIE %5d | %d", CYCLE_TO_DIE, visu->rules->cycle_to_die);
   mvwprintw(info, 12, 3, "CYCLE_DELTA  %5d |", CYCLE_DELTA);
-  mvwprintw(info, 13, 3, "NBR_LIVE     %5d | %d", NBR_LIVE, visu->rules->nb_live);
+  mvwprintw(info, 13, 3, "NBR_LIVE     %5d | %d", NBR_LIVE, visu->vm->cmpt_live);
   mvwprintw(info, 14, 3, "MAX_CHECKS   %5d | %d", MAX_CHECKS, visu->rules->nb_check);
   if (visu->pause)
   {
