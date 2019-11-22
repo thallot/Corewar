@@ -105,24 +105,31 @@ void			lets_play(t_env *vm)
 	t_visu			visu;
 
 	initialise_rules(&rules);
-	init_visu(&visu, &rules, vm, vm->player);
+	if (vm->visu)
+		init_visu(&visu, &rules, vm, vm->player);
 	while (rules.someone_alive == true && (int)rules.cycle != vm->dump - 1
-			&& (!rules.cycle || visu.pause == 0))
+	&& ((vm->visu && (!rules.cycle || visu.pause == 0)) || !vm->visu))
 	{
-		visu.process = vm->player;
-		visu_core(&visu, 0);
+		if (vm->visu)
+		{
+			visu.process = vm->player;
+			visu_core(&visu, 0);
+		}
 		process_play(vm->player, vm);
 		rules.cycle++;
 		// if (!rules.cycle_to_die || !(rules.cycle % rules.cycle_to_die))
 		// 	whos_living(players, vm, &rules);
 		if (!(rules.cycle % rules.cycle_to_die))
 			whos_living(vm->player, vm, &rules);
-
-		// ft_printf("cycle %d, vm->player.pc = %d\n", rules.cycle, vm->player->process.pc);
+		if (!vm->visu)
+		 ft_printf("cycle %d, vm->player.pc = %d\n", rules.cycle, vm->player->process.pc);
 		/*
 		if (visu)
 			visu(warriors name, arene (4096) with value, arena);*/
 	}
-	ft_memdel((void **)&(visu.memory));
-	ft_memdel((void **)&(visu.info));
+	if (vm->visu)
+	{
+		ft_memdel((void **)&(visu.memory));
+		ft_memdel((void **)&(visu.info));
+	}
 }

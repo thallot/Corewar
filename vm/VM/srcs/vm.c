@@ -42,6 +42,8 @@ static int	get_next_args(char **av[])
 		(*av)++;
 		return (NUMBER);
 	}
+	else if (!ft_strcmp(**av, "-v"))
+		return (VISUAL);
 	else if (is_champ(**av))
 		return (CHAMP);
 	else
@@ -76,6 +78,8 @@ static int	pars_args(char **av[], t_env *env)
 			else
 				return (NUMBER);
 		}
+		else if (ret == VISUAL)
+			env->visu = 1;
 		else if (ret == CHAMP && (ret = add_champ(**av, &env->tab_champ)))
 			return (ret);
 		else if (ret == EXIT_FAILURE)

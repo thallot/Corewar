@@ -30,6 +30,7 @@
 # define CHAMP 4
 # define BIG 5
 # define MAX 6
+# define VISUAL 7
 
 # define FIRST 1
 # define SECND 2
@@ -129,6 +130,7 @@ typedef struct		s_env
 	t_listp			*player;
 	int				lastlive;
 	int				nblive;
+	int				visu;
 	int				cmpt_live;
 }					t_env;
 
