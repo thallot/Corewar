@@ -105,7 +105,7 @@ typedef struct		s_env
 	t_lst			*list;
 	t_lst			*label;
 	t_gc			*garbage_collector;
-	void			(*parsing[28])(struct s_env *env);
+	void			(*parsing[21])(struct s_env *env);
 	int				size;
 }					t_env;
 
@@ -158,7 +158,7 @@ int					get_size(t_env *env);
 void				is_valid_command(t_env *env);
 void				is_valid_str(t_env *env);
 void				is_valid_label(t_env *env);
-void				is_valid_registre(t_env *env);
+void				is_valid_registre(t_env *env, char *instruction);
 void				is_valid_add(t_env *env);
 void				is_valid_sub(t_env *env);
 void				is_valid_and(t_env *env);
@@ -178,7 +178,6 @@ void				is_valid_aff(t_env *env);
 void				is_valid_label_call(t_env *env);
 void				is_valid_label_definition(t_env *env);
 int					is_valid_separator(t_env *env, char *ins, int one, int two);
-// int					is_valid_param(t_env *env, char *instruction);
 void				print_error(t_env *env, char *instr, int nb);
 /*
 *********************************** Byte_ope.c *********************************
@@ -215,6 +214,5 @@ void				print_error(t_env *env, char *instr, int nb);
 int					is_valid_separator(t_env *env, char *ins, int one, int two);
 int					is_valid_param(t_env *env, char *instruction);
 void				is_valid_label_call(t_env *env);
-
 void				print_lst(t_lst *list);
 #endif

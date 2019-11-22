@@ -31,8 +31,9 @@ int		get_size(t_env *env)
 		return (2);
 	if (env->list->type == TYPE_DIRECT_4)
 		return (4);
-	ft_printf("Mauvais type de parametre dans get_size sur %s (type : %d)", \
-	env->list->name, env->list->type);
+	// VOIR CI DESSOUS AVEC THALLOT LUNDI, JE COMPREND PAS SI ON DOIT AFFICHER QUELQUE CHOSE NI QUOI
+	ft_printf("Erreur : instruction %s -> [%d] type de parametre inconnu\n"
+	, env->list->name, env->list->type);
 	exit(exit_gc(env, 1));
 }
 
@@ -45,11 +46,11 @@ int		get_size(t_env *env)
 void	print_error(t_env *env, char *instr, int nb)
 {
 	if (nb == 0)
-		ft_printf("Erreur de formatage de parametre pour l'instruction %s, \
-	parametre : [%s] devrait etre numerique\n", instr, env->list->name);
+		ft_printf("Erreur : instruction %s -> [%s] devrait etre numerique\n"
+		, instr, env->list->name);
 	else
-		ft_printf("Erreur de type de parametre pour l'instruction %s, \
-	parametre %d : [%s]\n", instr, nb, env->list->name);
+		ft_printf("Erreur : instruction %s -> [%s] mauvais type\n"
+		, instr, env->list->name);
 	exit(exit_gc(env, 1));
 }
 
@@ -62,8 +63,8 @@ int		is_valid_separator(t_env *env, char *instr, int one, int two)
 {
 	if (env->list->type != TYPE_VIRGULE)
 	{
-		ft_printf("Erreur de formatage pour l'instruction %s, \
-		pas de separateur dans le %de et le %de parametre", instr, one, two);
+		ft_printf("Erreur : instruction %s -> separateur entre param %d et param %d\n"
+		, instr, one, two);
 		exit(exit_gc(env, 1));
 	}
 	env->list = env->list->next;
@@ -84,7 +85,7 @@ int		is_valid_param(t_env *env, char *instruction)
 		if (!ft_isnumber(env->list->name + 1, 0))
 			print_error(env, instruction, 0);
 	if (env->list->type == TYPE_REGISTRE)
-		is_valid_registre(env);
+		is_valid_registre(env, instruction);
 	
 	return (1);
 }
@@ -115,6 +116,6 @@ void	is_valid_label_call(t_env *env)
 		}
 		env->label = env->label->next;
 	}
-	ft_printf("Le label %s n'existe pas\n", i + env->list->name);
+	ft_printf("Erreur : label [%s] n'est pas déclaré\n", i + env->list->name);
 	exit(exit_gc(env, 1));
 }

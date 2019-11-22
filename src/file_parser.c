@@ -33,7 +33,7 @@ int		parsing_file_s(t_env *env, char *file_path)
 		env->file_name = ft_strndup_gc(env, dot_s, len - 2);
 	else
 	{
-		ft_printf("valid .s file needed\n");
+		ft_printf("Erreur : valid .s file needed\n");
 		exit(exit_gc(env, 1));
 	}
 	return (0);
