@@ -31,6 +31,8 @@ static void		cb_live(void *pvm, void *pproc)
 		vm->cmpt_live++;
 		vm->lastlive = id;
 		process->state = alive;
+		if (!vm->visu)
+			ft_printf("Joueur %d est en vie\n", id);
 	}
 }
 
@@ -71,11 +73,11 @@ static void		cb_ld(void *pvm, void *pproc)
 	lg = (vm->memory[process->pc_instru] == 2) ? false : true;
 	set_param_value(vm->memory, process, 1, lg);
 	if (!process->param[0].value)
-		process->carry = 1;
+		process->carry = true;
 	else
-		process->carry = 0;
+		process->carry = false;
 	dest = process->records[process->param[1].value - 1];
-	res = change_endian(&process->param[0].value, REG_SIZE);
+	res = process->param[0].value;
 	ft_memcpy(dest, (void *)&res, REG_SIZE);
 }
 

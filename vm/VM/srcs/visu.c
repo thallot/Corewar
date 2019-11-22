@@ -60,7 +60,7 @@ static void print_player(t_visu *visu, WINDOW *info)
   while (i < nb_player)
   {
     wattron(info, COLOR_PAIR(i + 1));
-    mvwprintw(info, 3 + i, (COLS / 6) - 14, "%s (Number : %d)", visu->vm->tab_champ.champs[i].name, visu->vm->tab_champ.champs[i].num);
+    mvwprintw(info, 3 + i, 3, "%s (Number : %d)", visu->vm->tab_champ.champs[i].name, visu->vm->tab_champ.champs[i].num);
     wattroff(info, COLOR_PAIR(i + 1));
     i++;
   }
@@ -105,11 +105,29 @@ void print_info(t_visu *visu, WINDOW *info)
   mvwprintw(info, 10, (COLS / 6) - 14, "RULES :");
   mvwprintw(info, 16, (COLS / 6) - 14, "INFOS :");
   mvwprintw(info, 20, (COLS / 6) - 14, "PARAMS :");
+  mvwprintw(info, 27, (COLS / 6) - 14, "Player 1 :");
+  mvwprintw(info, 31, (COLS / 6) - 14, "Player 2 :");
+  mvwprintw(info, 35, (COLS / 6) - 14, "Player 3 :");
+  mvwprintw(info, 39, (COLS / 6) - 14, "Player 4 :");
   wattroff(info, A_UNDERLINE);
-  mvwprintw(info, 11, 3, "CYCLE_TO_DIE %5d | %d", CYCLE_TO_DIE, visu->rules->cycle_to_die);
+  mvwprintw(info, 11, 3, "CYCLE_TO_DIE %5d | %d  ", CYCLE_TO_DIE, visu->rules->cycle_to_die);
   mvwprintw(info, 12, 3, "CYCLE_DELTA  %5d |", CYCLE_DELTA);
-  mvwprintw(info, 13, 3, "NBR_LIVE     %5d | %d", NBR_LIVE, visu->vm->cmpt_live);
-  mvwprintw(info, 14, 3, "MAX_CHECKS   %5d | %d", MAX_CHECKS, visu->rules->nb_check);
+  mvwprintw(info, 13, 3, "NBR_LIVE     %5d | %d  ", NBR_LIVE, visu->vm->cmpt_live);
+  mvwprintw(info, 14, 3, "MAX_CHECKS   %5d | %d  ", MAX_CHECKS, visu->rules->nb_check);
+  if (visu->vm->lastlive != UNDEF)
+  {
+    wattron(info, COLOR_PAIR(visu->vm->lastlive + 1));
+    mvwprintw(info, 29 + visu->vm->lastlive * 4, 3, "Player %s is alive", visu->vm->tab_champ.champs[visu->vm->lastlive].name);
+    wattroff(info, COLOR_PAIR(visu->vm->lastlive + 1));
+  }
+  if (visu->rules->cycle_to_die == visu->rules->cr_cycle + 1)
+  {
+    int i;
+
+    i = 0;
+    while (i < 4)
+      mvwprintw(info, 29 + i++ * 4, 3, "%128c", ' ');
+  }
   if (visu->pause)
   {
     wattron(info, COLOR_PAIR(3));

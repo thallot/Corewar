@@ -39,7 +39,7 @@ static void			cb_add(void *pvm, void *pproc)
 	registre[2] = registre[0] + registre[1];
 	ft_memcpy(process->records[process->param[2].value - 1]
 			, (void*)&registre[2], REG_SIZE);
-	process->carry = registre[2] == 0 ? 1 : 0;
+	process->carry = registre[2] == 0 ? true : false;
 }
 
 t_result		ft_add(t_env *vm, t_process *process)
@@ -71,7 +71,7 @@ static void			cb_sub(void *pvm, void *pproc)
 	registre[2] = registre[0] - registre[1];
 	ft_memcpy(process->records[process->param[2].value - 1]
 			, (void*)&registre[2], REG_SIZE);
-	process->carry = registre[2] == 0 ? 1 : 0;
+	process->carry = registre[2] == 0 ? true : false;
 }
 
 t_result		ft_sub(t_env *vm, t_process *process)

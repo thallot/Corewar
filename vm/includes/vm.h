@@ -140,10 +140,10 @@ typedef struct		s_env
 
 typedef struct		s_rules
 {
+	int	cr_cycle;
 	unsigned int	cycle;
 	int				cycle_to_die;
 	int				nb_verif;
-	int				nb_live;
 	int				nb_check;
 	enum e_bool		someone_alive;
 }					t_rules;

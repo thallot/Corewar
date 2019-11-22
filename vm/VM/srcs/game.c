@@ -32,6 +32,8 @@ static void		check_nbr_lives(t_rules *rules, t_env *vm)
 	if (vm->cmpt_live >= NBR_LIVE || rules->nb_check == MAX_CHECKS)
 	{
 		rules->cycle_to_die -= CYCLE_DELTA;
+		if (rules->cycle_to_die <= 0)
+			rules->cycle_to_die = 1;
 		rules->nb_check = 0;
 	}
 	else
@@ -73,6 +75,7 @@ static void		whos_living(t_listp *players, t_env *vm, t_rules *rules)
 {
 	t_listp	*p;
 
+	rules->cr_cycle = 0;
 	p = players;
 	while (players)
 	{
@@ -104,7 +107,7 @@ void			lets_play(t_env *vm)
 	t_visu			visu;
 
 	initialise_rules(&rules, vm, &visu);
-	while (rules.someone_alive == true && (int)rules.cycle != vm->dump
+	while (rules.someone_alive == true && (int)rules.cycle != vm->dump - 1
 		&& ((vm->visu && (!rules.cycle || visu.pause == 0)) || !vm->visu))
 	{
 		if (vm->visu)
@@ -114,11 +117,8 @@ void			lets_play(t_env *vm)
 		}
 		process_play(vm->player, vm);
 		rules.cycle++;
-		if (!(rules.cycle % rules.cycle_to_die))
+		if (++rules.cr_cycle == rules.cycle_to_die)
 			whos_living(vm->player, vm, &rules);
-		if (!vm->visu)
-			ft_printf("cycle %d, vm->player.pc = %d\n", rules.cycle
-				, vm->player->process.pc);
 	}
 	if (vm->visu)
 		del_visu(&visu);

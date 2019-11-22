@@ -68,7 +68,7 @@ t_result		ft_ldi(t_env *vm, t_process *process)
 ** Dans tous les cas on additionne la valeur de p1 et p2
 ** Puis on va a l addresse resultante de cette somme,
 ** et on y ecrit la valeur contenue dans le registre passe en parametre 0 (p0)
-*/ 
+*/
 static void			cb_sti(void *pvm, void *pproc)
 {
   t_env         *vm;
