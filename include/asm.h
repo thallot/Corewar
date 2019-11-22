@@ -178,7 +178,7 @@ void				is_valid_aff(t_env *env);
 void				is_valid_label_call(t_env *env);
 void				is_valid_label_definition(t_env *env);
 int					is_valid_separator(t_env *env, char *ins, int one, int two);
-int					is_valid_param(t_env *env);
+// int					is_valid_param(t_env *env, char *instruction);
 void				print_error(t_env *env, char *instr, int nb);
 /*
 *********************************** Byte_ope.c *********************************
@@ -213,7 +213,7 @@ t_lst				*add_list(t_lst **list, char *name, int type, t_env *env);
 int					get_size(t_env *env);
 void				print_error(t_env *env, char *instr, int nb);
 int					is_valid_separator(t_env *env, char *ins, int one, int two);
-int					is_valid_param(t_env *env);
+int					is_valid_param(t_env *env, char *instruction);
 void				is_valid_label_call(t_env *env);
 
 void				print_lst(t_lst *list);

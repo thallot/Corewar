@@ -6,7 +6,7 @@
 /*   By: jjaegle <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 16:28:29 by jjaegle           #+#    #+#             */
-/*   Updated: 2019/11/20 16:08:15 by jjaegle          ###   ########.fr       */
+/*   Updated: 2019/11/21 18:46:14 by jjaegle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,21 +18,17 @@
 
 static void		cb_live(void *pvm, void *pproc)
 {
-	int			arg;
 	int			id;
 	t_env		*vm;
 	t_process	*process;
 
 	process = (t_process*)pproc;
 	vm = (t_env*)pvm;
-	arg = change_endian(process->param[0].ptr, REG_SIZE);
-	// ft_printf("CB_LIVE : arg = %d\n", arg);
-	if ((id = in_arraynb(arg, &vm->tab_champ)) != UNDEF)
+	if ((id = in_arraynb(process->param[0].value, &vm->tab_champ)) != UNDEF)
 	{
-		// ft_printf("Player %d(%s) is alive\n", vm->tab_champ.champs[id].num
-				// , vm->tab_champ.champs[id].name);
 		if (vm->lastlive == UNDEF || id != vm->lastlive)
 			vm->nblive++;
+		vm->cmpt_live++;
 		vm->lastlive = id;
 		process->state = alive;
 	}
@@ -51,11 +47,8 @@ t_result		ft_live(t_env *vm, t_process *process)
 {
 	process->pc_instru = process->pc;
 	process->pc++;
-	// ft_printf("oui\n");
 	process->param[0].ptr = get_param(process, vm->memory, DIR_CODE, false);
-	// ft_printf("oui\n");
-	// ft_printf("LIVE : param = %d\n", change_endian(process->param[0].ptr, REG_SIZE));
-	// ft_printf("LIVE : param = %d\n", change_endian(process->param[0].ptr, 4));
+	process->param[0].value = change_endian(process-param[0].ptr, REG_SIZE);
 	process->active = true;
 	process->delay = 10 - 1;
 	return (cb_live);
@@ -71,22 +64,19 @@ static void		cb_ld(void *pvm, void *pproc)
 	t_process	*process;
 	void		*dest;
 	enum e_bool	lg;
-	int res;
+	int			res;
 
 	vm = (t_env*)pvm;
 	process = (t_process*)pproc;
-	process->pc_instru = process->pc;
 	lg = (vm->memory[process->pc_instru] == 2) ? false : true;
-	// ft_printf("adresse = %d\n", get_adress(process->pc_instru, process->param[0].value, lg));
 	set_param_value(vm->memory, process, 1, lg);
 	if (!process->param[0].value)
 		process->carry = 1;
 	else
 		process->carry = 0;
 	dest = process->records[process->param[1].value - 1];
-	res = change_endian(process->param[0].ptr, REG_SIZE);
+	res = change_endian(process->param[0].value, REG_SIZE);
 	ft_memcpy(dest, (void *)&res, REG_SIZE);
-	// ft_printf("r%d = %d, carry = %d\n", process->param[1].value, process->param[0].value, process->carry);
 }
 
 /*
@@ -133,45 +123,16 @@ t_result	ft_st(t_env *vm, t_process *process)
 	process->pc_instru = process->pc;
 	start = process->pc;
 	memory = vm->memory;
-	// ft_printf("oui\n");
 	if(get_params(process, memory, 2, false))
 		return (NULL);
-	// ft_printf("non\n");
 	if (process->param[0].type != T_REG || process->param[1].type == DIR_CODE)
 		return (NULL);
 	if (process->param[1].type == T_REG)
-		dest = (unsigned char *)process->records[process->param[1].value];
+		dest = (unsigned char *)process->records[process->param[1].value - 1];
 	else
 		dest = &memory[get_adress(start, process->param[1].value, false)];
-	// if (process->param[1].type == T_REG)
-		// ft_printf("ST : dest = registre %d\n", process->param[1].value);
-	// else
-		// ft_printf("ST : dest = decallage :%d\n", get_adress(start, process->param[1].value, false));
 	process->param[1].ptr = (char*)dest;
 	process->active = true;
 	process->delay = 5 - 1;
 	return (cb_st);
 }
-/*
-void		ft_add(t_env *vm, t_process *process)
-{
-	unsigned char	encoded;
-	unsigned char	*memory;
-	int				src;
-	int				params[3];
-
-	memory = vm->memory;
-	encoded = get_encoded(process, memory);
-	params[0] = get_param(process, memory, get_size(encoded, FIRST));
-	params[1] = get_param(process, memory, get_size(encoded, SECND));
-	params[2] = get_param(process, memory, get_size(encoded, THIRD));
-	if (!is_register(params, 3))
-		return ;
-	src = val_record(process, params[0], READ)
-		+ val_record(process, params[1], READ);
-	ft_memcpy(process->records[params[2] - 1], &src, REG_SIZE);
-	if (!*(int*)process->records[params[2] - 1])
-		process->carry = !process->carry;
-	ft_printf("resultat = %d, carry = %d\n", *(int*)process->records[params[2] - 1], process->carry);
-}
-*/

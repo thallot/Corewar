@@ -1,12 +1,4 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ldi_sti.c                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: thallot <marvin@42.fr>                     +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/14 15:02:09 by thallot           #+#    #+#             */
-/*   Updated: 2019/11/20 17:04:24 by jjaegle          ###   ########.fr       */
+/* ************************************************************************** */ /*                                                                            */ /*                                                        :::      ::::::::   */ /*   ldi_sti.c                                          :+:      :+:    :+:   */ /*                                                    +:+ +:+         +:+     */ /*   By: thallot <marvin@42.fr>                     +#+  +:+       +#+        */ /*                                                +#+#+#+#+#+   +#+           */ /*   Created: 2019/11/14 15:02:09 by thallot           #+#    #+#             */ /*   Updated: 2019/11/20 17:04:24 by jjaegle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +14,6 @@
 static void			cb_ldi(void *pvm, void *pproc)
 {
     t_process		*process;
-    int				idx;
     int				address;
     void			*dest;
     unsigned char	*mem;
@@ -34,15 +25,14 @@ static void			cb_ldi(void *pvm, void *pproc)
     set_param_value(mem, process, 1, lg);
     set_param_value(mem, process, 2, lg);
     address = process->param[0].value + process->param[1].value;
-    idx = change_endian(&mem[get_adress(process->pc_instru, address
+    address = change_endian(&mem[get_adress(process->pc_instru, address
 				, lg)], REG_SIZE);
     dest = process->records[process->param[2].value - 1];
-    ft_memcpy(dest, (void*)&idx, REG_SIZE);
+    ft_memcpy(dest, (void*)&address, REG_SIZE);
 	if (lg == true && !(*(int*)dest))
 		process->carry = 1;
 	else if (lg == true)
 		process->carry = 0;
-    // ft_printf("What's in the register after LDI? -> %d, caeey = %d\n", *(int*)process->records[process->param[2].value - 1], process->carry);
 }
 
 /*
@@ -57,14 +47,12 @@ t_result		ft_ldi(t_env *vm, t_process *process)
 {
     unsigned char	*mem;
 
-    // printf("ENTER LDI\n");
     process->pc_instru = process->pc;
     mem = vm->memory;
     if (get_params(process, mem, 3, true))
         return (NULL);
-    if (process->param[2].type != REG_CODE || process->param[1].type == IND_CODE)
-        return (NULL);
-    if (process->param[0].type == UNDEF || process->param[1].type == UNDEF || process->param[2].type == UNDEF)
+    if (process->param[2].type != REG_CODE
+			|| process->param[1].type == IND_CODE)
         return (NULL);
     process->active = true;
     process->delay = 25 - 1;
@@ -80,8 +68,7 @@ t_result		ft_ldi(t_env *vm, t_process *process)
 ** Dans tous les cas on additionne la valeur de p1 et p2
 ** Puis on va a l addresse resultante de cette somme,
 ** et on y ecrit la valeur contenue dans le registre passe en parametre 0 (p0)
-*/
-
+*/ 
 static void			cb_sti(void *pvm, void *pproc)
 {
   t_env         *vm;
@@ -89,7 +76,6 @@ static void			cb_sti(void *pvm, void *pproc)
   unsigned char *mem;
   int           address;
   int           reg;
-  //int           idx;
 
   vm = (t_env*)pvm;
   process = (t_process*)pproc;
@@ -98,15 +84,9 @@ static void			cb_sti(void *pvm, void *pproc)
   set_param_value(mem, process, 3, false);
   address = process->param[1].value + process->param[2].value;
   address = get_adress(process->pc_instru, address, false);
-  // ft_printf("DEST = %d\n",address);
-  /*
-  idx = change_endian(&mem[get_adress(process->pc_instru, address, false)], REG_SIZE);
-  reg = change_endian(&process->records[process->param[0].value - 1], REG_SIZE);
-  ft_memcpy(&(vm->memory[idx]), &reg, REG_SIZE);*/
   reg = change_endian(&process->records[process->param[0].value - 1], REG_SIZE);
   ft_memcpy(&(vm->memory[address]), &reg, REG_SIZE);
   write_in_visu(process->pc_instru, address, vm);
-  // ft_printf("JUST WROTE THE FOLLOWING IN MEMORY : %d at address : %d\n", change_endian(&reg, REG_SIZE), address);
 }
 
 
@@ -118,15 +98,13 @@ t_result		ft_sti(t_env *vm, t_process *process)
 {
     unsigned char	*mem;
 
-    // printf("ENTER STI\n");
     process->pc_instru = process->pc;
     mem = vm->memory;
     if (get_params(process, mem, 3, true))
         return (NULL);
-    if (process->param[0].type != REG_CODE || process->param[2].type == IND_CODE)
+    if (process->param[0].type != REG_CODE
+			|| process->param[2].type == IND_CODE)
         return (NULL);
-    if (process->param[0].type == UNDEF || process->param[1].type == UNDEF || process->param[2].type == UNDEF)
-    return (NULL);
     process->active = true;
     process->delay = 25 - 1;
     return (cb_sti);
