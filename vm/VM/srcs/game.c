@@ -6,7 +6,7 @@
 /*   By: jjaegle <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 11:23:02 by jjaegle           #+#    #+#             */
-/*   Updated: 2019/11/22 13:01:05 by jjaegle          ###   ########.fr       */
+/*   Updated: 2019/11/22 17:01:20 by jjaegle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,11 +55,10 @@ static void		print_result(t_info_champ champs[], int *ll, int nblive
 	(void)champs;
 	(void)nblive;
 	i = *ll;
-	// ft_printf("nblive = %d ll = %d\n", nblive, *ll);
-	// if (nblive == 1)
-	// 	ft_printf("le joueur %d(%s) a gagne\n", champs[i].num, champs[i].name);
-	// else
-	// 	ft_printf("No winner for today... Only looser\n");
+	if (nblive == 1)
+		ft_printf("le joueur %d(%s) a gagne\n", champs[i].num, champs[i].name);
+	else
+		ft_printf("No winner for today... Only looser\n");
 	rules->someone_alive = false;
 }
 
@@ -87,7 +86,7 @@ static void		whos_living(t_listp *players, t_env *vm, t_rules *rules)
 	}
 	if (nb_alive(p))
 		check_nbr_lives(rules, vm);
-	else
+	else if (!vm->visu)
 		print_result(vm->tab_champ.champs, &vm->lastlive, vm->nblive, rules);
 	if (vm->nblive > 1)
 	{
@@ -107,7 +106,7 @@ void			lets_play(t_env *vm)
 	t_visu			visu;
 
 	initialise_rules(&rules, vm, &visu);
-	while (rules.someone_alive == true && (int)rules.cycle != vm->dump - 1
+	while (rules.someone_alive == true && (int)rules.cycle != vm->dump
 		&& ((vm->visu && (!rules.cycle || visu.pause == 0)) || !vm->visu))
 	{
 		if (vm->visu)

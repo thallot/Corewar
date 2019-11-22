@@ -6,7 +6,7 @@
 /*   By: jjaegle <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/06 09:41:43 by jjaegle           #+#    #+#             */
-/*   Updated: 2019/11/19 13:44:04 by jjaegle          ###   ########.fr       */
+/*   Updated: 2019/11/22 17:01:06 by jjaegle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ static int	pars_args(char **av[], t_env *env)
 	{
 		if (ret == DUMP)
 		{
-		   	if (!env->dump && ft_str_is(**av, ft_isdigit)
+		   	if (env->dump == UNDEF && ft_str_is(**av, ft_isdigit)
 				&& ft_strcmp(**av, "0"))
 				env->dump = ft_atoi(**av);
 			else
@@ -94,6 +94,7 @@ static void	initialise_env(t_env *env)
 
 	ft_bzero(env, sizeof(*env));
 	env->lastlive = UNDEF;
+	env->dump = UNDEF;
 	i = 0;
 	while (i < MAX_PLAYERS)
 	{
@@ -117,10 +118,4 @@ int			main(int ac, char *av[])
 		lets_play(&env);
 	(void)ac;
 	return (clean_process(env.player));
-}
-
-int my_destructor(void) __attribute__((destructor));
-int my_destructor(void) /* This function is called after main() */
-{                       /* completes or after exit() is called. */
-    while (2) ;
 }
