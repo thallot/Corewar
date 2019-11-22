@@ -6,17 +6,19 @@
 /*   By: jjaegle <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 11:23:02 by jjaegle           #+#    #+#             */
-/*   Updated: 2019/11/21 18:08:05 by jjaegle          ###   ########.fr       */
+/*   Updated: 2019/11/22 13:01:05 by jjaegle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 
-static void		initialise_rules(t_rules *rules)
+static void		initialise_rules(t_rules *rules, t_env *vm, t_visu *visu)
 {
 	ft_bzero(rules, sizeof(t_rules));
 	rules->cycle_to_die = CYCLE_TO_DIE;
 	rules->someone_alive = true;
+	if (vm->visu)
+		init_visu(visu, rules, vm, vm->player);
 }
 
 /*
@@ -77,10 +79,7 @@ static void		whos_living(t_listp *players, t_env *vm, t_rules *rules)
 		if (players->process.state == alive)
 			players->process.state = waiting;
 		else if (players->process.state == waiting)
-		{
 			players->process.state = dead;
-			// ft_printf("A process is dead :'(\n");
-		}
 		players = players->next;
 	}
 	if (nb_alive(p))
@@ -104,11 +103,9 @@ void			lets_play(t_env *vm)
 	t_rules			rules;
 	t_visu			visu;
 
-	initialise_rules(&rules);
-	if (vm->visu)
-		init_visu(&visu, &rules, vm, vm->player);
-	while (rules.someone_alive == true && (int)rules.cycle != vm->dump - 1
-	&& ((vm->visu && (!rules.cycle || visu.pause == 0)) || !vm->visu))
+	initialise_rules(&rules, vm, &visu);
+	while (rules.someone_alive == true && (int)rules.cycle != vm->dump
+		&& ((vm->visu && (!rules.cycle || visu.pause == 0)) || !vm->visu))
 	{
 		if (vm->visu)
 		{
@@ -117,19 +114,14 @@ void			lets_play(t_env *vm)
 		}
 		process_play(vm->player, vm);
 		rules.cycle++;
-		// if (!rules.cycle_to_die || !(rules.cycle % rules.cycle_to_die))
-		// 	whos_living(players, vm, &rules);
 		if (!(rules.cycle % rules.cycle_to_die))
 			whos_living(vm->player, vm, &rules);
 		if (!vm->visu)
-		 ft_printf("cycle %d, vm->player.pc = %d\n", rules.cycle, vm->player->process.pc);
-		/*
-		if (visu)
-			visu(warriors name, arene (4096) with value, arena);*/
+			ft_printf("cycle %d, vm->player.pc = %d\n", rules.cycle
+				, vm->player->process.pc);
 	}
 	if (vm->visu)
-	{
-		ft_memdel((void **)&(visu.memory));
-		ft_memdel((void **)&(visu.info));
-	}
+		del_visu(&visu);
+	else if ((int)rules.cycle == vm->dump)
+		dump_memory(vm->memory);
 }

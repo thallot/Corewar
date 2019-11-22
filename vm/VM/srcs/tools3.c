@@ -6,7 +6,7 @@
 /*   By: jjaegle <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 16:19:53 by jjaegle           #+#    #+#             */
-/*   Updated: 2019/11/20 14:40:43 by jjaegle          ###   ########.fr       */
+/*   Updated: 2019/11/22 13:02:37 by jjaegle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void            set_param_value(unsigned char *mem, t_process *process, int i
 			*(int*)process->records[(short)process->param[i - 1].value - 1];
 }
 
-void write_in_visu(int start, int dest, t_env *vm)
+void			write_in_visu(int start, int dest, t_env *vm)
 {
 	int nb_champ;
 	int cpt;
@@ -54,4 +54,10 @@ void write_in_visu(int start, int dest, t_env *vm)
 	cpt = 4;
 	while (cpt--)
 		vm->memory_visu[dest + cpt] = nb_champ;
+}
+
+void			del_visu(t_visu *visu)
+{
+	ft_memdel((void **)&(visu->memory));
+	ft_memdel((void **)&(visu->info));
 }

@@ -6,7 +6,7 @@
 /*   By: jjaegle <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/06 09:42:52 by jjaegle           #+#    #+#             */
-/*   Updated: 2019/11/21 18:08:02 by jjaegle          ###   ########.fr       */
+/*   Updated: 2019/11/22 13:00:11 by jjaegle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -225,6 +225,7 @@ int					get_adress(int start, short ind, enum e_bool l);
 int					clean_process(t_listp *list);
 void				set_param_value(unsigned char *mem, t_process *process
 		, int i, enum e_bool lg);
+void				del_visu(t_visu *visu);
 
 /*
 **----------------------------------Visu------------------------------
