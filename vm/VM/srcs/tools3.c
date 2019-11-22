@@ -6,7 +6,7 @@
 /*   By: jjaegle <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 16:19:53 by jjaegle           #+#    #+#             */
-/*   Updated: 2019/11/22 17:24:12 by jjaegle          ###   ########.fr       */
+/*   Updated: 2019/11/22 18:03:22 by jjaegle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,23 +29,23 @@ int		get_size(int type, int d2)
 ** en se basant sur leur type
 */
 
-void            set_param_value(unsigned char *mem, t_process *process, int i
+void	set_param_value(unsigned char *mem, t_process *process, int i
 		, int lg)
 {
-    unsigned char   *idx;
+	unsigned char	*idx;
 
-    if (process->param[i - 1].type == IND_CODE)
-    {
-        idx = &mem[get_adress(process->pc_instru
-				, (short)process->param[i - 1].value, lg)];
-        process->param[i - 1].value = change_endian(idx, REG_SIZE);
-    }
-    else if (process->param[i - 1].type == REG_CODE)
-        process->param[i - 1].value =
+	if (process->param[i - 1].type == IND_CODE)
+	{
+		idx = &mem[get_adress(process->pc_instru
+			, (short)process->param[i - 1].value, lg)];
+		process->param[i - 1].value = change_endian(idx, REG_SIZE);
+	}
+	else if (process->param[i - 1].type == REG_CODE)
+		process->param[i - 1].value =
 			*(int*)process->records[(short)process->param[i - 1].value - 1];
 }
 
-void			write_in_visu(int start, int dest, t_env *vm)
+void	write_in_visu(int start, int dest, t_env *vm)
 {
 	int nb_champ;
 	int cpt;
@@ -56,7 +56,7 @@ void			write_in_visu(int start, int dest, t_env *vm)
 		vm->memory_visu[dest + cpt] = nb_champ;
 }
 
-void			del_visu(t_visu *visu)
+void	del_visu(t_visu *visu)
 {
 	ft_memdel((void **)&(visu->memory));
 	ft_memdel((void **)&(visu->info));

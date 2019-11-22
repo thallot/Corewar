@@ -6,7 +6,7 @@
 /*   By: jjaegle <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/06 13:28:45 by jjaegle           #+#    #+#             */
-/*   Updated: 2019/11/07 16:54:33 by jjaegle          ###   ########.fr       */
+/*   Updated: 2019/11/22 17:49:39 by jjaegle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 static int	has_magic(char *str, int len)
 {
 	int				i;
-	unsigned int	mask;;
+	unsigned int	mask;
 	unsigned int	ret;
 
 	i = 0;
@@ -33,12 +33,17 @@ static int	has_magic(char *str, int len)
 	return (ret == COREWAR_EXEC_MAGIC ? 1 : 0);
 }
 
+int			too_big(int fd)
+{
+	close(fd);
+	return (BIG);
+}
+
 int			extract_info(char *file, t_info_champ *champ)
 {
 	int		fd;
 	char	buf[CHAMP_MAX_SIZE + 2];
 	int		ret;
-	int size;
 
 	fd = open(file, O_RDONLY);
 	if (fd > -1)
@@ -46,8 +51,8 @@ int			extract_info(char *file, t_info_champ *champ)
 		lseek(fd, 136, SEEK_SET);
 		ret = read(fd, buf, 4);
 		buf[ret] = '\0';
-		size = change_endian((void *)&buf, 4);
-		champ->size = size;
+		if ((champ->size = change_endian((void *)&buf, 4)) > CHAMP_MAX_SIZE)
+			return (too_big(fd));
 		lseek(fd, 4, SEEK_SET);
 		ret = read(fd, buf, PROG_NAME_LENGTH);
 		buf[ret] = '\0';
@@ -55,11 +60,6 @@ int			extract_info(char *file, t_info_champ *champ)
 		lseek(fd, 2192, SEEK_SET);
 		ret = read(fd, buf, CHAMP_MAX_SIZE + 1);
 		buf[ret] = '\0';
-		if (size > CHAMP_MAX_SIZE)
-		{
-			close(fd);
-			return (BIG);
-		}
 		ft_memcpy(champ->instr, buf, ret);
 	}
 	close(fd);

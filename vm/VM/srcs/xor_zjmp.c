@@ -6,7 +6,7 @@
 /*   By: thallot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/15 12:05:18 by thallot           #+#    #+#             */
-/*   Updated: 2019/11/21 18:40:23 by jjaegle          ###   ########.fr       */
+/*   Updated: 2019/11/22 18:05:12 by jjaegle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@
 ** et stock le resultat dans le 3e parametre aui est un registre.
 ** les 2 premier parametre sont code sur 2 octets
 */
-static void			cb_xor(void *pvm, void *pproc)
+
+static void		cb_xor(void *pvm, void *pproc)
 {
 	t_env		*vm;
 	t_process	*process;
@@ -57,7 +58,7 @@ t_result		ft_xor(t_env *vm, t_process *process)
 ** et fais reference a un label.
 */
 
-static void			cb_zjmp(void *pvm, void *pproc)
+static void		cb_zjmp(void *pvm, void *pproc)
 {
 	t_env		*vm;
 	t_process	*process;
@@ -84,5 +85,5 @@ t_result		ft_zjmp(t_env *vm, t_process *process)
 			, IND_SIZE);
 	process->active = true;
 	process->delay = 20 - 1;
-  	return (cb_zjmp);
+	return (cb_zjmp);
 }

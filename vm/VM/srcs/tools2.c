@@ -6,13 +6,13 @@
 /*   By: jjaegle <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 15:52:01 by jjaegle           #+#    #+#             */
-/*   Updated: 2019/11/22 17:26:33 by jjaegle          ###   ########.fr       */
+/*   Updated: 2019/11/22 18:01:44 by jjaegle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 
-int		val_record(t_process *process, int registre,int opt)
+int			val_record(t_process *process, int registre, int opt)
 {
 	int		ret;
 
@@ -52,7 +52,7 @@ int			get_type(char encoded, int param)
 **get_params recupere tout les parametres d'une instruction
 */
 
-int		get_params(t_process *process, unsigned char *memory
+int			get_params(t_process *process, unsigned char *memory
 		, int nb, int d2)
 {
 	int				i;
@@ -64,7 +64,7 @@ int		get_params(t_process *process, unsigned char *memory
 	type = get_type(encoded, FIRST);
 	while (i < nb)
 	{
-		process->param[i].ptr = get_param(process, memory,  type, d2);
+		process->param[i].ptr = get_param(process, memory, type, d2);
 		if (!(process->param[i].ptr))
 			return (EXIT_FAILURE);
 		process->param[i].value = change_endian(process->param[i].ptr
@@ -76,7 +76,6 @@ int		get_params(t_process *process, unsigned char *memory
 		else if (i == 2)
 			type = get_type(encoded, THIRD);
 	}
-	// printf("success\n");
 	return (EXIT_SUCCESS);
 }
 
@@ -103,7 +102,7 @@ char		*get_param(t_process *process, unsigned char memory[], int type
 	return (ret);
 }
 
-int		get_adress(int start, short ind, int l)
+int			get_adress(int start, short ind, int l)
 {
 	int		ret;
 	int		sign;
@@ -127,6 +126,5 @@ int		get_adress(int start, short ind, int l)
 	}
 	else
 		ret %= MEM_SIZE;
-	// printf("S:%d | I:%d | R :%d\n", start, ind, ret);
 	return (ret);
 }

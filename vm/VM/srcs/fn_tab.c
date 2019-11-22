@@ -6,7 +6,7 @@
 /*   By: jjaegle <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/06 11:55:27 by jjaegle           #+#    #+#             */
-/*   Updated: 2019/11/22 17:15:40 by jjaegle          ###   ########.fr       */
+/*   Updated: 2019/11/22 17:50:57 by jjaegle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,6 @@ int				add_champ(char *file, t_tabchamp *tab)
 	int		i;
 	int		ret;
 
-
 	if (!is_filechamp(file))
 		return (CHAMP);
 	else if (tab->nb_champ == MAX_PLAYERS)
@@ -110,7 +109,7 @@ int				add_champ(char *file, t_tabchamp *tab)
 	return (EXIT_SUCCESS);
 }
 
-void	add_champ_num(int num, t_tabchamp *tab)
+void			add_champ_num(int num, t_tabchamp *tab)
 {
 	int		i;
 

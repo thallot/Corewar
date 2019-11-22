@@ -6,13 +6,13 @@
 /*   By: jjaegle <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 16:32:27 by jjaegle           #+#    #+#             */
-/*   Updated: 2019/11/21 18:30:21 by jjaegle          ###   ########.fr       */
+/*   Updated: 2019/11/22 17:38:31 by jjaegle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 
-void			cb_st(void *pvm, void *pproc)
+void				cb_st(void *pvm, void *pproc)
 {
 	t_env		*vm;
 	t_process	*process;
@@ -42,7 +42,7 @@ static void			cb_add(void *pvm, void *pproc)
 	process->carry = registre[2] == 0 ? true : false;
 }
 
-t_result		ft_add(t_env *vm, t_process *process)
+t_result			ft_add(t_env *vm, t_process *process)
 {
 	unsigned char	*mem;
 
@@ -74,7 +74,7 @@ static void			cb_sub(void *pvm, void *pproc)
 	process->carry = registre[2] == 0 ? true : false;
 }
 
-t_result		ft_sub(t_env *vm, t_process *process)
+t_result			ft_sub(t_env *vm, t_process *process)
 {
 	unsigned char	*mem;
 

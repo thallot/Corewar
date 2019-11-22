@@ -6,7 +6,7 @@
 /*   By: thallot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/15 10:49:09 by thallot           #+#    #+#             */
-/*   Updated: 2019/11/21 18:35:16 by jjaegle          ###   ########.fr       */
+/*   Updated: 2019/11/22 17:40:00 by jjaegle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@
 ** et stock le resultat dans le 3e parametre aui est un registre.
 ** les 2 premier parametre sont code sur 2 octets
 */
-static void			cb_and(void *pvm, void *pproc)
+
+static void		cb_and(void *pvm, void *pproc)
 {
 	t_env		*vm;
 	t_process	*process;
@@ -35,6 +36,7 @@ static void			cb_and(void *pvm, void *pproc)
 /*
 ** AND prends en parametre T_REG | T_DIR | T_IND, T_REG | T_IND | T_DIR, T_REG
 */
+
 t_result		ft_and(t_env *vm, t_process *process)
 {
 	unsigned char	*mem;
@@ -56,7 +58,7 @@ t_result		ft_and(t_env *vm, t_process *process)
 ** les 2 premier parametre sont code sur 2 octets
 */
 
-static void			cb_or(void *pvm, void *pproc)
+static void		cb_or(void *pvm, void *pproc)
 {
 	t_env		*vm;
 	t_process	*process;

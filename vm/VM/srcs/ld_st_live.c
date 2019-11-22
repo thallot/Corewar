@@ -6,7 +6,7 @@
 /*   By: jjaegle <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 16:28:29 by jjaegle           #+#    #+#             */
-/*   Updated: 2019/11/22 17:26:09 by jjaegle          ###   ########.fr       */
+/*   Updated: 2019/11/22 17:52:32 by jjaegle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ t_result		ft_ld(t_env *vm, t_process *process)
 
 	process->pc_instru = process->pc;
 	mem = vm->memory;
-	if(get_params(process, mem, 2, false))
+	if (get_params(process, mem, 2, false))
 		return (NULL);
 	if (process->param[1].type != T_REG || process->param[0].type == T_REG)
 		return (NULL);
@@ -116,7 +116,7 @@ t_result		ft_ld(t_env *vm, t_process *process)
 ** charge le contenu du registre.
 */
 
-t_result	ft_st(t_env *vm, t_process *process)
+t_result		ft_st(t_env *vm, t_process *process)
 {
 	unsigned char	*memory;
 	unsigned char	*dest;
@@ -125,7 +125,7 @@ t_result	ft_st(t_env *vm, t_process *process)
 	process->pc_instru = process->pc;
 	start = process->pc;
 	memory = vm->memory;
-	if(get_params(process, memory, 2, false))
+	if (get_params(process, memory, 2, false))
 		return (NULL);
 	if (process->param[0].type != T_REG || process->param[1].type == DIR_CODE)
 		return (NULL);
