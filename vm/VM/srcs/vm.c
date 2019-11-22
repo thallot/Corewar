@@ -6,7 +6,7 @@
 /*   By: jjaegle <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/06 09:41:43 by jjaegle           #+#    #+#             */
-/*   Updated: 2019/11/22 17:01:06 by jjaegle          ###   ########.fr       */
+/*   Updated: 2019/11/22 17:17:06 by jjaegle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,10 +112,15 @@ int			main(int ac, char *av[])
 	if ((err = pars_args(&av, &env)))
 		return (print_error(err, av));
 	adjust_num(&env.tab_champ);
-	if (create_process(&env))
-		write(2, "Malloc error\n", 13);
+	if (env.tab_champ.nb_champ > 0)
+	{
+		if (create_process(&env))
+			write(2, "Malloc error\n", 13);
+		else
+			lets_play(&env);
+	}
 	else
-		lets_play(&env);
+			write(2, "Champ needed\n", 13);
 	(void)ac;
 	return (clean_process(env.player));
 }

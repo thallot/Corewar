@@ -6,13 +6,13 @@
 /*   By: jjaegle <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 16:02:40 by jjaegle           #+#    #+#             */
-/*   Updated: 2019/11/21 18:54:19 by jjaegle          ###   ########.fr       */
+/*   Updated: 2019/11/22 17:25:33 by jjaegle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 
-static t_result		(*instr[NB_INSTR])(t_env *vm, t_process *process) =
+static t_result		(*instru[NB_INSTR])(t_env *vm, t_process *process) =
 {
 	ft_live,
 	ft_ld,
@@ -45,7 +45,7 @@ void		process_play(t_listp *players, t_env *vm)
 		if (player->active == false && player->state != dead)
 		{
 			if ((opcode = memory[player->pc] - 1) < NB_INSTR && opcode >= 0)
-				player->callback = instr[opcode](vm, player);
+				player->callback = instru[opcode](vm, player);
 			else
 				player->pc = (player->pc == MEM_SIZE - 1) ? 0 : player->pc + 1;
 		}

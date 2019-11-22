@@ -6,13 +6,13 @@
 /*   By: jjaegle <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 16:19:53 by jjaegle           #+#    #+#             */
-/*   Updated: 2019/11/22 13:02:37 by jjaegle          ###   ########.fr       */
+/*   Updated: 2019/11/22 17:24:12 by jjaegle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 
-int		get_size(int type, enum e_bool d2)
+int		get_size(int type, int d2)
 {
 	if (type == UNDEF)
 		return (0);
@@ -30,7 +30,7 @@ int		get_size(int type, enum e_bool d2)
 */
 
 void            set_param_value(unsigned char *mem, t_process *process, int i
-		, enum e_bool lg)
+		, int lg)
 {
     unsigned char   *idx;
 

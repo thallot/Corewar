@@ -6,7 +6,7 @@
 /*   By: jjaegle <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 16:28:29 by jjaegle           #+#    #+#             */
-/*   Updated: 2019/11/21 18:46:14 by jjaegle          ###   ########.fr       */
+/*   Updated: 2019/11/22 17:26:09 by jjaegle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static void		cb_live(void *pvm, void *pproc)
 		vm->lastlive = id;
 		process->state = alive;
 		if (!vm->visu)
-			ft_printf("Joueur %d est en vie\n", id);
+			ft_printf("Joueur %d est en vie\n", process->param[0].value);
 	}
 }
 
@@ -65,7 +65,7 @@ static void		cb_ld(void *pvm, void *pproc)
 	t_env		*vm;
 	t_process	*process;
 	void		*dest;
-	enum e_bool	lg;
+	int			lg;
 	int			res;
 
 	vm = (t_env*)pvm;

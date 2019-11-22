@@ -6,7 +6,7 @@
 /*   By: jjaegle <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/06 09:42:52 by jjaegle           #+#    #+#             */
-/*   Updated: 2019/11/22 13:00:11 by jjaegle          ###   ########.fr       */
+/*   Updated: 2019/11/22 17:32:24 by jjaegle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "../libft/includes/ft_printf.h"
 # include "op.h"
 # include <stdio.h>
+# include <ncurses.h>
 
 # define NB_INSTR 16
 
@@ -40,7 +41,6 @@
 **--------------------------------Structures-----------------------
 */
 
-enum				e_bool{false, true};
 enum				e_live{waiting, alive, dead};
 
 /*
@@ -72,11 +72,11 @@ typedef struct		s_param
 
 typedef struct		s_process
 {
-	enum e_bool		active;
+	int				active;
 	char			records[REG_NUMBER][REG_SIZE];
 	int				pc;
 	int				pc_instru;
-	enum e_bool		carry;
+	int				carry;
 	int				delay;
 	enum e_live		state;
 	t_param			param[MAX_ARGS_NUMBER];
@@ -100,7 +100,7 @@ typedef struct		s_listp
 typedef struct		s_info_champ
 {
 	int				num;
-	int 			size;
+	int				size;
 	char			name[PROG_NAME_LENGTH + 1];
 	char			instr[CHAMP_MAX_SIZE + 1];
 }					t_info_champ;
@@ -140,25 +140,24 @@ typedef struct		s_env
 
 typedef struct		s_rules
 {
-	int	cr_cycle;
+	int				cr_cycle;
 	unsigned int	cycle;
 	int				cycle_to_die;
 	int				nb_verif;
 	int				nb_check;
-	enum e_bool		someone_alive;
+	int				someone_alive;
 }					t_rules;
 
 typedef struct		s_visu
 {
 	t_listp			*process;
-	t_env				*vm;
-	t_rules     *rules;
+	t_env			*vm;
+	t_rules			*rules;
 	void			*memory;
 	void			*info;
 	int				pause;
-	int 			speed;
+	int				speed;
 }					t_visu;
-
 
 /*
 **--------------------------------Fn_champ----------------------------
@@ -213,25 +212,26 @@ int					print_error(int err, char *av[]);
 void				dump_memory(unsigned char memory[]);
 int					nb_alive(t_listp *players);
 char				*get_param(t_process *process, unsigned char memory[]
-		, int type, enum e_bool d2);
+		, int type, int d2);
 int					get_params(t_process *process, unsigned char *memory
-		, int nb, enum e_bool d2);
-int					get_size(int type, enum e_bool d2);
+		, int nb, int d2);
+int					get_size(int type, int d2);
 char				get_encoded(t_process *process, unsigned char memory[]);
 int					is_register(int tab[], int size);
 int					val_record(t_process *process, int rec, int opt);
 int					change_endian(void *var, int size);
-int					get_adress(int start, short ind, enum e_bool l);
+int					get_adress(int start, short ind, int l);
 int					clean_process(t_listp *list);
 void				set_param_value(unsigned char *mem, t_process *process
-		, int i, enum e_bool lg);
+		, int i, int lg);
 void				del_visu(t_visu *visu);
 
 /*
 **----------------------------------Visu------------------------------
 */
-void init_visu(t_visu *visu, t_rules *rules, t_env *vm, t_listp *players);
-int visu_core(t_visu *visu, int opt);
-void write_in_visu(int start, int dest, t_env *vm);
+void				init_visu(t_visu *visu, t_rules *rules, t_env *vm
+		, t_listp *players);
+int					visu_core(t_visu *visu, int opt);
+void				write_in_visu(int start, int dest, t_env *vm);
 
 #endif

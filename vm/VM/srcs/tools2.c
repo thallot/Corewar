@@ -6,7 +6,7 @@
 /*   By: jjaegle <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 15:52:01 by jjaegle           #+#    #+#             */
-/*   Updated: 2019/11/20 14:57:48 by jjaegle          ###   ########.fr       */
+/*   Updated: 2019/11/22 17:26:33 by jjaegle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int			get_type(char encoded, int param)
 */
 
 int		get_params(t_process *process, unsigned char *memory
-		, int nb, enum e_bool d2)
+		, int nb, int d2)
 {
 	int				i;
 	int				type;
@@ -86,7 +86,7 @@ int		get_params(t_process *process, unsigned char *memory
 */
 
 char		*get_param(t_process *process, unsigned char memory[], int type
-		, enum e_bool d2)
+		, int d2)
 {
 	char	*ret;
 	int		value;
@@ -103,7 +103,7 @@ char		*get_param(t_process *process, unsigned char memory[], int type
 	return (ret);
 }
 
-int		get_adress(int start, short ind, enum e_bool l)
+int		get_adress(int start, short ind, int l)
 {
 	int		ret;
 	int		sign;
