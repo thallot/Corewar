@@ -6,7 +6,7 @@
 /*   By: jjaegle <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 16:28:29 by jjaegle           #+#    #+#             */
-/*   Updated: 2019/11/22 17:52:32 by jjaegle          ###   ########.fr       */
+/*   Updated: 2019/11/25 16:00:02 by jjaegle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,11 @@ static void		cb_live(void *pvm, void *pproc)
 			vm->nblive++;
 		vm->cmpt_live++;
 		vm->lastlive = id;
-		process->state = alive;
 		vm->live[id] = 1;
 		if (!vm->visu)
 			ft_printf("Joueur %d est en vie\n", process->param[0].value);
 	}
+	process->state = alive;
 }
 
 /*
