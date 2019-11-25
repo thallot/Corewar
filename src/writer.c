@@ -6,7 +6,7 @@
 /*   By: thallot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 15:43:51 by thallot           #+#    #+#             */
-/*   Updated: 2019/11/13 15:43:52 by thallot          ###   ########.fr       */
+/*   Updated: 2019/11/25 16:15:18 by thallot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	check_error(t_env *env, char *name)
 	env->list = env->list->next;
 	if (ft_strcmp(env->list->name, COMMENT_CMD_STRING))
 	{
-		ft_printf("Erreur : Le commentaire du champion doit être la 2ème commande (%s)\n"
+		ft_printf("Erreur : Le commentaire doit être la 2ème commande (%s)\n"
 		, str);
 		exit(exit_gc(env, 1));
 	}

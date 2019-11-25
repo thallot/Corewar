@@ -6,7 +6,7 @@
 /*   By: thallot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 15:55:19 by thallot           #+#    #+#             */
-/*   Updated: 2019/11/13 15:59:41 by thallot          ###   ########.fr       */
+/*   Updated: 2019/11/25 16:18:33 by thallot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ int		get_size(t_env *env)
 		return (2);
 	if (env->list->type == TYPE_DIRECT_4)
 		return (4);
-	// VOIR CI DESSOUS AVEC THALLOT LUNDI, JE COMPREND PAS SI ON DOIT AFFICHER QUELQUE CHOSE NI QUOI
 	ft_printf("Erreur : instruction %s -> [%d] type de parametre inconnu\n"
 	, env->list->name, env->list->type);
 	exit(exit_gc(env, 1));
@@ -63,7 +62,7 @@ int		is_valid_separator(t_env *env, char *instr, int one, int two)
 {
 	if (env->list->type != TYPE_VIRGULE)
 	{
-		ft_printf("Erreur : instruction %s -> separateur entre param %d et param %d\n"
+		ft_printf("Erreur : %s -> separateur entre param %d et param %d\n"
 		, instr, one, two);
 		exit(exit_gc(env, 1));
 	}
@@ -86,7 +85,6 @@ int		is_valid_param(t_env *env, char *instruction)
 			print_error(env, instruction, 0);
 	if (env->list->type == TYPE_REGISTRE)
 		is_valid_registre(env, instruction);
-	
 	return (1);
 }
 
