@@ -21,7 +21,8 @@ void	is_valid_command(t_env *env)
 	if (!ft_strcmp(env->list->name, NAME_CMD_STRING)
 			|| !ft_strcmp(env->list->name, COMMENT_CMD_STRING))
 		return ;
-	ft_printf("Commande inconnue [%s]\n", env->list->name);
+	ft_printf("Erreur : Commande inconnue [%s] (.name || .comment)\n"
+	, env->list->name);
 	exit(exit_gc(env, 1));
 }
 
@@ -44,7 +45,8 @@ void	is_valid_str(t_env *env)
 		env->list->name[size - 1] = '\0';
 		return ;
 	}
-	ft_printf("Chaine de caractere mal formatée [%s]\n", env->list->name);
+	ft_printf("Erreur : Chaine de caractere -> [%s] est mal formatée\n"
+	, env->list->name);
 	exit(exit_gc(env, 1));
 }
 
@@ -68,7 +70,8 @@ void	is_valid_label_definition(t_env *env)
 		if (!((c >= 'a' && c <= 'z') || (c >= '0' && c <= '9') || c == '_')
 				&& !(i == size && c == ':'))
 		{
-			ft_printf("Label [%s], caractere invalide : %c\n", env->list->name, c);
+			ft_printf("Erreur : label %s -> caractere invalide : %c\n"
+			, env->list->name, c);
 			exit(exit_gc(env, 1));
 		}
 	}
@@ -85,14 +88,15 @@ void	is_valid_label_definition(t_env *env)
 ** Verifie que le registre est compris entre 0 et 16
 */
 
-void	is_valid_registre(t_env *env)
+void	is_valid_registre(t_env *env, char *instruction)
 {
 	int i;
 
 	i = ft_atoi(&(env->list->name)[1]);
 	if (i >= 1 && i <= 16)
 		return ;
-	ft_printf("Erreur de formatage du registre [%s]\n", env->list->name);
+	ft_printf("Erreur : instruction %s -> [%s] doit etre 1-16\n"
+	, instruction, env->list->name);
 	exit(exit_gc(env, 1));
 }
 

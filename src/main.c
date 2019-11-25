@@ -61,23 +61,23 @@ void	check_error_main(t_env *env, int argc, char **argv, int opt)
 	{
 		if (argc != 2)
 		{
-			ft_printf("Wrong params number\n");
+			ft_printf("Erreur : UN parametre (uniquement) requis\n");
 			exit(exit_gc(env, 1));
 		}
 		if ((env->fd_s = open(argv[1], O_RDONLY)) <= 0)
 		{
-			ft_printf(".S FILE DOES NOT EXIST\n");
+			ft_printf("Erreur : fichier .s n'existe pas\n");
 			exit(exit_gc(env, 1));
 		}
 		if (read(env->fd_s, 0, 0) < 0)
 		{
-			ft_printf("Not a valid file\n");
+			ft_printf("Erreur : fichier non valide\n");
 			exit(exit_gc(env, 1));
 		}
 	}
 	else if (!env->list)
 	{
-		ft_printf("Not a valid file\n");
+		ft_printf("Erreur : fichier non valide\n");
 		exit(exit_gc(env, 1));
 	}
 }
@@ -113,7 +113,7 @@ int		main(int argc, char **argv)
 	loop_parser(env);
 	w_header(env);
 	w_core(env);
-	ft_printf("Writing output program to %s.cor\n", env->file_name);
+	ft_printf("Assemblage dans le fichier ...%s.cor\n", env->file_name);
 	return (exit_gc(env, 0));
 }
 

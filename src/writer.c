@@ -25,8 +25,8 @@ void	check_error(t_env *env, char *name)
 	zap_all(env, 0);
 	if (ft_strcmp(env->list->name, NAME_CMD_STRING))
 	{
-		ft_printf("Le nom du champions n'est pas la \
-		1ere commande (%s)\n", str);
+		ft_printf("Erreur : Le nom du champion doit être la 1ère commande(%s)\n"
+		, str);
 		exit(exit_gc(env, 1));
 	}
 	zap_all(env, 0);
@@ -35,8 +35,8 @@ void	check_error(t_env *env, char *name)
 	env->list = env->list->next;
 	if (ft_strcmp(env->list->name, COMMENT_CMD_STRING))
 	{
-		ft_printf("Le commentaire du champions n'est pas \
-		la 2e commande (%s)\n", str);
+		ft_printf("Erreur : Le commentaire du champion doit être la 2ème commande (%s)\n"
+		, str);
 		exit(exit_gc(env, 1));
 	}
 	zap_all(env, 0);

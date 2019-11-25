@@ -21,7 +21,6 @@ void	init_parsing_tab(t_env *env)
 	env->parsing[TYPE_COMMAND] = is_valid_command;
 	env->parsing[TYPE_STR] = is_valid_str;
 	env->parsing[TYPE_LABEL_DEFINITION] = is_valid_label_definition;
-	env->parsing[TYPE_REGISTRE] = is_valid_registre;
 	env->parsing[TYPE_INSTRUCTION_LIVE] = is_valid_live;
 	env->parsing[TYPE_INSTRUCTION_LD] = is_valid_ld;
 	env->parsing[TYPE_INSTRUCTION_ST] = is_valid_st;
@@ -59,7 +58,7 @@ int		loop_parser(t_env *env)
 			env->parsing[env->list->type](env);
 		else if (env->list->type != TYPE_COMMENT)
 		{
-			ft_printf("Element inconnu : %s\n", env->list->name);
+			ft_printf("Erreur : element inconnu -> [%s]\n", env->list->name);
 			exit(exit_gc(env, 1));
 		}
 		env->list = env->list->next;
