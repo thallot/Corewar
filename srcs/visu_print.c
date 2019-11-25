@@ -6,7 +6,7 @@
 /*   By: thallot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 10:36:17 by thallot           #+#    #+#             */
-/*   Updated: 2019/11/25 11:21:59 by thallot          ###   ########.fr       */
+/*   Updated: 2019/11/25 15:49:44 by jjaegle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ void	print_nb_process(t_visu *visu, WINDOW *info)
 			i++;
 		tmp = tmp->next;
 	}
-	mvwprintw(info, 18, 3, "Process number : %d", i);
+	mvwprintw(info, 18, 3, "Process number : %10d", i);
 }
 
 void	print_info(t_visu *visu, WINDOW *info)

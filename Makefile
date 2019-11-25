@@ -6,7 +6,7 @@
 #    By: thallot <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/27 16:42:47 by edillenb          #+#    #+#              #
-#    Updated: 2019/11/13 14:11:20 by edillenb         ###   ########.fr        #
+#    Updated: 2019/11/25 15:43:06 by jjaegle          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -89,7 +89,7 @@ $(ASM): $(LIBFTPRINTF) $(LIBFT_ASM) $(OBJS_ASM) $(INCLS_ASM)
 	@echo "$(GREEN)[OK] $(GREY)Tous les objets de $(WHITE)$(ASM) $(GREY)sont generes !\r"
 	@echo "$(GREEN)[OK] $(GREY)Compilation de $(WHITE)$(ASM)\n"
 
-$(VM): $(OBJS_VM) ./includes/vm.h ./includes/op.h
+$(VM): $(SRCS_VM) ./includes/vm.h ./includes/op.h
 	@echo "$(BOLD)$(GREY)~~~~~~~~~~~~ Generation ~~~~~~~~~~~~"
 	@$(CC) $(CFLAGS_VM) $(LIBFT_VM) $(SRCS_VM) -o $(VM) -I $(HEADER)
 	@echo "$(GREEN)[OK] $(GREY)Tous les objets de $(WHITE)$(VM) $(GREY)sont generes !\r"

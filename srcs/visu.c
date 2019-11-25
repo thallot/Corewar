@@ -6,7 +6,7 @@
 /*   By: thallot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 10:36:27 by thallot           #+#    #+#             */
-/*   Updated: 2019/11/25 11:25:07 by thallot          ###   ########.fr       */
+/*   Updated: 2019/11/25 16:02:02 by jjaegle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int		is_process_position(t_visu *visu, int i)
 	tmp = visu->process;
 	while (tmp)
 	{
-		if (tmp->process.pc_instru == i && tmp->process.state != dead)
+		if (tmp->process.pc == i && tmp->process.state != dead)
 			return (1);
 		tmp = tmp->next;
 	}
