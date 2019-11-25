@@ -6,14 +6,14 @@
 /*   By: thallot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 11:12:43 by thallot           #+#    #+#             */
-/*   Updated: 2019/11/25 11:14:02 by thallot          ###   ########.fr       */
+/*   Updated: 2019/11/25 11:25:42 by thallot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "op.h"
 #include "vm.h"
 
-void make_pause_exit(t_visu *visu, int opt)
+void	make_pause_exit(t_visu *visu, int opt)
 {
 	int c;
 
@@ -28,7 +28,7 @@ void make_pause_exit(t_visu *visu, int opt)
 	}
 }
 
-void get_speed(t_visu *visu)
+void	get_speed(t_visu *visu)
 {
 	int c;
 
@@ -50,8 +50,6 @@ void get_speed(t_visu *visu)
 		}
 		else if (c == 27)
 		{
-			ft_memdel((void **)&(visu->memory));
-			ft_memdel((void **)&(visu->info));
 			endwin();
 			exit(clean_process(visu->process));
 		}
