@@ -6,7 +6,7 @@
 /*   By: jjaegle <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 16:19:53 by jjaegle           #+#    #+#             */
-/*   Updated: 2019/11/22 18:03:22 by jjaegle          ###   ########.fr       */
+/*   Updated: 2019/11/25 16:23:25 by thallot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,12 +62,13 @@ void	del_visu(t_visu *visu)
 	while (1)
 	{
 		attron(COLOR_PAIR(1));
-		mvprintw(LINES / 2 - 3, (COLS / 2) - 32, "Le joueur %s a gagné", visu->vm->tab_champ.champs[visu->vm->lastlive].name);
+		mvprintw(LINES / 2 - 3, (COLS / 2) - 32, "Le joueur %s a gagné"
+			, visu->vm->tab_champ.champs[visu->vm->lastlive].name);
 		attroff(COLOR_PAIR(1));
 		move(0, 0);
 		timeout(150000);
 		if (getch())
 			break ;
 	}
-	// endwin();
+	endwin();
 }

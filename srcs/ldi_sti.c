@@ -6,7 +6,7 @@
 /*   By: jjaegle <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/22 17:27:02 by jjaegle           #+#    #+#             */
-/*   Updated: 2019/11/22 17:27:17 by jjaegle          ###   ########.fr       */
+/*   Updated: 2019/11/25 16:22:27 by thallot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,28 +16,28 @@
 /*
 ** CALLBACK LDI
 ** additionne les valeurs effectives des deux premiers parametres
-** en deduit une addresse et charge dans le registre (param3) les 4
+** en deduit une addresse et charge dans le registre (param3) les 4 
 ** octets se trouvant a l'addrese trouvée
 */
 
 static void			cb_ldi(void *pvm, void *pproc)
 {
-    t_process		*process;
-    int				address;
-    void			*dest;
-    unsigned char	*mem;
+	t_process		*process;
+	int				address;
+	void			*dest;
+	unsigned char	*mem;
 	int				lg;
 
-    process = (t_process*)pproc;
-    mem = ((t_env*)pvm)->memory;
+	process = (t_process*)pproc;
+	mem = ((t_env*)pvm)->memory;
 	lg = (mem[process->pc_instru] == 10) ? false : true;
-    set_param_value(mem, process, 1, lg);
-    set_param_value(mem, process, 2, lg);
-    address = process->param[0].value + process->param[1].value;
-    address = change_endian(&mem[get_adress(process->pc_instru, address
+	set_param_value(mem, process, 1, lg);
+	set_param_value(mem, process, 2, lg);
+	address = process->param[0].value + process->param[1].value;
+	address = change_endian(&mem[get_adress(process->pc_instru, address
 				, lg)], REG_SIZE);
-    dest = process->records[process->param[2].value - 1];
-    ft_memcpy(dest, (void*)&address, REG_SIZE);
+	dest = process->records[process->param[2].value - 1];
+	ft_memcpy(dest, (void*)&address, REG_SIZE);
 	if (lg == true && !(*(int*)dest))
 		process->carry = 1;
 	else if (lg == true)
@@ -54,18 +54,18 @@ static void			cb_ldi(void *pvm, void *pproc)
 
 t_result		ft_ldi(t_env *vm, t_process *process)
 {
-    unsigned char	*mem;
+	unsigned char	*mem;
 
-    process->pc_instru = process->pc;
-    mem = vm->memory;
-    if (get_params(process, mem, 3, true))
-        return (NULL);
-    if (process->param[2].type != REG_CODE
+	process->pc_instru = process->pc;
+	mem = vm->memory;
+	if (get_params(process, mem, 3, true))
+		return (NULL);
+	if (process->param[2].type != REG_CODE
 			|| process->param[1].type == IND_CODE)
-        return (NULL);
-    process->active = true;
-    process->delay = 25 - 1;
-    return (cb_ldi);
+		return (NULL);
+	process->active = true;
+	process->delay = 25 - 1;
+	return (cb_ldi);
 }
 
 /*
@@ -78,24 +78,25 @@ t_result		ft_ldi(t_env *vm, t_process *process)
 ** Puis on va a l addresse resultante de cette somme,
 ** et on y ecrit la valeur contenue dans le registre passe en parametre 0 (p0)
 */
+
 static void			cb_sti(void *pvm, void *pproc)
 {
-  t_env         *vm;
-  t_process     *process;
-  unsigned char *mem;
-  int           address;
-  int           reg;
+	t_env         *vm;
+	t_process     *process;
+	unsigned char *mem;
+	int           address;
+	int           reg;
 
-  vm = (t_env*)pvm;
-  process = (t_process*)pproc;
-  mem = vm->memory;
-  set_param_value(mem, process, 2, false);
-  set_param_value(mem, process, 3, false);
-  address = process->param[1].value + process->param[2].value;
-  address = get_adress(process->pc_instru, address, false);
-  reg = change_endian(&process->records[process->param[0].value - 1], REG_SIZE);
-  ft_memcpy(&(vm->memory[address]), &reg, REG_SIZE);
-  write_in_visu(process->pc_instru, address, vm);
+	vm = (t_env*)pvm;
+	process = (t_process*)pproc;
+	mem = vm->memory;
+	set_param_value(mem, process, 2, false);
+	set_param_value(mem, process, 3, false);
+	address = process->param[1].value + process->param[2].value;
+	address = get_adress(process->pc_instru, address, false);
+	reg = change_endian(&process->records[process->param[0].value - 1], REG_SIZE);
+	ft_memcpy(&(vm->memory[address]), &reg, REG_SIZE);
+	write_in_visu(process->pc_instru, address, vm);
 }
 
 
@@ -105,16 +106,16 @@ static void			cb_sti(void *pvm, void *pproc)
 
 t_result		ft_sti(t_env *vm, t_process *process)
 {
-    unsigned char	*mem;
+	unsigned char	*mem;
 
-    process->pc_instru = process->pc;
-    mem = vm->memory;
-    if (get_params(process, mem, 3, true))
-        return (NULL);
-    if (process->param[0].type != REG_CODE
+	process->pc_instru = process->pc;
+	mem = vm->memory;
+	if (get_params(process, mem, 3, true))
+		return (NULL);
+	if (process->param[0].type != REG_CODE
 			|| process->param[2].type == IND_CODE)
-        return (NULL);
-    process->active = true;
-    process->delay = 25 - 1;
-    return (cb_sti);
+		return (NULL);
+	process->active = true;
+	process->delay = 25 - 1;
+	return (cb_sti);
 }
