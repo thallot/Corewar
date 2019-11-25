@@ -23,7 +23,7 @@ void	is_valid_or(t_env *env)
 	if (env->list->type != TYPE_REGISTRE && env->list->type != TYPE_DIRECT
 		&& env->list->type != TYPE_INDEX && env->list->type != TYPE_LABEL)
 		print_error(env, "or", 1);
-	is_valid_param(env, "or");
+	is_valid_param(env);
 	env->list->type = env->list->type
 		== TYPE_DIRECT ? TYPE_DIRECT_4 : env->list->type;
 	env->size += get_size(env);
@@ -32,7 +32,7 @@ void	is_valid_or(t_env *env)
 	if (env->list->type != TYPE_REGISTRE && env->list->type != TYPE_DIRECT
 		&& env->list->type != TYPE_INDEX && env->list->type != TYPE_LABEL)
 		print_error(env, "or", 2);
-	is_valid_param(env, "or");
+	is_valid_param(env);
 	env->list->type = env->list->type
 		== TYPE_DIRECT ? TYPE_DIRECT_4 : env->list->type;
 	env->size += get_size(env);
@@ -41,7 +41,7 @@ void	is_valid_or(t_env *env)
 	if (env->list->type != TYPE_REGISTRE)
 		print_error(env, "or", 3);
 	env->size += get_size(env);
-	is_valid_param(env, "or");
+	is_valid_param(env);
 }
 
 /*
@@ -55,7 +55,7 @@ void	is_valid_xor(t_env *env)
 	if (env->list->type != TYPE_REGISTRE && env->list->type != TYPE_DIRECT
 		&& env->list->type != TYPE_INDEX && env->list->type != TYPE_LABEL)
 		print_error(env, "xor", 1);
-	is_valid_param(env, "or");
+	is_valid_param(env);
 	env->list->type = env->list->type
 		== TYPE_DIRECT ? TYPE_DIRECT_4 : env->list->type;
 	env->size += get_size(env);
@@ -64,7 +64,7 @@ void	is_valid_xor(t_env *env)
 	if (env->list->type != TYPE_REGISTRE && env->list->type != TYPE_DIRECT
 		&& env->list->type != TYPE_INDEX && env->list->type != TYPE_LABEL)
 		print_error(env, "xor", 2);
-	is_valid_param(env, "or");
+	is_valid_param(env);
 	env->list->type = env->list->type
 		== TYPE_DIRECT ? TYPE_DIRECT_4 : env->list->type;
 	env->size += get_size(env);
@@ -73,7 +73,7 @@ void	is_valid_xor(t_env *env)
 	if (env->list->type != TYPE_REGISTRE)
 		print_error(env, "xor", 3);
 	env->size += get_size(env);
-	is_valid_param(env, "or");
+	is_valid_param(env);
 }
 
 /*
@@ -86,7 +86,7 @@ void	is_valid_zjmp(t_env *env)
 	env->list = env->list->next;
 	if (env->list->type != TYPE_DIRECT)
 		print_error(env, "zjmp", 1);
-	is_valid_param(env, "zjmp");
+	is_valid_param(env);
 	env->list->type = TYPE_DIRECT_2;
 	env->size += get_size(env);
 }
@@ -102,7 +102,7 @@ void	is_valid_ldi(t_env *env)
 	if (env->list->type != TYPE_REGISTRE && env->list->type != TYPE_DIRECT
 		&& env->list->type != TYPE_INDEX && env->list->type != TYPE_LABEL)
 		print_error(env, "ldi", 1);
-	is_valid_param(env, "ldi");
+	is_valid_param(env);
 	env->list->type = env->list->type
 		== TYPE_DIRECT ? TYPE_DIRECT_2 : env->list->type;
 	env->size += get_size(env);
@@ -110,7 +110,7 @@ void	is_valid_ldi(t_env *env)
 	is_valid_separator(env, "ldi", 1, 2);
 	if (env->list->type != TYPE_DIRECT && env->list->type != TYPE_REGISTRE)
 		print_error(env, "ldi", 2);
-	is_valid_param(env, "ldi");
+	is_valid_param(env);
 	env->list->type = env->list->type
 		== TYPE_DIRECT ? TYPE_DIRECT_2 : env->list->type;
 	env->size += get_size(env);
@@ -119,7 +119,7 @@ void	is_valid_ldi(t_env *env)
 	if (env->list->type != TYPE_REGISTRE)
 		print_error(env, "ldi", 3);
 	env->size += get_size(env);
-	is_valid_param(env, "ldi");
+	is_valid_param(env);
 }
 
 /*
@@ -133,13 +133,13 @@ void	is_valid_sti(t_env *env)
 	if (env->list->type != TYPE_REGISTRE)
 		print_error(env, "sti", 1);
 	env->size += get_size(env);
-	is_valid_param(env, "sti");
+	is_valid_param(env);
 	env->list = env->list->next;
 	is_valid_separator(env, "sti", 1, 2);
 	if (env->list->type != TYPE_REGISTRE && env->list->type != TYPE_DIRECT
 		&& env->list->type != TYPE_INDEX && env->list->type != TYPE_LABEL)
 		print_error(env, "sti", 2);
-	is_valid_param(env, "sti");
+	is_valid_param(env);
 	env->list->type = env->list->type
 		== TYPE_DIRECT ? TYPE_DIRECT_2 : env->list->type;
 	env->size += get_size(env);
@@ -148,7 +148,7 @@ void	is_valid_sti(t_env *env)
 	if (env->list->type != TYPE_INDEX && env->list->type != TYPE_DIRECT
 		&& env->list->type != TYPE_REGISTRE && env->list->type != TYPE_LABEL)
 		print_error(env, "sti", 3);
-	is_valid_param(env, "sti");
+	is_valid_param(env);
 	env->list->type = env->list->type
 		== TYPE_DIRECT ? TYPE_DIRECT_2 : env->list->type;
 	env->size += get_size(env);

@@ -6,7 +6,6 @@
 #    By: tbrizon <tbrizon@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/15 17:09:42 by tbrizon           #+#    #+#              #
-#    Updated: 2019/11/20 16:56:18 by jjaegle          ###   ########.fr        #
 #    Updated: 2019/11/14 16:35:47 by jjaegle          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
@@ -26,16 +25,8 @@ SC = vm.c \
 	 play.c \
 	 ld_st_live.c \
 	 tools2.c \
-	 tools3.c \
-	 add_sub.c \
-	 and_or.c \
-	 xor_zjmp.c \
-	 ldi_sti.c \
+	 add_sub_and.c \
 	 fork_lfork.c \
-	 aff.c \
-	 visu.c \
-	 visu_print.c \
-	 visu_param.c \
 
 LIBFT = ../libft
 
@@ -49,7 +40,7 @@ HEADER = ../includes
 
 CC = gcc $(CFLAGS)
 
-CFLAGS = -Wall -Wextra -Werror -lncurses #-g -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror
 
 SRCS = $(addprefix $(D_SRCS)/,$(SC))
 

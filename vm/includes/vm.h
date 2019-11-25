@@ -6,7 +6,7 @@
 /*   By: jjaegle <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/06 09:42:52 by jjaegle           #+#    #+#             */
-/*   Updated: 2019/11/22 17:34:10 by jjaegle          ###   ########.fr       */
+/*   Updated: 2019/11/14 17:32:28 by jjaegle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,8 @@
 # include "../libft/includes/ft_printf.h"
 # include "op.h"
 # include <stdio.h>
-# include <ncurses.h>
 
-# define NB_INSTR 16
+# define NB_INSTR 12
 
 # define UNINIT -2
 # define UNDEF -1
@@ -31,7 +30,6 @@
 # define CHAMP 4
 # define BIG 5
 # define MAX 6
-# define VISUAL 7
 
 # define FIRST 1
 # define SECND 2
@@ -41,6 +39,7 @@
 **--------------------------------Structures-----------------------
 */
 
+enum				e_bool{true, false};
 enum				e_live{waiting, alive, dead};
 
 /*
@@ -60,7 +59,7 @@ typedef struct		s_param
 {
 	char			*ptr;
 	int				value;
-	int				type;
+	size_t			size;
 }					t_param;
 
 /*
@@ -72,11 +71,10 @@ typedef struct		s_param
 
 typedef struct		s_process
 {
-	int				active;
+	enum e_bool		active;
 	char			records[REG_NUMBER][REG_SIZE];
 	int				pc;
-	int				pc_instru;
-	int				carry;
+	enum e_bool		carry;
 	int				delay;
 	enum e_live		state;
 	t_param			param[MAX_ARGS_NUMBER];
@@ -100,7 +98,6 @@ typedef struct		s_listp
 typedef struct		s_info_champ
 {
 	int				num;
-	int				size;
 	char			name[PROG_NAME_LENGTH + 1];
 	char			instr[CHAMP_MAX_SIZE + 1];
 }					t_info_champ;
@@ -124,14 +121,11 @@ typedef struct		s_tabchamp
 typedef struct		s_env
 {
 	unsigned char	memory[MEM_SIZE];
-	unsigned char	memory_visu[MEM_SIZE];
 	int				dump;
 	t_tabchamp		tab_champ;
 	t_listp			*player;
 	int				lastlive;
 	int				nblive;
-	int				visu;
-	int				cmpt_live;
 }					t_env;
 
 /*
@@ -140,24 +134,13 @@ typedef struct		s_env
 
 typedef struct		s_rules
 {
-	int				cr_cycle;
 	unsigned int	cycle;
 	int				cycle_to_die;
 	int				nb_verif;
+	int				nb_live;
 	int				nb_check;
-	int				someone_alive;
+	enum e_bool		someone_alive;
 }					t_rules;
-
-typedef struct		s_visu
-{
-	t_listp			*process;
-	t_env			*vm;
-	t_rules			*rules;
-	void			*memory;
-	void			*info;
-	int				pause;
-	int				speed;
-}					t_visu;
 
 /*
 **--------------------------------Fn_champ----------------------------
@@ -180,7 +163,7 @@ int					extract_info(char *file, t_info_champ *champ);
 **----------------------------------Fn game------------------------
 */
 
-void				lets_play(t_env *vm);
+void				lets_play(t_env *vm, t_listp *players);
 int					create_process(t_env *vm);
 void				process_play(t_listp *players, t_env *vm);
 
@@ -188,21 +171,13 @@ void				process_play(t_listp *players, t_env *vm);
 **-------------------------------Instructions---------------------
 */
 
-t_result			ft_ld(t_env *vm, t_process *process);
+t_result				ft_ld(t_env *vm, t_process *process);
 t_result			ft_live(t_env *vm, t_process *process);
-t_result			ft_st(t_env *vm, t_process *process);
-void				cb_st(void *pvm, void *pproc);
-t_result			ft_add(t_env *vm, t_process *process);
-t_result			ft_sub(t_env *vm, t_process *process);
-t_result			ft_and(t_env *vm, t_process *process);
-t_result			ft_or(t_env *vm, t_process *process);
-t_result			ft_xor(t_env *vm, t_process *process);
-t_result			ft_zjmp(t_env *vm, t_process *process);
-t_result			ft_ldi(t_env *vm, t_process *process);
-t_result			ft_sti(t_env *vm, t_process *process);
-t_result			ft_fork(t_env *vm, t_process *process);
-t_result			ft_lfork(t_env *vm, t_process *process);
-t_result			ft_aff(t_env *vm, t_process *process);
+t_result				ft_st(t_env *vm, t_process *process);
+void					cb_st(void *pvm, void *pproc);
+t_result				ft_add(t_env *vm, t_process *process);
+t_result				ft_sub(t_env *vm, t_process *process);
+t_result				ft_fork(t_env *vm, t_process *process);
 
 /*
 **----------------------------------Tools------------------------------
@@ -212,36 +187,15 @@ int					print_error(int err, char *av[]);
 void				dump_memory(unsigned char memory[]);
 int					nb_alive(t_listp *players);
 char				*get_param(t_process *process, unsigned char memory[]
-		, int type, int d2);
+		, size_t size);
 int					get_params(t_process *process, unsigned char *memory
-		, int nb, int d2);
-int					get_size(int type, int d2);
+		, int nb, enum e_bool d2);
+int					get_size(char opcode, int param, enum e_bool d2);
 char				get_encoded(t_process *process, unsigned char memory[]);
 int					is_register(int tab[], int size);
 int					val_record(t_process *process, int rec, int opt);
 int					change_endian(void *var, int size);
-int					get_adress(int start, short ind, int l);
+int					get_adress(int start, int ind, enum e_bool l);
 int					clean_process(t_listp *list);
-void				set_param_value(unsigned char *mem, t_process *process
-		, int i, int lg);
-void				del_visu(t_visu *visu);
-
-/*
-**----------------------------------Visu------------------------------
-*/
-void				init_visu(t_visu *visu, t_rules *rules, t_env *vm
-		, t_listp *players);
-int					visu_core(t_visu *visu, int opt);
-void				write_in_visu(int start, int dest, t_env *vm);
-void print_intro();
-void print_live(WINDOW *info, t_visu *visu);
-void print_memory(t_visu *visu, WINDOW *memory);
-void init_visu(t_visu *visu, t_rules *rules, t_env *vm, t_listp *players);
-int is_process_position(t_visu *visu, int i);
-void print_info(t_visu *visu, WINDOW *info);
-void print_player(t_visu *visu, WINDOW *info);
-void print_nb_process(t_visu *visu, WINDOW *info);
-void get_speed(t_visu *visu);
-void make_pause_exit(t_visu *visu, int opt);
 
 #endif

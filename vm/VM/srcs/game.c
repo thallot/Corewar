@@ -6,19 +6,17 @@
 /*   By: jjaegle <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 11:23:02 by jjaegle           #+#    #+#             */
-/*   Updated: 2019/11/22 17:01:20 by jjaegle          ###   ########.fr       */
+/*   Updated: 2019/11/14 17:42:34 by jjaegle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 
-static void		initialise_rules(t_rules *rules, t_env *vm, t_visu *visu)
+static void		initialise_rules(t_rules *rules)
 {
 	ft_bzero(rules, sizeof(t_rules));
 	rules->cycle_to_die = CYCLE_TO_DIE;
 	rules->someone_alive = true;
-	if (vm->visu)
-		init_visu(visu, rules, vm, vm->player);
 }
 
 /*
@@ -27,18 +25,16 @@ static void		initialise_rules(t_rules *rules, t_env *vm, t_visu *visu)
 **Sinon si depuis MAX_CHECKS verif CTD n'a pas bouger, il decroit.
 */
 
-static void		check_nbr_lives(t_rules *rules, t_env *vm)
+static void		check_nbr_lives(t_rules *rules)
 {
-	if (vm->cmpt_live >= NBR_LIVE || rules->nb_check == MAX_CHECKS)
+	if (rules->nb_live >= NBR_LIVE || rules->nb_check == MAX_CHECKS)
 	{
 		rules->cycle_to_die -= CYCLE_DELTA;
-		if (rules->cycle_to_die <= 0)
-			rules->cycle_to_die = 1;
 		rules->nb_check = 0;
 	}
 	else
 		rules->nb_check++;
-	vm->cmpt_live = 0;
+	rules->nb_live = 0;
 }
 
 /*
@@ -52,9 +48,8 @@ static void		print_result(t_info_champ champs[], int *ll, int nblive
 {
 	int		i;
 
-	(void)champs;
-	(void)nblive;
 	i = *ll;
+	ft_printf("nblive = %d ll = %d\n", nblive, *ll);
 	if (nblive == 1)
 		ft_printf("le joueur %d(%s) a gagne\n", champs[i].num, champs[i].name);
 	else
@@ -74,19 +69,21 @@ static void		whos_living(t_listp *players, t_env *vm, t_rules *rules)
 {
 	t_listp	*p;
 
-	rules->cr_cycle = 0;
 	p = players;
 	while (players)
 	{
 		if (players->process.state == alive)
 			players->process.state = waiting;
 		else if (players->process.state == waiting)
+		{
 			players->process.state = dead;
+			ft_printf("A process is dead :'(\n");
+		}
 		players = players->next;
 	}
 	if (nb_alive(p))
-		check_nbr_lives(rules, vm);
-	else if (!vm->visu)
+		check_nbr_lives(rules);
+	else
 		print_result(vm->tab_champ.champs, &vm->lastlive, vm->nblive, rules);
 	if (vm->nblive > 1)
 	{
@@ -100,27 +97,23 @@ static void		whos_living(t_listp *players, t_env *vm, t_rules *rules)
 **et au variable contenue dans rules a ce que les regles soit respectes.
 */
 
-void			lets_play(t_env *vm)
+void			lets_play(t_env *vm, t_listp *players)
 {
 	t_rules			rules;
-	t_visu			visu;
 
-	initialise_rules(&rules, vm, &visu);
-	while (rules.someone_alive == true && (int)rules.cycle != vm->dump
-		&& ((vm->visu && (!rules.cycle || visu.pause == 0)) || !vm->visu))
+	initialise_rules(&rules);
+	while (rules.someone_alive == true && (int)rules.cycle != vm->dump - 1)
 	{
-		if (vm->visu)
-		{
-			visu.process = vm->player;
-			visu_core(&visu, 0);
-		}
 		process_play(vm->player, vm);
 		rules.cycle++;
-		if (++rules.cr_cycle == rules.cycle_to_die)
+		if (!(rules.cycle % rules.cycle_to_die))
 			whos_living(vm->player, vm, &rules);
+		ft_printf("cycle %d, vm->player.pc = %d\n", rules.cycle, vm->player->process.pc);
+		/*
+		if (visu)
+			visu(warriors name, arene (4096) with value, arena);*/
 	}
-	if (vm->visu)
-		del_visu(&visu);
-	else if ((int)rules.cycle == vm->dump)
+	if ((int)rules.cycle == vm->dump - 1)
 		dump_memory(vm->memory);
+	(void)players;
 }

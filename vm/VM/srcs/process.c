@@ -6,7 +6,7 @@
 /*   By: jjaegle <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/07 15:33:25 by jjaegle           #+#    #+#             */
-/*   Updated: 2019/11/22 16:41:09 by jjaegle          ###   ########.fr       */
+/*   Updated: 2019/11/12 15:29:10 by jjaegle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ static t_listp	*add_player(t_info_champ *champ, t_listp *al)
 int				create_process(t_env *vm)
 {
 	int			i;
-	int			j;
 	t_tabchamp	tab;
 	int			start;
 
@@ -67,12 +66,6 @@ int				create_process(t_env *vm)
 		vm->player->process.pc = start;
 		vm->player->process.active = false;
 		ft_memcpy(&vm->memory[start], tab.champs[i].instr, CHAMP_MAX_SIZE);
-		j = start;
-		while (j < start + tab.champs[i].size)
-		{
-			vm->memory_visu[j] = i + 1;
-			j++;
-		}
 		start += MEM_SIZE / tab.nb_champ;
 		i++;
 	}

@@ -6,13 +6,13 @@
 /*   By: jjaegle <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 15:52:01 by jjaegle           #+#    #+#             */
-/*   Updated: 2019/11/22 18:01:44 by jjaegle          ###   ########.fr       */
+/*   Updated: 2019/11/14 16:53:53 by jjaegle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 
-int			val_record(t_process *process, int registre, int opt)
+int		val_record(t_process *process, int registre,int opt)
 {
 	int		ret;
 
@@ -28,7 +28,7 @@ int			val_record(t_process *process, int registre, int opt)
 **de l'instruction en cours
 */
 
-int			get_type(char encoded, int param)
+int			get_size(char encoded, int param, enum e_bool d2)
 {
 	unsigned char	ret;
 
@@ -40,11 +40,15 @@ int			get_type(char encoded, int param)
 	else if (param == THIRD)
 		ret = ((encoded << 4) >> 6) & 0x03;
 	if (ret == REG_CODE)
-		return (REG_CODE);
+		return (T_REG);
 	else if (ret == DIR_CODE)
-		return (DIR_CODE);
+	{
+		if (d2 == false)
+			return (DIR_SIZE);
+		return (IND_SIZE);
+	}
 	else if (ret == IND_CODE)
-		return (IND_CODE);
+		return (IND_SIZE);
 	return (UNDEF);
 }
 
@@ -52,29 +56,29 @@ int			get_type(char encoded, int param)
 **get_params recupere tout les parametres d'une instruction
 */
 
-int			get_params(t_process *process, unsigned char *memory
-		, int nb, int d2)
+int		get_params(t_process *process, unsigned char *memory
+		, int nb, enum e_bool d2)
 {
-	int				i;
-	int				type;
-	unsigned char	encoded;
+	int		i;
+	int		size;
+	unsigned char encoded;
 
 	i = 0;
 	encoded = get_encoded(process, memory);
-	type = get_type(encoded, FIRST);
+	size = get_size(encoded, FIRST, d2);
 	while (i < nb)
 	{
-		process->param[i].ptr = get_param(process, memory, type, d2);
+		process->param[i].ptr = get_param(process, memory,  size);
 		if (!(process->param[i].ptr))
 			return (EXIT_FAILURE);
-		process->param[i].value = change_endian(process->param[i].ptr
-				, get_size(type, d2));
-		process->param[i].type = type;
+		process->param[i].size = size;
+		process->param[i].value = change_endian(process->param[i].ptr, size);
+	//	ft_printf("GPs : value %d = %d\n", i, process->param[i].value);
 		i++;
 		if (i == 1)
-			type = get_type(encoded, SECND);
+			size = get_size(encoded, SECND, d2);
 		else if (i == 2)
-			type = get_type(encoded, THIRD);
+			size = get_size(encoded, THIRD, d2);
 	}
 	return (EXIT_SUCCESS);
 }
@@ -84,14 +88,12 @@ int			get_params(t_process *process, unsigned char *memory
 **processeur et retourne les size octets demande
 */
 
-char		*get_param(t_process *process, unsigned char memory[], int type
-		, int d2)
+char		*get_param(t_process *process, unsigned char memory[], size_t size)
 {
 	char	*ret;
 	int		value;
-	int		size;
 
-	if (!(size = get_size(type, d2)))
+	if ((int)size == UNDEF)
 		return (NULL);
 	ret = (char*)&memory[process->pc];
 	value = change_endian(ret, size);
@@ -102,29 +104,14 @@ char		*get_param(t_process *process, unsigned char memory[], int type
 	return (ret);
 }
 
-int			get_adress(int start, short ind, int l)
+int		get_adress(int start, int ind, enum e_bool l)
 {
 	int		ret;
-	int		sign;
 
-	sign = 0;
-	if (ind < 0)
-	{
-		sign = 1;
-		ind = -ind;
-	}
 	ret = start;
 	if (l == false)
 		ind %= IDX_MOD;
-	if (sign)
-		ind = -ind;
 	ret += ind;
-	if (ret < 0)
-	{
-		ret %= MEM_SIZE;
-		ret = MEM_SIZE + ret;
-	}
-	else
-		ret %= MEM_SIZE;
+	ret %= MEM_SIZE;
 	return (ret);
 }

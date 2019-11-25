@@ -6,7 +6,7 @@
 /*   By: jjaegle <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/06 09:41:43 by jjaegle           #+#    #+#             */
-/*   Updated: 2019/11/22 17:37:42 by jjaegle          ###   ########.fr       */
+/*   Updated: 2019/11/09 20:10:10 by jjaegle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int	is_champ(char *file)
 
 	len = ft_strlen(file) - 1;
 	if (file[len] == 'r' && file[len - 1] == 'o' && file[len - 2] == 'c'
-		&& file[len - 3] == '.')
+		   	&& file[len - 3] == '.')
 		return (1);
 	return (0);
 }
@@ -30,7 +30,7 @@ static int	is_champ(char *file)
 **pars_arg'
 */
 
-static int	get_next_args(char **av[], t_env *vm)
+static int	get_next_args(char **av[])
 {
 	if (!ft_strcmp(**av, "-dump"))
 	{
@@ -41,11 +41,6 @@ static int	get_next_args(char **av[], t_env *vm)
 	{
 		(*av)++;
 		return (NUMBER);
-	}
-	else if (!ft_strcmp(**av, "-v"))
-	{
-		vm->visu = 1;
-		return (VISUAL);
 	}
 	else if (is_champ(**av))
 		return (CHAMP);
@@ -63,12 +58,12 @@ static int	get_next_args(char **av[], t_env *vm)
 static int	pars_args(char **av[], t_env *env)
 {
 	int		ret;
-
-	while (*(*av)++ && **av && (ret = get_next_args(av, env)))
+	
+	while (*(*av)++ && **av && (ret = get_next_args(av)))
 	{
 		if (ret == DUMP)
 		{
-			if (env->dump == UNDEF && ft_str_is(**av, ft_isdigit)
+		   	if (!env->dump && ft_str_is(**av, ft_isdigit)
 				&& ft_strcmp(**av, "0"))
 				env->dump = ft_atoi(**av);
 			else
@@ -95,7 +90,6 @@ static void	initialise_env(t_env *env)
 
 	ft_bzero(env, sizeof(*env));
 	env->lastlive = UNDEF;
-	env->dump = UNDEF;
 	i = 0;
 	while (i < MAX_PLAYERS)
 	{
@@ -113,15 +107,10 @@ int			main(int ac, char *av[])
 	if ((err = pars_args(&av, &env)))
 		return (print_error(err, av));
 	adjust_num(&env.tab_champ);
-	if (env.tab_champ.nb_champ > 0)
-	{
-		if (create_process(&env))
-			write(2, "Malloc error\n", 13);
-		else
-			lets_play(&env);
-	}
+	if (create_process(&env))
+		write(2, "Malloc error\n", 13);
 	else
-		write(2, "Champ needed\n", 13);
+		lets_play(&env, env.player);
 	(void)ac;
-	return (clean_process(env.player));
+	return (0);
 }

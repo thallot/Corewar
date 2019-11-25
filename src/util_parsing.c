@@ -44,11 +44,7 @@ int		get_size(t_env *env)
 
 void	print_error(t_env *env, char *instr, int nb)
 {
-	if (nb == 0)
-		ft_printf("Erreur de formatage de parametre pour l'instruction %s, \
-	parametre : [%s] devrait etre numerique\n", instr, env->list->name);
-	else
-		ft_printf("Erreur de type de parametre pour l'instruction %s, \
+	ft_printf("Erreur de type de parametre pour l'instruction %s, \
 	parametre %d : [%s]\n", instr, nb, env->list->name);
 	exit(exit_gc(env, 1));
 }
@@ -72,20 +68,16 @@ int		is_valid_separator(t_env *env, char *instr, int one, int two)
 
 /*
 ** Verifie la validite de l'element dans le cas d'un DIRECT (label) ||
-** INDIRECT (label) || REGISTRE || DIRECT
+** INDIRECT (label) || REGISTRE
 */
 
-int		is_valid_param(t_env *env, char *instruction)
+int		is_valid_param(t_env *env)
 {
 	if (((env->list->type == TYPE_DIRECT
 	&& env->list->name[1] == ':') || env->list->type == TYPE_LABEL))
 		is_valid_label_call(env);
-	else if (env->list->type == TYPE_DIRECT)
-		if (!ft_isnumber(env->list->name + 1, 0))
-			print_error(env, instruction, 0);
 	if (env->list->type == TYPE_REGISTRE)
 		is_valid_registre(env);
-	
 	return (1);
 }
 

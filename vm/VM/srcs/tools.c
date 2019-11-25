@@ -6,7 +6,7 @@
 /*   By: jjaegle <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 11:53:59 by jjaegle           #+#    #+#             */
-/*   Updated: 2019/11/22 17:57:39 by jjaegle          ###   ########.fr       */
+/*   Updated: 2019/11/14 16:38:23 by jjaegle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,8 @@ int			clean_process(t_listp *list)
 {
 	t_listp	*next;
 
-	while (list)
+	while (list && (next = list->next))
 	{
-		next = list->next;
 		free(list);
 		list = next;
 	}
@@ -39,7 +38,7 @@ int			nb_alive(t_listp *players)
 	return (ret);
 }
 
-int			change_endian(void *var, int size)
+int		change_endian(void *var, int size)
 {
 	int		ret;
 
