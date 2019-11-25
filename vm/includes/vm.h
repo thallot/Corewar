@@ -233,5 +233,15 @@ void				init_visu(t_visu *visu, t_rules *rules, t_env *vm
 		, t_listp *players);
 int					visu_core(t_visu *visu, int opt);
 void				write_in_visu(int start, int dest, t_env *vm);
+void print_intro();
+void print_live(WINDOW *info, t_visu *visu);
+void print_memory(t_visu *visu, WINDOW *memory);
+void init_visu(t_visu *visu, t_rules *rules, t_env *vm, t_listp *players);
+int is_process_position(t_visu *visu, int i);
+void print_info(t_visu *visu, WINDOW *info);
+void print_player(t_visu *visu, WINDOW *info);
+void print_nb_process(t_visu *visu, WINDOW *info);
+void get_speed(t_visu *visu);
+void make_pause_exit(t_visu *visu, int opt);
 
 #endif

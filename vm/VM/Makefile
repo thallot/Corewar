@@ -33,7 +33,9 @@ SC = vm.c \
 	 ldi_sti.c \
 	 fork_lfork.c \
 	 aff.c \
-	 visu.c
+	 visu.c \
+	 visu_print.c \
+	 visu_param.c \
 
 LIBFT = ../libft
 
