@@ -10,23 +10,64 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME = assembler
+ASM = assembler
+VM = corewar
 
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS_ASM = -Wall -Werror -Wextra
+CFLAGS_VM = -Wall -Werror -Wextra -lncurses
 CC = gcc
-LIBFT = lib/libft/libft.a
+LIBFT_ASM = lib/libft/libft.a
+LIBFT_VM = libft/libftprintf.a
 LIBFTPRINTF = lib/printf/libftprintf.a
 
-OBJDIR = obj
-SRCDIR = src
+OBJDIR_ASM = obj
+SRCDIR_ASM = src
 
-SC = $(addsuffix .c, main get_asm garbage_collector parsing byte_ope \
-	file_parser gc_functions ft_tab_one ft_tab_two ft_tab_three ft_tab_four \
-	writer utils util_parsing)
+SC_ASM = $(addsuffix .c, main \
+	get_asm \
+	garbage_collector \
+	 parsing byte_ope \
+	file_parser \
+	gc_functions \
+	ft_tab_one \
+	ft_tab_two \
+	ft_tab_three \
+	ft_tab_four \
+	writer \
+	utils \
+	util_parsing)
 
-SRCS = $(addprefix $(SRCDIR)/, $(SC))
-OBJS = $(addprefix $(OBJDIR)/, $(SC:.c=.o))
-INCLS = $(addprefix ./include/, $(addsuffix .h, asm))
+SRCS_ASM = $(addprefix $(SRCDIR_ASM)/, $(SC_ASM))
+OBJS_ASM = $(addprefix $(OBJDIR_ASM)/, $(SC_ASM:.c=.o))
+INCLS_ASM = $(addprefix ./include/, $(addsuffix .h, asm))
+
+OBJDIR_VM = obj
+SRCDIR_VM = srcs
+
+SC_VM = $(addsuffix .c, vm \
+	 fn_file \
+	 fn_tab \
+	 error \
+	 process \
+	 memory \
+	 tools \
+	 game \
+	 play \
+	 ld_st_live \
+	 tools2 \
+	 tools3 \
+	 add_sub \
+	 and_or \
+	 xor_zjmp \
+	 ldi_sti \
+	 fork_lfork \
+	 aff \
+	 visu \
+	 visu_print \
+	 visu_param)
+
+SRCS_VM = $(addprefix $(SRCDIR_VM)/, $(SC_VM))
+HEADER= ./includes
 
 GREEN = \033[01;32m
 BLUE = \033[01;34m
@@ -38,21 +79,22 @@ MAGENTA = \033[35m
 BLACK = \033[30m
 NOCOLOR = \033[0m
 WHITE=$ \x1b[37m
-
 BOLD= \033[1m
 
-all: $(NAME)
+all: $(ASM) $(VM)
 
-$(NAME): $(LIBFTPRINTF) $(LIBFT) $(OBJS) $(INCLS)
+$(ASM): $(LIBFTPRINTF) $(LIBFT_ASM) $(OBJS_ASM) $(INCLS_ASM)
 	@echo "$(BOLD)$(GREY)~~~~~~~~~~~~ Generation ~~~~~~~~~~~~"
-	@$(CC) $(CFLAGS) $(LIBFTPRINTF) $(LIBFT) $(OBJS) -o $(NAME)
-	@echo "$(GREEN)[OK] $(GREY)Tous les objets de $(WHITE)$(NAME) $(GREY)sont generes !\r"
-	@echo "$(GREEN)[OK] $(GREY)Compilation de $(WHITE)$(NAME)\n"
+	@$(CC) $(CFLAGS_ASM) $(LIBFTPRINTF) $(LIBFT_ASM) $(OBJS_ASM) -o $(ASM)
+	@echo "$(GREEN)[OK] $(GREY)Tous les objets de $(WHITE)$(ASM) $(GREY)sont generes !\r"
+	@echo "$(GREEN)[OK] $(GREY)Compilation de $(WHITE)$(ASM)\n"
 
-$(OBJDIR)/%.o: $(SRCDIR)/%.c
-	@mkdir -p obj
-	@$(CC) $(CFLAGS) -c -o $@ $< && printf "$(GREEN)[OK] $(GREY)Generation de $(WHITE)%-50s\r" "$@" || \
-		(echo "$(_RED)[ERREUR]$(_GRAY) Une est erreur est survenue sur $(WHITE)$<$(RED), $(WHITE)$(NAME)$(RED) non compilé(e)\n" && exit 1)
+$(VM): $(OBJS_VM) ./includes/vm.h ./includes/op.h
+	@echo "$(BOLD)$(GREY)~~~~~~~~~~~~ Generation ~~~~~~~~~~~~"
+	@$(CC) $(CFLAGS_VM) $(LIBFT_VM) $(SRCS_VM) -o $(VM) -I $(HEADER)
+	@echo "$(GREEN)[OK] $(GREY)Tous les objets de $(WHITE)$(VM) $(GREY)sont generes !\r"
+	@echo "$(GREEN)[OK] $(GREY)Compilation de $(WHITE)$(VM)\n"
+
 
 lib: menu_lib $(LIBFTPRINTF) $(LIBFT)
 
@@ -63,7 +105,7 @@ $(LIBFTPRINTF): FORCE
 	@make -C lib/printf/
 	@echo "$(NOCOLOR)"
 
-$(LIBFT): FORCE
+$(LIBFT_ASM): FORCE
 	@make -C lib/libft/
 	@echo "$(NOCOLOR)"
 
@@ -71,7 +113,8 @@ FORCE:
 
 clean:
 	@echo "$(BOLD)$(RED)~~~~~~~~~~~~ Delete ~~~~~~~~~~~~~~~~"
-	@echo "$(GREEN)[OK]$(RED) Supression des objets de $(WHITE)$(NAME)"
+	@echo "$(GREEN)[OK]$(RED) Supression des objets de $(WHITE)$(ASM)"
+	@echo "$(GREEN)[OK]$(RED) Supression des objets de $(WHITE)$(VM)"
 	@echo "$(GREEN)[OK]$(RED) Supression des objets de $(WHITE)libft.a"
 	@echo "$(GREEN)[OK]$(RED) Supression des objets de $(WHITE)libftprintf.a"
 	@make clean -C lib/libft
@@ -80,10 +123,12 @@ clean:
 	@rm -rf $(OBJDIR)
 
 fclean: clean
-	@echo "$(GREEN)[OK]$(RED) Supression de $(WHITE)$(NAME)"
+	@echo "$(GREEN)[OK]$(RED) Supression de $(WHITE)$(VM)"
+	@echo "$(GREEN)[OK]$(RED) Supression de $(WHITE)$(ASM)"
 	@make fclean -C lib/libft
 	@make fclean -C lib/printf
-	@rm -f $(NAME)
+	@rm -f $(ASM)
+	@rm -rf $(VM)
 
 re: fclean all
 
