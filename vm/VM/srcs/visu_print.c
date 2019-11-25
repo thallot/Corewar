@@ -43,14 +43,18 @@ void	print_live(WINDOW *info, t_visu *visu)
 {
 	int i;
 
-	i = 0;
-	if (visu->vm->lastlive != UNDEF)
+	i = -1;
+	while (++i < 4)
 	{
-		wattron(info, COLOR_PAIR(visu->vm->lastlive + 1));
-		mvwprintw(info, 29 + visu->vm->lastlive * 4, 3, "Player %s is alive",
-		visu->vm->tab_champ.champs[visu->vm->lastlive].name);
-		wattroff(info, COLOR_PAIR(visu->vm->lastlive + 1));
+		if (visu->vm->live[i] == 1)
+		{
+			wattron(info, COLOR_PAIR(i + 1));
+			mvwprintw(info, 29 + i * 4, 3, "Player %s is alive",
+			visu->vm->tab_champ.champs[i].name);
+			wattroff(info, COLOR_PAIR(i + 1));
+		}
 	}
+	i = 0;
 	if (visu->rules->cycle_to_die == visu->rules->cr_cycle + 1)
 		while (i < 4)
 			mvwprintw(info, 29 + i++ * 4, 3, "%128c", ' ');

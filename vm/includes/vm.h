@@ -132,6 +132,7 @@ typedef struct		s_env
 	int				nblive;
 	int				visu;
 	int				cmpt_live;
+	int				live[4];
 }					t_env;
 
 /*

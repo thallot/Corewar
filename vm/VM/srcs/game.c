@@ -29,12 +29,17 @@ static void		initialise_rules(t_rules *rules, t_env *vm, t_visu *visu)
 
 static void		check_nbr_lives(t_rules *rules, t_env *vm)
 {
+	int i;
+
+	i = 0;
 	if (vm->cmpt_live >= NBR_LIVE || rules->nb_check == MAX_CHECKS)
 	{
 		rules->cycle_to_die -= CYCLE_DELTA;
 		if (rules->cycle_to_die <= 0)
 			rules->cycle_to_die = 1;
 		rules->nb_check = 0;
+		while (i < 4)
+			vm->live[i++] = 0;
 	}
 	else
 		rules->nb_check++;
