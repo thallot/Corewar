@@ -31,8 +31,6 @@ int		get_size(t_env *env)
 		return (2);
 	if (env->list->type == TYPE_DIRECT_4)
 		return (4);
-	ft_printf("Erreur : instruction %s -> [%d] type de parametre inconnu\n"
-	, env->list->name, env->list->type);
 	exit(exit_gc(env, 1));
 }
 
