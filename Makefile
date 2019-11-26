@@ -98,9 +98,11 @@ $(VM): $(SRCS_VM) $(OBJS_VM) $(INCLS_ASM)
 	@echo "$(GREEN)[OK] $(GREY)Compilation de $(WHITE)$(VM)\n"
 
 $(OBJDIR_VM)/%.o: $(SRCDIR_VM)/%.c
+		@mkdir -p $(OBJDIR_VM)
 	  @$(CC) -I $(HEADER) $(CFLAGS) -c -o $@ $<
 
 $(OBJDIR_ASM)/%.o: $(SRCDIR_ASM)/%.c
+		@mkdir -p $(OBJDIR_ASM)
 	  @$(CC) $(CFLAGS) -c -o $@ $<
 
 lib: menu_lib $(LIBFTPRINTF) $(LIBFT)
@@ -122,12 +124,12 @@ clean:
 	@echo "$(BOLD)$(RED)~~~~~~~~~~~~ Delete ~~~~~~~~~~~~~~~~"
 	@echo "$(GREEN)[OK]$(RED) Supression des objets de $(WHITE)$(ASM)"
 	@echo "$(GREEN)[OK]$(RED) Supression des objets de $(WHITE)$(VM)"
-	@echo "$(GREEN)[OK]$(RED) Supression des objets de $(WHITE)libft.a"
-	@echo "$(GREEN)[OK]$(RED) Supression des objets de $(WHITE)libftprintf.a"
+	@echo "$(GREEN)[OK]$(RED) Supression des objets de $(WHITE)libft"
+	@echo "$(GREEN)[OK]$(RED) Supression des objets de $(WHITE)libftprintf"
 	@make clean -C lib/libft
 	@make clean -C lib/printf
-	@rm -f $(OBJS)
-	@rm -rf $(OBJDIR)
+	@rm -rf $(OBJDIR_ASM)
+	@rm -rf $(OBJDIR_VM)
 
 fclean: clean
 	@echo "$(GREEN)[OK]$(RED) Supression de $(WHITE)$(VM)"
