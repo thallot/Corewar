@@ -42,7 +42,10 @@ int		get_size(t_env *env)
 
 void	print_error(t_env *env, char *instr, int nb)
 {
-	if (nb == 0)
+	if (!env->list)
+		ft_printf("Erreur : instruction %s -> manque un/plusieurs param(s)\n"
+		, instr);
+	else if (nb == 0)
 		ft_printf("Erreur : instruction %s -> [%s] devrait etre numerique\n"
 		, instr, env->list->name);
 	else
@@ -58,7 +61,7 @@ void	print_error(t_env *env, char *instr, int nb)
 
 int		is_valid_separator(t_env *env, char *instr, int one, int two)
 {
-	if (env->list->type != TYPE_VIRGULE)
+	if (!env->list || env->list->type != TYPE_VIRGULE)
 	{
 		ft_printf("Erreur : %s -> separateur entre param %d et param %d\n"
 		, instr, one, two);
