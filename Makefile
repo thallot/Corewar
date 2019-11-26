@@ -91,11 +91,15 @@ $(ASM): $(LIBFTPRINTF) $(LIBFT_ASM) $(OBJS_ASM) $(INCLS_ASM)
 	@echo "$(GREEN)[OK] $(GREY)Tous les objets de $(WHITE)$(ASM) $(GREY)sont generes !\r"
 	@echo "$(GREEN)[OK] $(GREY)Compilation de $(WHITE)$(ASM)\n"
 
-$(VM): $(SRCS_VM) $(OBJS_VM) $(INCLS_ASM)
+$(OBJS_ASM) : $(INCLS_ASM)
+
+$(VM): $(SRCS_VM) $(OBJS_VM)
 	@echo "$(BOLD)$(GREY)~~~~~~~~~~~~ Generation ~~~~~~~~~~~~"
 	@$(CC) $(CFLAGS_VM) $(LIBFT_VM) $(OBJS_VM) -o $(VM)
 	@echo "$(GREEN)[OK] $(GREY)Tous les objets de $(WHITE)$(VM) $(GREY)sont generes !\r"
 	@echo "$(GREEN)[OK] $(GREY)Compilation de $(WHITE)$(VM)\n"
+
+$(OBJS_VM) : $(INCLS_VM)
 
 $(OBJDIR_VM)/%.o: $(SRCDIR_VM)/%.c
 	  @$(CC) -I $(HEADER) $(CFLAGS) -c -o $@ $<
