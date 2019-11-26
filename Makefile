@@ -145,4 +145,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re lib
+.PHONY: all clean fclean re lib $(LIBFTPRINTF) $(LIBFT_ASM)
