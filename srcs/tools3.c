@@ -62,8 +62,11 @@ void	del_visu(t_visu *visu)
 	while (1)
 	{
 		attron(COLOR_PAIR(1));
-		mvprintw(LINES / 2 - 3, (COLS / 2) - 32, "Le joueur %s a gagné"
-			, visu->vm->tab_champ.champs[visu->vm->lastlive].name);
+		if (visu->vm->lastlive)
+			mvprintw(LINES / 2 - 3, (COLS / 2) - 10, "Le joueur %s a gagné"
+				, visu->vm->tab_champ.champs[visu->vm->lastlive].name);
+		else
+			mvprintw(LINES / 2 - 3, (COLS / 2) - 10, "No winner for today... Only looser");
 		attroff(COLOR_PAIR(1));
 		move(0, 0);
 		timeout(150000);
