@@ -62,7 +62,7 @@ void	del_visu(t_visu *visu)
 	while (1)
 	{
 		attron(COLOR_PAIR(1));
-		if (visu->vm->lastlive)
+		if (visu->vm->lastlive != -1)
 			mvprintw(LINES / 2 - 3, (COLS / 2) - 10, "Le joueur %s a gagné"
 				, visu->vm->tab_champ.champs[visu->vm->lastlive].name);
 		else
