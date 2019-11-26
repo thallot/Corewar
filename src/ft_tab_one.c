@@ -114,7 +114,7 @@ void	is_valid_live(t_env *env)
 {
 	env->size += T_INSTRUCTION;
 	env->list = env->list->next;
-	if (env->list->type != TYPE_DIRECT)
+	if (!env->list || env->list->type != TYPE_DIRECT)
 		print_error(env, "live", 1);
 	is_valid_param(env, "live");
 	env->list->type = TYPE_DIRECT_4;
