@@ -20,8 +20,8 @@ LIBFT_ASM = lib/libft/libft.a
 LIBFT_VM = libft/libftprintf.a
 LIBFTPRINTF = lib/printf/libftprintf.a
 
-OBJDIR_ASM = obj
 SRCDIR_ASM = src
+OBJDIR_ASM = obj_asm
 
 SC_ASM = $(addsuffix .c, main \
 	get_asm \
@@ -41,8 +41,8 @@ SRCS_ASM = $(addprefix $(SRCDIR_ASM)/, $(SC_ASM))
 OBJS_ASM = $(addprefix $(OBJDIR_ASM)/, $(SC_ASM:.c=.o))
 INCLS_ASM = $(addprefix ./include/, $(addsuffix .h, asm))
 
-OBJDIR_VM = obj
 SRCDIR_VM = srcs
+OBJDIR_VM = obj_vm
 
 SC_VM = $(addsuffix .c, vm \
 	 fn_file \
@@ -67,6 +67,8 @@ SC_VM = $(addsuffix .c, vm \
 	 visu_param)
 
 SRCS_VM = $(addprefix $(SRCDIR_VM)/, $(SC_VM))
+OBJS_VM = $(addprefix $(OBJDIR_VM)/, $(SC_VM:.c=.o))
+INCLS_VM = $(addprefix ./includes/, $(addsuffix .h, op vm))
 HEADER= ./includes
 
 GREEN = \033[01;32m
@@ -89,12 +91,17 @@ $(ASM): $(LIBFTPRINTF) $(LIBFT_ASM) $(OBJS_ASM) $(INCLS_ASM)
 	@echo "$(GREEN)[OK] $(GREY)Tous les objets de $(WHITE)$(ASM) $(GREY)sont generes !\r"
 	@echo "$(GREEN)[OK] $(GREY)Compilation de $(WHITE)$(ASM)\n"
 
-$(VM): $(SRCS_VM) ./includes/vm.h ./includes/op.h
+$(VM): $(SRCS_VM) $(OBJS_VM) $(INCLS_ASM)
 	@echo "$(BOLD)$(GREY)~~~~~~~~~~~~ Generation ~~~~~~~~~~~~"
-	@$(CC) $(CFLAGS_VM) $(LIBFT_VM) $(SRCS_VM) -o $(VM) -I $(HEADER)
+	@$(CC) $(CFLAGS_VM) $(LIBFT_VM) $(OBJS_VM) -o $(VM)
 	@echo "$(GREEN)[OK] $(GREY)Tous les objets de $(WHITE)$(VM) $(GREY)sont generes !\r"
 	@echo "$(GREEN)[OK] $(GREY)Compilation de $(WHITE)$(VM)\n"
 
+$(OBJDIR_VM)/%.o: $(SRCDIR_VM)/%.c
+	  @$(CC) -I $(HEADER) $(CFLAGS) -c -o $@ $<
+
+$(OBJDIR_ASM)/%.o: $(SRCDIR_ASM)/%.c
+	  @$(CC) $(CFLAGS) -c -o $@ $<
 
 lib: menu_lib $(LIBFTPRINTF) $(LIBFT)
 
