@@ -64,6 +64,11 @@ void	is_valid_label_definition(t_env *env)
 
 	i = -1;
 	size = ft_strlen(env->list->name) - 1;
+	if (size == -1)
+	{
+		ft_printf("Label vide\n");
+		exit(exit_gc(env, 1));
+	}
 	while (env->list->name[++i])
 	{
 		c = env->list->name[i];
