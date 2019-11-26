@@ -85,7 +85,7 @@ BOLD= \033[1m
 
 all: $(ASM) $(VM)
 
-$(ASM): $(LIBFTPRINTF) $(LIBFT_ASM) $(OBJS_ASM) $(INCLS_ASM)
+$(ASM): $(LIBFTPRINTF) $(LIBFT_ASM) $(OBJS_ASM)
 	@echo "$(BOLD)$(GREY)~~~~~~~~~~~~ Generation ~~~~~~~~~~~~"
 	@$(CC) $(CFLAGS_ASM) $(LIBFTPRINTF) $(LIBFT_ASM) $(OBJS_ASM) -o $(ASM)
 	@echo "$(GREEN)[OK] $(GREY)Tous les objets de $(WHITE)$(ASM) $(GREY)sont generes !\r"
@@ -145,4 +145,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re lib $(LIBFTPRINTF) $(LIBFT_ASM)
+.PHONY: all clean fclean re lib menu_lib
