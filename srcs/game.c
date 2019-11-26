@@ -17,6 +17,7 @@ static void		initialise_rules(t_rules *rules, t_env *vm, t_visu *visu)
 	ft_bzero(rules, sizeof(t_rules));
 	rules->cycle_to_die = CYCLE_TO_DIE;
 	rules->someone_alive = true;
+	vm->rules = rules;
 	if (vm->visu)
 		init_visu(visu, rules, vm, vm->player);
 }

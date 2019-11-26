@@ -42,15 +42,16 @@ void	print_intro(void)
 void	print_live(WINDOW *info, t_visu *visu)
 {
 	int i;
+	static int live[4];
 
 	i = -1;
 	while (++i < 4)
 	{
-		if (visu->vm->live[i] == 1)
+		if (visu->vm->live[i] != 0)
 		{
 			wattron(info, COLOR_PAIR(i + 1));
-			mvwprintw(info, 29 + i * 4, 3, "Player %s is alive",
-			visu->vm->tab_champ.champs[i].name);
+			mvwprintw(info, 29 + i * 4, 3, "Player %s is alive (cycle : %d)",
+			visu->vm->tab_champ.champs[i].name, visu->vm->live[i]);
 			wattroff(info, COLOR_PAIR(i + 1));
 		}
 	}

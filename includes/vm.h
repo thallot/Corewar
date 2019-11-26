@@ -116,6 +116,20 @@ typedef struct		s_tabchamp
 }					t_tabchamp;
 
 /*
+**Variable permettant de faire tourner le corewar et d'avoir un vainqueur'
+*/
+
+typedef struct		s_rules
+{
+	int				cr_cycle;
+	unsigned int	cycle;
+	int				cycle_to_die;
+	int				nb_verif;
+	int				nb_check;
+	int				someone_alive;
+}					t_rules;
+
+/*
 **l'environnement de la vm
 **lastlive => dernier champion ayant donne signe de vie
 **nblive => nb de champion signale en vie depuis la derniere verif
@@ -133,21 +147,8 @@ typedef struct		s_env
 	int				visu;
 	int				cmpt_live;
 	int				live[4];
+	t_rules 	*rules;
 }					t_env;
-
-/*
-**Variable permettant de faire tourner le corewar et d'avoir un vainqueur'
-*/
-
-typedef struct		s_rules
-{
-	int				cr_cycle;
-	unsigned int	cycle;
-	int				cycle_to_die;
-	int				nb_verif;
-	int				nb_check;
-	int				someone_alive;
-}					t_rules;
 
 typedef struct		s_visu
 {
