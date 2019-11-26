@@ -9,12 +9,7 @@ write:	sti	r1,%:live,%1
 live:	live	%1
 		zjmp	%:live
 
-writer: and %8, %8, r2
-		sti r2, %:loin, r2
-
 jump:	live %1
-		and 	%0, %0, r2
-		sti		r1, %:live, %1
-		zjmp 	%:create
+		and %0, %0, r2
+		sti r1, %:create, %1
 
-loin:	

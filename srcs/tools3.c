@@ -53,7 +53,7 @@ void	write_in_visu(int start, int dest, t_env *vm)
 	nb_champ = vm->memory_visu[start];
 	cpt = 4;
 	while (cpt--)
-		vm->memory_visu[dest + cpt] = nb_champ;
+		vm->memory_visu[(dest + cpt) % 4096] = nb_champ;
 }
 
 void	del_visu(t_visu *visu)

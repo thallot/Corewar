@@ -1,8 +1,6 @@
 .name "Ez"
 .comment "Only win"
 		
-:
-
 create:	fork %:jump
 		
 write:	sti	r1,%:live,%1

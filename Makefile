@@ -14,7 +14,7 @@ ASM = assembler
 VM = corewar
 
 CFLAGS_ASM = -Wall -Werror -Wextra
-CFLAGS_VM = -Wall -Werror -Wextra -lncurses
+CFLAGS_VM = -Wall -Werror -Wextra -lncurses -fsanitize=address
 CC = gcc
 LIBFT_ASM = lib/libft/libft.a
 LIBFT_VM = libft/libftprintf.a
