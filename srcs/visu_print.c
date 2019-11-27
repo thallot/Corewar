@@ -59,18 +59,7 @@ void	print_live(WINDOW *info, t_visu *visu)
 	if (visu->rules->cycle_to_die == visu->rules->cr_cycle + 1)
 		while (i < 4)
 			mvwprintw(info, 29 + i++ * 4, 3, "%128c", ' ');
-	if (visu->pause)
-	{
-		wattron(info, COLOR_PAIR(3));
-		mvwprintw(info, 21, 3, "Pause : ON ");
-		wattroff(info, COLOR_PAIR(3));
-	}
-	else
-	{
-		wattron(info, COLOR_PAIR(1));
-		mvwprintw(info, 21, 3, "Pause : OFF");
-		wattroff(info, COLOR_PAIR(1));
-	}
+	print_pause(visu, info);
 }
 
 void	print_memory(t_visu *visu, WINDOW *memory)
@@ -115,6 +104,9 @@ void	print_nb_process(t_visu *visu, WINDOW *info)
 
 void	print_info(t_visu *visu, WINDOW *info)
 {
+	int i;
+
+	i = 0;
 	print_player(visu, info);
 	print_nb_process(visu, info);
 	mvwprintw(info, 17, 3, "Cycle : %d", visu->rules->cycle);
@@ -122,10 +114,11 @@ void	print_info(t_visu *visu, WINDOW *info)
 	mvwprintw(info, 10, (COLS / 6) - 14, "RULES :");
 	mvwprintw(info, 16, (COLS / 6) - 14, "INFOS :");
 	mvwprintw(info, 20, (COLS / 6) - 14, "PARAMS :");
-	mvwprintw(info, 27, (COLS / 6) - 14, "Player 1 :");
-	mvwprintw(info, 31, (COLS / 6) - 14, "Player 2 :");
-	mvwprintw(info, 35, (COLS / 6) - 14, "Player 3 :");
-	mvwprintw(info, 39, (COLS / 6) - 14, "Player 4 :");
+	while (i < visu->vm->tab_champ.nb_champ)
+	{
+		mvwprintw(info, 27 + i * 4, (COLS / 6) - 14, "Player %d :", visu->vm->tab_champ.champs[i].num);
+		i++;
+	}
 	wattroff(info, A_UNDERLINE);
 	mvwprintw(info, 11, 3, "CYCLE_TO_DIE %5d | %d  ",
 	CYCLE_TO_DIE, visu->rules->cycle_to_die);

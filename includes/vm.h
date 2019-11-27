@@ -6,7 +6,7 @@
 /*   By: jjaegle <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/06 09:42:52 by jjaegle           #+#    #+#             */
-/*   Updated: 2019/11/25 15:34:06 by jjaegle          ###   ########.fr       */
+/*   Updated: 2019/11/27 10:13:05 by thallot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -246,5 +246,6 @@ void				print_player(t_visu *visu, WINDOW *info);
 void				print_nb_process(t_visu *visu, WINDOW *info);
 void				get_speed(t_visu *visu);
 void				make_pause_exit(t_visu *visu, int opt);
+void				print_pause(t_visu *visu, WINDOW *info);
 
 #endif

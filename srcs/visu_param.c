@@ -55,3 +55,19 @@ void	get_speed(t_visu *visu)
 		}
 	}
 }
+
+void print_pause(t_visu *visu, WINDOW *info)
+{
+	if (visu->pause)
+	{
+		wattron(info, COLOR_PAIR(3));
+		mvwprintw(info, 21, 3, "Pause : ON ");
+		wattroff(info, COLOR_PAIR(3));
+	}
+	else
+	{
+		wattron(info, COLOR_PAIR(1));
+		mvwprintw(info, 21, 3, "Pause : OFF");
+		wattroff(info, COLOR_PAIR(1));
+	}
+}
