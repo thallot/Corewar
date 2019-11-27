@@ -147,6 +147,7 @@ typedef struct		s_env
 	int				visu;
 	int				cmpt_live;
 	int				live[4];
+	int				nb_live[4];
 	t_rules 	*rules;
 }					t_env;
 
@@ -247,5 +248,8 @@ void				print_nb_process(t_visu *visu, WINDOW *info);
 void				get_speed(t_visu *visu);
 void				make_pause_exit(t_visu *visu, int opt);
 void				print_pause(t_visu *visu, WINDOW *info);
+void print_livebar(t_visu *visu, WINDOW *info, float live_percent[4]);
+void print_alive(t_visu *visu, WINDOW *info);
+int print_livebar_color(t_visu *visu, WINDOW *info, float live_percent[4]);
 
 #endif

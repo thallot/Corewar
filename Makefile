@@ -64,6 +64,7 @@ SC_VM = $(addsuffix .c, vm \
 	 aff \
 	 visu \
 	 visu_print \
+	 visu_print_two \
 	 visu_param)
 
 SRCS_VM = $(addprefix $(SRCDIR_VM)/, $(SC_VM))

@@ -100,6 +100,7 @@ static void	initialise_env(t_env *env)
 	while (i < MAX_PLAYERS)
 	{
 		env->tab_champ.champs[i].num = UNINIT;
+		env->nb_live[i] = 0;
 		i++;
 	}
 }

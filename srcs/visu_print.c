@@ -6,7 +6,7 @@
 /*   By: thallot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 10:36:17 by thallot           #+#    #+#             */
-/*   Updated: 2019/11/25 15:49:44 by jjaegle          ###   ########.fr       */
+/*   Updated: 2019/11/27 13:48:53 by thallot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,25 +41,22 @@ void	print_intro(void)
 
 void	print_live(WINDOW *info, t_visu *visu)
 {
-	int i;
-	static int live[4];
+	int		i;
+	float	live_percent[4];
 
+	print_alive(visu, info);
+	i = -1;
+	if (visu->rules->cycle_to_die == visu->rules->cr_cycle + 1)
+		while (++i < 4)
+			mvwprintw(info, 32 + i * 4, 3, "%128c", ' ');
 	i = -1;
 	while (++i < 4)
 	{
-		if (visu->vm->live[i] != 0)
-		{
-			wattron(info, COLOR_PAIR(i + 1));
-			mvwprintw(info, 29 + i * 4, 3, "Player %s is alive (cycle : %d)",
-			visu->vm->tab_champ.champs[i].name, visu->vm->live[i]);
-			wattroff(info, COLOR_PAIR(i + 1));
-		}
+		live_percent[i] = 0;
+		if (visu->vm->nb_live[i] && visu->vm->cmpt_live)
+			live_percent[i] = visu->vm->nb_live[i] * 100 / visu->vm->cmpt_live;
 	}
-	i = 0;
-	if (visu->rules->cycle_to_die == visu->rules->cr_cycle + 1)
-		while (i < 4)
-			mvwprintw(info, 29 + i++ * 4, 3, "%128c", ' ');
-	print_pause(visu, info);
+	print_livebar(visu, info, live_percent);
 }
 
 void	print_memory(t_visu *visu, WINDOW *memory)
@@ -106,20 +103,18 @@ void	print_info(t_visu *visu, WINDOW *info)
 {
 	int i;
 
-	i = 0;
+	i = -1;
 	print_player(visu, info);
 	print_nb_process(visu, info);
-	mvwprintw(info, 17, 3, "Cycle : %d", visu->rules->cycle);
+	print_pause(visu, info);
+	mvwprintw(info, 17, 3, "Cycle :          %d | %d    ",
+	visu->rules->cycle, visu->rules->cr_cycle);
 	wattron(info, A_UNDERLINE);
 	mvwprintw(info, 10, 35, "RULES :");
 	mvwprintw(info, 16, 35, "INFOS :");
 	mvwprintw(info, 20, 35, "PARAMS :");
-	while (i < visu->vm->tab_champ.nb_champ)
-	{
-		mvwprintw(info, 27 + i * 4, 35, "Player %d :",
-		visu->vm->tab_champ.champs[i].num);
-		i++;
-	}
+	mvwprintw(info, 24, 35, "LIVE BAR :");
+	mvwprintw(info, 29, 35, "Player :");
 	wattroff(info, A_UNDERLINE);
 	mvwprintw(info, 11, 3, "CYCLE_TO_DIE %5d | %d  ",
 	CYCLE_TO_DIE, visu->rules->cycle_to_die);

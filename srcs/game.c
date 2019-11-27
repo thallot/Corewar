@@ -40,7 +40,11 @@ static void		check_nbr_lives(t_rules *rules, t_env *vm)
 			rules->cycle_to_die = 1;
 		rules->nb_check = 0;
 		while (i < 4)
-			vm->live[i++] = 0;
+		{
+			vm->live[i] = 0;
+			vm->nb_live[i] = 0;
+			i++;
+		}		
 	}
 	else
 		rules->nb_check++;

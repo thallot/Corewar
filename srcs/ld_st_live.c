@@ -31,6 +31,7 @@ static void		cb_live(void *pvm, void *pproc)
 		vm->cmpt_live++;
 		vm->lastlive = id;
 		vm->live[id] = vm->rules->cr_cycle;
+		vm->nb_live[id]++;
 		if (!vm->visu)
 			ft_printf("Joueur %d est en vie\n", process->param[0].value);
 	}

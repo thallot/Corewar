@@ -12,26 +12,23 @@
 
 #include "op.h"
 #include "vm.h"
+#define L_ONE " _____                                  "
+#define L_TWO "/ ____|                                 "
+#define L_TRE "| |     ___  _ __ _____      ____ _ _ __ "
+#define L_FOU "| |    / _ \\| '__/ _ \\ \\ /\\ / / _` | '__|"
+#define L_FIV "| |___| (_) | | |  __/\\ V  V / (_| | | "
+#define L_SIX "\\_____\\___/|_|  \\___| \\_/\\_/ \\__,_|_| "
 
 void	print_player(t_visu *visu, WINDOW *info)
 {
-	int nb_player;
-	int i;
-
-	nb_player = visu->vm->tab_champ.nb_champ;
-	i = 0;
-	wattron(info, A_UNDERLINE);
-	mvwprintw(info, 1, 35, "PLAYERS (%d) :",
-	visu->vm->tab_champ.nb_champ);
-	wattroff(info, A_UNDERLINE);
-	while (i < nb_player)
-	{
-		wattron(info, COLOR_PAIR(i + 1));
-		mvwprintw(info, 3 + i, 3, "%s (Number : %d)",
-		visu->vm->tab_champ.champs[i].name, visu->vm->tab_champ.champs[i].num);
-		wattroff(info, COLOR_PAIR(i + 1));
-		i++;
-	}
+	wattron(info, COLOR_PAIR(1));
+	mvwprintw(info, 1, 13, L_ONE);
+	mvwprintw(info, 2, 13, L_TWO);
+	mvwprintw(info, 3, 13, L_TRE);
+	mvwprintw(info, 4, 13, L_FOU);
+	mvwprintw(info, 5, 13, L_FIV);
+	mvwprintw(info, 6, 13, L_SIX);
+	wattroff(info, COLOR_PAIR(1));
 }
 
 int		is_process_position(t_visu *visu, int i)
