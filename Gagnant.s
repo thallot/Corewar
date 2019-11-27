@@ -1,8 +1,7 @@
 .name		"Celebration Funebre v0.99pl42"
 .comment	"Jour J"
 
-code:: live %42
-		
+	ld %0, r3	
 label:		zjmp %:avantdebut
 		zjmp %0				# pour eviter ecrasement
 						# de l'instruction suivante

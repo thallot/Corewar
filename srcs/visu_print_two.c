@@ -42,7 +42,7 @@ int		print_livebar_color(t_visu *visu, WINDOW *info, float live_percent[4])
 		j = -1;
 		if (live_percent[i])
 		{
-			while (++j < live_percent[i] / 2)
+			while (++j < live_percent[i] / 2 && total + j < 62)
 			{
 				wattron(info, COLOR_PAIR(i + 1));
 				mvwprintw(info, 26, total + j, "-");
@@ -70,7 +70,7 @@ void	print_livebar(t_visu *visu, WINDOW *info, float live_percent[4])
 	else
 		total = print_livebar_color(visu, info, live_percent);
 	mvwprintw(info, 26, 11, "[");
-	mvwprintw(info, 26, total, "]   ");
+	mvwprintw(info, 26, 62, "]   ");
 }
 
 void	print_alive(t_visu *visu, WINDOW *info)
