@@ -82,9 +82,9 @@ void	print_alive(t_visu *visu, WINDOW *info)
 	{
 		mvwprintw(info, 30 + (i * 4), 3, "Player [%d] ",
 				visu->vm->tab_champ.champs[i].num);
-		mvwprintw(info, 31 + (i * 4), 6, "Last Live   %d",
+		mvwprintw(info, 31 + (i * 4), 6, "Last Live   %d     ",
 				visu->vm->live[i]);
-		mvwprintw(info, 32 + (i * 4), 6, "Nb Live     %d",
+		mvwprintw(info, 32 + (i * 4), 6, "Nb Live     %d     ",
 				visu->vm->nb_live[i]);
 		wattron(info, COLOR_PAIR(i + 1));
 		mvwprintw(info, 30 + (i * 4), 18, "%s",
