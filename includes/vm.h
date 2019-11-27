@@ -243,7 +243,7 @@ void				init_visu(t_visu *visu, t_rules *rules, t_env *vm,
 					t_listp *players);
 int					is_process_position(t_visu *visu, int i);
 void				print_info(t_visu *visu, WINDOW *info);
-void				print_player(t_visu *visu, WINDOW *info);
+void				print_corewar(t_visu *visu, WINDOW *info);
 void				print_nb_process(t_visu *visu, WINDOW *info);
 void				get_speed(t_visu *visu);
 void				make_pause_exit(t_visu *visu, int opt);
@@ -251,5 +251,6 @@ void				print_pause(t_visu *visu, WINDOW *info);
 void print_livebar(t_visu *visu, WINDOW *info, float live_percent[4]);
 void print_alive(t_visu *visu, WINDOW *info);
 int print_livebar_color(t_visu *visu, WINDOW *info, float live_percent[4]);
+int get_winner(t_visu *visu);
 
 #endif

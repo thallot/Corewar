@@ -55,3 +55,14 @@ void	get_speed(t_visu *visu)
 		}
 	}
 }
+
+int get_winner(t_visu *visu)
+{
+	if (visu->rules->cycle_to_die < CYCLE_DELTA
+	&& visu->rules->cycle_to_die == 1)
+	{
+		visu->pause = 1;
+		return (1);
+	}
+	return (0);
+}

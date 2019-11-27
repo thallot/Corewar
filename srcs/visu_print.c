@@ -104,7 +104,7 @@ void	print_info(t_visu *visu, WINDOW *info)
 	int i;
 
 	i = -1;
-	print_player(visu, info);
+	print_corewar(visu, info);
 	print_nb_process(visu, info);
 	print_pause(visu, info);
 	mvwprintw(info, 17, 3, "Cycle :          %d | %d    ",

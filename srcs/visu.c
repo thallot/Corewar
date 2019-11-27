@@ -19,7 +19,7 @@
 #define L_FIV "| |___| (_) | | |  __/\\ V  V / (_| | | "
 #define L_SIX "\\_____\\___/|_|  \\___| \\_/\\_/ \\__,_|_| "
 
-void	print_player(t_visu *visu, WINDOW *info)
+void	print_corewar(t_visu *visu, WINDOW *info)
 {
 	wattron(info, COLOR_PAIR(1));
 	mvwprintw(info, 1, 13, L_ONE);
@@ -79,6 +79,8 @@ int		visu_core(t_visu *visu, int opt)
 
 	memory = visu->memory;
 	info = visu->info;
+	if (get_winner(visu) == 1)
+		return (0);
 	make_pause_exit(visu, opt);
 	wmove(memory, 0, 0);
 	wmove(info, 0, 0);
