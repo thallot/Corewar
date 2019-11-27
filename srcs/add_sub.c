@@ -6,7 +6,7 @@
 /*   By: jjaegle <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 16:32:27 by jjaegle           #+#    #+#             */
-/*   Updated: 2019/11/22 17:38:31 by jjaegle          ###   ########.fr       */
+/*   Updated: 2019/11/27 14:45:51 by jjaegle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,24 @@ void				cb_st(void *pvm, void *pproc)
 {
 	t_env		*vm;
 	t_process	*process;
-	void		*src;
+	void		*dest;
+	int			reg;
 
 	vm = (t_env*)pvm;
 	process = (t_process*)pproc;
-	src = process->records[process->param[0].value - 1];
-	ft_memrev(src, REG_SIZE);
-	ft_memcpy(process->param[1].ptr, src, REG_SIZE);
-	write_in_visu(process->pc_instru, (int)src, vm);
+	set_param_value(vm->memory, process, 1, false);
+	if (process->param[1].type == T_REG)
+	{
+		set_param_value(vm->memory, process, 2, false);
+		dest = process->param[1].ptr;
+	}
+	else
+		dest = &vm->memory[get_adress(process->pc_instru
+				, process->param[1].value, false)];
+	reg = change_endian(&process->param[0].value, REG_SIZE);
+	ft_memcpy(dest, &reg, REG_SIZE);
+	write_in_visu(process->pc_instru, get_adress(process->pc_instru
+				, process->param[1].value, false), vm);
 }
 
 static void			cb_add(void *pvm, void *pproc)

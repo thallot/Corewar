@@ -6,7 +6,7 @@
 /*   By: jjaegle <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 16:19:53 by jjaegle           #+#    #+#             */
-/*   Updated: 2019/11/25 16:23:25 by thallot          ###   ########.fr       */
+/*   Updated: 2019/11/27 12:37:24 by jjaegle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,11 @@ void	set_param_value(unsigned char *mem, t_process *process, int i
 		process->param[i - 1].value = change_endian(idx, REG_SIZE);
 	}
 	else if (process->param[i - 1].type == REG_CODE)
-		process->param[i - 1].value =
-			*(int*)process->records[(short)process->param[i - 1].value - 1];
+	{
+		process->param[i - 1].ptr = 
+			process->records[process->param[i - 1].value - 1];
+		process->param[i - 1].value = *(int*)process->param[i - 1].ptr;
+	}
 }
 
 void	write_in_visu(int start, int dest, t_env *vm)
