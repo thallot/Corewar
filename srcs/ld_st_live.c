@@ -6,7 +6,7 @@
 /*   By: jjaegle <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 16:28:29 by jjaegle           #+#    #+#             */
-/*   Updated: 2019/11/25 16:00:02 by jjaegle          ###   ########.fr       */
+/*   Updated: 2019/11/27 14:52:58 by jjaegle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,21 +65,25 @@ static void		cb_ld(void *pvm, void *pproc)
 {
 	t_env		*vm;
 	t_process	*process;
-	void		*dest;
+	void		*src;
 	int			lg;
-	int			res;
+	void		*dest;
 
 	vm = (t_env*)pvm;
 	process = (t_process*)pproc;
 	lg = (vm->memory[process->pc_instru] == 2) ? false : true;
-	set_param_value(vm->memory, process, 1, lg);
-	if (!process->param[0].value)
-		process->carry = true;
+	if (process->param[0].type == DIR_CODE)
+		src = &process->param[0].value;
 	else
-		process->carry = false;
+	{
+		src = &vm->memory[get_adress(process->pc_instru
+				, process->param[0].value, lg)];	
+		lg = change_endian(src, REG_SIZE);
+		src = &lg;
+	}
 	dest = process->records[process->param[1].value - 1];
-	res = process->param[0].value;
-	ft_memcpy(dest, (void *)&res, REG_SIZE);
+	ft_memcpy(dest, src, REG_SIZE);
+	process->carry = !(*(int*)dest) ? true : false;
 }
 
 /*
@@ -120,7 +124,6 @@ t_result		ft_ld(t_env *vm, t_process *process)
 t_result		ft_st(t_env *vm, t_process *process)
 {
 	unsigned char	*memory;
-	unsigned char	*dest;
 	int				start;
 
 	process->pc_instru = process->pc;
@@ -130,11 +133,6 @@ t_result		ft_st(t_env *vm, t_process *process)
 		return (NULL);
 	if (process->param[0].type != T_REG || process->param[1].type == DIR_CODE)
 		return (NULL);
-	if (process->param[1].type == T_REG)
-		dest = (unsigned char *)process->records[process->param[1].value - 1];
-	else
-		dest = &memory[get_adress(start, process->param[1].value, false)];
-	process->param[1].ptr = (char*)dest;
 	process->active = true;
 	process->delay = 5 - 1;
 	return (cb_st);
