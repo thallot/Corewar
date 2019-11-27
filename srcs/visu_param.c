@@ -6,7 +6,7 @@
 /*   By: thallot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 11:12:43 by thallot           #+#    #+#             */
-/*   Updated: 2019/11/25 11:25:42 by thallot          ###   ########.fr       */
+/*   Updated: 2019/11/27 13:23:52 by thallot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,18 +56,13 @@ void	get_speed(t_visu *visu)
 	}
 }
 
-void print_pause(t_visu *visu, WINDOW *info)
+int get_winner(t_visu *visu)
 {
-	if (visu->pause)
+	if (visu->rules->cycle_to_die < CYCLE_DELTA
+	&& visu->rules->cycle_to_die == 1)
 	{
-		wattron(info, COLOR_PAIR(3));
-		mvwprintw(info, 21, 3, "Pause : ON ");
-		wattroff(info, COLOR_PAIR(3));
+		visu->pause = 1;
+		return (1);
 	}
-	else
-	{
-		wattron(info, COLOR_PAIR(1));
-		mvwprintw(info, 21, 3, "Pause : OFF");
-		wattroff(info, COLOR_PAIR(1));
-	}
+	return (0);
 }

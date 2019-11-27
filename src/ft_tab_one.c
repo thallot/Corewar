@@ -69,11 +69,15 @@ void	is_valid_label_definition(t_env *env)
 		ft_printf("Label vide\n");
 		exit(exit_gc(env, 1));
 	}
+	if (env->list->name[size - 1] == ':')
+	{
+		ft_printf("Label invalide\n");
+		exit(exit_gc(env, 1));
+	}
 	while (env->list->name[++i])
 	{
 		c = env->list->name[i];
-		if (!((c >= 'a' && c <= 'z') || (c >= '0' && c <= '9') || c == '_')
-				&& !(i == size && c == ':'))
+		if (!((c >= 'a' && c <= 'z') || (c >= '0' && c <= '9') || c == '_'))
 		{
 			ft_printf("Erreur : label %s -> caractere invalide : %c\n"
 			, env->list->name, c);
