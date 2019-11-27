@@ -99,7 +99,7 @@ void	print_nb_process(t_visu *visu, WINDOW *info)
 			i++;
 		tmp = tmp->next;
 	}
-	mvwprintw(info, 18, 3, "Process number : %10d", i);
+	mvwprintw(info, 18, 3, "Process number : %-10d", i);
 }
 
 void	print_info(t_visu *visu, WINDOW *info)
@@ -111,12 +111,13 @@ void	print_info(t_visu *visu, WINDOW *info)
 	print_nb_process(visu, info);
 	mvwprintw(info, 17, 3, "Cycle : %d", visu->rules->cycle);
 	wattron(info, A_UNDERLINE);
-	mvwprintw(info, 10, (COLS / 6) - 14, "RULES :");
-	mvwprintw(info, 16, (COLS / 6) - 14, "INFOS :");
-	mvwprintw(info, 20, (COLS / 6) - 14, "PARAMS :");
+	mvwprintw(info, 10, 35, "RULES :");
+	mvwprintw(info, 16, 35, "INFOS :");
+	mvwprintw(info, 20, 35, "PARAMS :");
 	while (i < visu->vm->tab_champ.nb_champ)
 	{
-		mvwprintw(info, 27 + i * 4, (COLS / 6) - 14, "Player %d :", visu->vm->tab_champ.champs[i].num);
+		mvwprintw(info, 27 + i * 4, 35, "Player %d :",
+		visu->vm->tab_champ.champs[i].num);
 		i++;
 	}
 	wattroff(info, A_UNDERLINE);

@@ -21,7 +21,7 @@ void	print_player(t_visu *visu, WINDOW *info)
 	nb_player = visu->vm->tab_champ.nb_champ;
 	i = 0;
 	wattron(info, A_UNDERLINE);
-	mvwprintw(info, 1, (COLS / 6) - 14, "PLAYERS (%d) :",
+	mvwprintw(info, 1, 35, "PLAYERS (%d) :",
 	visu->vm->tab_champ.nb_champ);
 	wattroff(info, A_UNDERLINE);
 	while (i < nb_player)
