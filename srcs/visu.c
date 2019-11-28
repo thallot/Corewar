@@ -62,6 +62,7 @@ void	init_visu(t_visu *visu, t_rules *rules, t_env *vm, t_listp *players)
 	print_intro();
 	visu->rules = rules;
 	visu->vm = vm;
+	visu->vm->aff = 0;
 	visu->process = players;
 	visu->pause = 0;
 	visu->speed = 100;

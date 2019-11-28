@@ -16,11 +16,22 @@ static void		cb_aff(void *pvm, void *pproc)
 {
 	t_env		*vm;
 	t_process	*process;
+	int c;
 
 	vm = (t_env*)pvm;
 	process = (t_process*)pproc;
 	if (!vm->visu)
+	{
+		c = *(int*)process->records[process->param[0].value - 1];
+		c %= 256;
 		ft_printf("%c\n", *(int*)process->records[process->param[0].value - 1]);
+	}
+
+	else
+	{
+		c = *(int*)process->records[process->param[0].value - 1];
+		vm->aff = c % 256;
+	}
 }
 
 t_result		ft_aff(t_env *vm, t_process *process)

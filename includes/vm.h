@@ -37,6 +37,8 @@
 # define SECND 2
 # define THIRD 3
 
+# define BOLD_TURN 90
+
 /*
 **--------------------------------Structures-----------------------
 */
@@ -138,7 +140,7 @@ typedef struct		s_rules
 typedef struct		s_env
 {
 	unsigned char	memory[MEM_SIZE];
-	unsigned char	memory_visu[MEM_SIZE];
+	unsigned int	memory_visu[MEM_SIZE];
 	int				dump;
 	t_tabchamp		tab_champ;
 	t_listp			*player;
@@ -149,6 +151,7 @@ typedef struct		s_env
 	int				live[4];
 	int				nb_live[4];
 	t_rules 	*rules;
+	int				aff;
 }					t_env;
 
 typedef struct		s_visu
@@ -160,6 +163,7 @@ typedef struct		s_visu
 	void			*info;
 	int				pause;
 	int				speed;
+	int				nb_process;
 }					t_visu;
 
 /*
@@ -252,5 +256,7 @@ void print_livebar(t_visu *visu, WINDOW *info, float live_percent[4]);
 void print_alive(t_visu *visu, WINDOW *info);
 int print_livebar_color(t_visu *visu, WINDOW *info, float live_percent[4]);
 int get_winner(t_visu *visu);
+void print_menu(t_visu *visu, WINDOW *info);
+void print_aff(t_visu *visu, WINDOW *info);
 
 #endif

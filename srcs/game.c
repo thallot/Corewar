@@ -44,7 +44,7 @@ static void		check_nbr_lives(t_rules *rules, t_env *vm)
 			vm->live[i] = 0;
 			vm->nb_live[i] = 0;
 			i++;
-		}		
+		}
 	}
 	else
 		rules->nb_check++;

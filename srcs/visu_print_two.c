@@ -92,3 +92,24 @@ void	print_alive(t_visu *visu, WINDOW *info)
 		wattroff(info, COLOR_PAIR(i + 1));
 	}
 }
+
+void print_menu(t_visu *visu, WINDOW *info)
+{
+	mvwprintw(info, 17, 3, "Cycle :          %d | %d    ",
+	visu->rules->cycle, visu->rules->cr_cycle);
+	wattron(info, A_UNDERLINE);
+	mvwprintw(info, 10, 35, "RULES :");
+	mvwprintw(info, 16, 35, "INFOS :");
+	mvwprintw(info, 20, 35, "PARAMS :");
+	mvwprintw(info, 24, 35, "LIVE BAR :");
+	mvwprintw(info, 29, 35, "Player :");
+	wattroff(info, A_UNDERLINE);
+	mvwprintw(info, 11, 3, "CYCLE_TO_DIE %5d | %d  ",
+	CYCLE_TO_DIE, visu->rules->cycle_to_die);
+	mvwprintw(info, 12, 3, "CYCLE_DELTA  %5d |", CYCLE_DELTA);
+	mvwprintw(info, 13, 3, "NBR_LIVE     %5d | %d  ",
+	NBR_LIVE, visu->vm->cmpt_live);
+	mvwprintw(info, 14, 3, "MAX_CHECKS   %5d | %d  ",
+	MAX_CHECKS, visu->rules->nb_check);
+	mvwprintw(info, 22, 3, "Speed : %d", 1000 - visu->speed);
+}

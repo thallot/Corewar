@@ -70,7 +70,7 @@ int				create_process(t_env *vm)
 		j = start;
 		while (j < start + tab.champs[i].size)
 		{
-			vm->memory_visu[j] = i + 1;
+			vm->memory_visu[j] = (i + 1) * 100;
 			j++;
 		}
 		start += MEM_SIZE / tab.nb_champ;

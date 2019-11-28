@@ -68,7 +68,9 @@ void	print_memory(t_visu *visu, WINDOW *memory)
 	while (i < MEM_SIZE)
 	{
 		if (visu->vm->memory_visu[i] != 0)
-			wattron(memory, COLOR_PAIR(visu->vm->memory_visu[i]));
+			wattron(memory, COLOR_PAIR(visu->vm->memory_visu[i] / 100));
+		if (visu->vm->memory_visu[i] % 100 > 0)
+			wattron(memory, A_BOLD);
 		if (is_process_position(visu, i))
 		{
 			wattron(memory, A_STANDOUT);
@@ -77,26 +79,21 @@ void	print_memory(t_visu *visu, WINDOW *memory)
 		}
 		else
 			wprintw(memory, " %02x", visu->vm->memory[i]);
+		if (visu->vm->memory_visu[i] % 100 > 0)
+		{
+			wattroff(memory, A_BOLD);
+			visu->vm->memory_visu[i]--;
+		}
+
 		if (visu->vm->memory_visu[i] != 0)
-			wattroff(memory, COLOR_PAIR(1));
+			wattroff(memory, COLOR_PAIR(visu->vm->memory_visu[i] / 100));
 		i++;
 	}
 }
 
 void	print_nb_process(t_visu *visu, WINDOW *info)
 {
-	int		i;
-	t_listp	*tmp;
-
-	tmp = visu->process;
-	i = 0;
-	while (tmp)
-	{
-		if (tmp->process.state != dead)
-			i++;
-		tmp = tmp->next;
-	}
-	mvwprintw(info, 18, 3, "Process number : %-10d", i);
+	mvwprintw(info, 18, 3, "Process number : %-10d", visu->nb_process);
 }
 
 void	print_info(t_visu *visu, WINDOW *info)
@@ -107,22 +104,7 @@ void	print_info(t_visu *visu, WINDOW *info)
 	print_corewar(visu, info);
 	print_nb_process(visu, info);
 	print_pause(visu, info);
-	mvwprintw(info, 17, 3, "Cycle :          %d | %d    ",
-	visu->rules->cycle, visu->rules->cr_cycle);
-	wattron(info, A_UNDERLINE);
-	mvwprintw(info, 10, 35, "RULES :");
-	mvwprintw(info, 16, 35, "INFOS :");
-	mvwprintw(info, 20, 35, "PARAMS :");
-	mvwprintw(info, 24, 35, "LIVE BAR :");
-	mvwprintw(info, 29, 35, "Player :");
-	wattroff(info, A_UNDERLINE);
-	mvwprintw(info, 11, 3, "CYCLE_TO_DIE %5d | %d  ",
-	CYCLE_TO_DIE, visu->rules->cycle_to_die);
-	mvwprintw(info, 12, 3, "CYCLE_DELTA  %5d |", CYCLE_DELTA);
-	mvwprintw(info, 13, 3, "NBR_LIVE     %5d | %d  ",
-	NBR_LIVE, visu->vm->cmpt_live);
-	mvwprintw(info, 14, 3, "MAX_CHECKS   %5d | %d  ",
-	MAX_CHECKS, visu->rules->nb_check);
+	print_menu(visu, info);
 	print_live(info, visu);
-	mvwprintw(info, 22, 3, "Speed : %d", 1000 - visu->speed);
+	print_aff(visu, info);
 }
