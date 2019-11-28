@@ -63,8 +63,8 @@ void	del_visu(t_visu *visu)
 	{
 		attron(COLOR_PAIR(1));
 		if (visu->vm->lastlive != -1)
-			mvprintw(LINES / 2 - 3, (COLS / 2) - 10, "Le joueur %s a gagné"
-				, visu->vm->tab_champ.champs[visu->vm->lastlive].name);
+			mvprintw(LINES / 2 - 3, (COLS / 2) - 10, "Le joueur %d (%s) a gagné",
+			visu->vm->lastlive, visu->vm->tab_champ.champs[visu->vm->lastlive].name);
 		else
 			mvprintw(LINES / 2 - 3, (COLS / 2) - 10
 					, "No winner for today... Only looser");
