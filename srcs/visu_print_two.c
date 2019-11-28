@@ -6,7 +6,7 @@
 /*   By: thallot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 13:30:03 by thallot           #+#    #+#             */
-/*   Updated: 2019/11/27 14:31:56 by thallot          ###   ########.fr       */
+/*   Updated: 2019/11/28 15:46:35 by thallot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,10 +93,10 @@ void	print_alive(t_visu *visu, WINDOW *info)
 	}
 }
 
-void print_menu(t_visu *visu, WINDOW *info)
+void	print_menu(t_visu *visu, WINDOW *info)
 {
 	mvwprintw(info, 17, 3, "Cycle :          %d | %d    ",
-	visu->rules->cycle, visu->rules->cr_cycle);
+			visu->rules->cycle, visu->rules->cr_cycle);
 	wattron(info, A_UNDERLINE);
 	mvwprintw(info, 10, 35, "RULES :");
 	mvwprintw(info, 16, 35, "INFOS :");
@@ -105,11 +105,11 @@ void print_menu(t_visu *visu, WINDOW *info)
 	mvwprintw(info, 29, 35, "Player :");
 	wattroff(info, A_UNDERLINE);
 	mvwprintw(info, 11, 3, "CYCLE_TO_DIE %5d | %d  ",
-	CYCLE_TO_DIE, visu->rules->cycle_to_die);
+			CYCLE_TO_DIE, visu->rules->cycle_to_die);
 	mvwprintw(info, 12, 3, "CYCLE_DELTA  %5d |", CYCLE_DELTA);
 	mvwprintw(info, 13, 3, "NBR_LIVE     %5d | %d  ",
-	NBR_LIVE, visu->vm->cmpt_live);
+			NBR_LIVE, visu->vm->cmpt_live);
 	mvwprintw(info, 14, 3, "MAX_CHECKS   %5d | %d  ",
-	MAX_CHECKS, visu->rules->nb_check);
+			MAX_CHECKS, visu->rules->nb_check);
 	mvwprintw(info, 22, 3, "Speed : %d", 1000 - visu->speed);
 }

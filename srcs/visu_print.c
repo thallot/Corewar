@@ -18,7 +18,6 @@
 #define L_FOU "| |    / _ \\| '__/ _ \\ \\ /\\ / / _` | '__|"
 #define L_FIV "| |___| (_) | | |  __/\\ V  V / (_| | | "
 #define L_SIX "\\_____\\___/|_|  \\___| \\_/\\_/ \\__,_|_| "
-#define L_SEV ""
 
 void	print_intro(void)
 {
@@ -31,7 +30,6 @@ void	print_intro(void)
 		mvprintw(LINES / 2, (COLS / 2) - 32, L_FOU);
 		mvprintw(LINES / 2 + 1, (COLS / 2) - 32, L_FIV);
 		mvprintw(LINES / 2 + 2, (COLS / 2) - 32, L_SIX);
-		mvprintw(LINES / 2 + 3, (COLS / 2) - 32, L_SEV);
 		attroff(COLOR_PAIR(1));
 		move(0, 0);
 		if (getch())
@@ -72,21 +70,17 @@ void	print_memory(t_visu *visu, WINDOW *memory)
 		if (visu->vm->memory_visu[i] % 100 > 0)
 			wattron(memory, A_BOLD);
 		if (is_process_position(visu, i))
-		{
 			wattron(memory, A_STANDOUT);
-			wprintw(memory, " %02x", visu->vm->memory[i]);
-			wattroff(memory, A_STANDOUT);
-		}
-		else
-			wprintw(memory, " %02x", visu->vm->memory[i]);
+		wprintw(memory, " %02x", visu->vm->memory[i]);
 		if (visu->vm->memory_visu[i] % 100 > 0)
 		{
 			wattroff(memory, A_BOLD);
 			visu->vm->memory_visu[i]--;
 		}
-
 		if (visu->vm->memory_visu[i] != 0)
 			wattroff(memory, COLOR_PAIR(visu->vm->memory_visu[i] / 100));
+		if (is_process_position(visu, i))
+			wattroff(memory, A_STANDOUT);
 		i++;
 	}
 }
