@@ -6,7 +6,7 @@
 /*   By: thallot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 11:12:43 by thallot           #+#    #+#             */
-/*   Updated: 2019/11/27 13:23:52 by thallot          ###   ########.fr       */
+/*   Updated: 2019/11/28 15:44:42 by jjaegle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	get_speed(t_visu *visu)
 	}
 }
 
-int get_winner(t_visu *visu)
+int		get_winner(t_visu *visu)
 {
 	int		i;
 	t_listp	*tmp;

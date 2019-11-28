@@ -6,7 +6,7 @@
 /*   By: thallot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 10:36:17 by thallot           #+#    #+#             */
-/*   Updated: 2019/11/27 13:48:53 by thallot          ###   ########.fr       */
+/*   Updated: 2019/11/28 15:45:35 by jjaegle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,6 @@ void	print_memory(t_visu *visu, WINDOW *memory)
 			wattroff(memory, A_BOLD);
 			visu->vm->memory_visu[i]--;
 		}
-
 		if (visu->vm->memory_visu[i] != 0)
 			wattroff(memory, COLOR_PAIR(visu->vm->memory_visu[i] / 100));
 		i++;

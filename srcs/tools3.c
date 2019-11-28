@@ -6,7 +6,7 @@
 /*   By: jjaegle <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 16:19:53 by jjaegle           #+#    #+#             */
-/*   Updated: 2019/11/28 11:11:22 by jjaegle          ###   ########.fr       */
+/*   Updated: 2019/11/28 15:43:28 by jjaegle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,13 @@ void	set_param_value(unsigned char *mem, t_process *process, int i
 	}
 	else if (process->param[i - 1].type == REG_CODE)
 		process->param[i - 1].value =
-			*(int*)process->records[(short)process->param[i -1].value - 1];
+			*(int*)process->records[(short)process->param[i - 1].value - 1];
 }
 
 void	write_in_visu(int start, int dest, t_env *vm)
 {
-	int nb_champ;
-	int cpt;
+	int				nb_champ;
+	int				cpt;
 
 	nb_champ = vm->memory_visu[start] / 100;
 	cpt = 4;
@@ -66,7 +66,8 @@ void	del_visu(t_visu *visu)
 			mvprintw(LINES / 2 - 3, (COLS / 2) - 10, "Le joueur %s a gagné"
 				, visu->vm->tab_champ.champs[visu->vm->lastlive].name);
 		else
-			mvprintw(LINES / 2 - 3, (COLS / 2) - 10, "No winner for today... Only looser");
+			mvprintw(LINES / 2 - 3, (COLS / 2) - 10
+					, "No winner for today... Only looser");
 		attroff(COLOR_PAIR(1));
 		move(0, 0);
 		timeout(150000);

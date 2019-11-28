@@ -6,17 +6,16 @@
 /*   By: jjaegle <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/22 17:27:02 by jjaegle           #+#    #+#             */
-/*   Updated: 2019/11/27 10:55:11 by jjaegle          ###   ########.fr       */
+/*   Updated: 2019/11/28 15:41:18 by jjaegle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "vm.h"
 
 /*
 ** CALLBACK LDI
 ** additionne les valeurs effectives des deux premiers parametres
-** en deduit une addresse et charge dans le registre (param3) les 4 
+** en deduit une addresse et charge dans le registre (param3) les 4
 ** octets se trouvant a l'addrese trouvée
 */
 
@@ -52,7 +51,7 @@ static void			cb_ldi(void *pvm, void *pproc)
 ** ici on parse, et on recupere les valeurs "effectives" des premiers params
 */
 
-t_result		ft_ldi(t_env *vm, t_process *process)
+t_result			ft_ldi(t_env *vm, t_process *process)
 {
 	unsigned char	*mem;
 
@@ -70,8 +69,8 @@ t_result		ft_ldi(t_env *vm, t_process *process)
 
 /*
 ** STI additionne la valeur des deux dernier parametres (p1 et p2),
-** et ecrit le contenue du registre passe en parametre (p0) a ladresse resultante
-** de la somme de p1 et p2
+** et ecrit le contenue du registre passe en parametre (p0) a ladresse
+** resultante de la somme de p1 et p2
 ** Si le p1 est un indirect,
 ** on va chercher la valeur present a p1.value + pc_instru
 ** Dans tous les cas on additionne la valeur de p1 et p2
@@ -81,11 +80,11 @@ t_result		ft_ldi(t_env *vm, t_process *process)
 
 static void			cb_sti(void *pvm, void *pproc)
 {
-	t_env         *vm;
-	t_process     *process;
-	unsigned char *mem;
-	int           address;
-	int           reg;
+	t_env			*vm;
+	t_process		*process;
+	unsigned char	*mem;
+	int				address;
+	int				reg;
 
 	vm = (t_env*)pvm;
 	process = (t_process*)pproc;
@@ -94,17 +93,17 @@ static void			cb_sti(void *pvm, void *pproc)
 	set_param_value(mem, process, 3, false);
 	address = process->param[1].value + process->param[2].value;
 	address = get_adress(process->pc_instru, address, false);
-	reg = change_endian(&process->records[process->param[0].value - 1], REG_SIZE);
+	reg = change_endian(&process->records[process->param[0].value - 1]
+			, REG_SIZE);
 	ft_memcpy(&(vm->memory[address]), &reg, REG_SIZE);
 	write_in_visu(process->pc_instru, address, vm);
 }
-
 
 /*
 ** STI prends en parametre T_REG, T_REG | T_DIR | T_IND, T_DIR | T_REG
 */
 
-t_result		ft_sti(t_env *vm, t_process *process)
+t_result			ft_sti(t_env *vm, t_process *process)
 {
 	unsigned char	*mem;
 

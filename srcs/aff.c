@@ -6,7 +6,7 @@
 /*   By: jjaegle <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 16:10:06 by jjaegle           #+#    #+#             */
-/*   Updated: 2019/11/28 11:48:18 by jjaegle          ###   ########.fr       */
+/*   Updated: 2019/11/28 15:38:04 by jjaegle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static void		cb_aff(void *pvm, void *pproc)
 {
 	t_env		*vm;
 	t_process	*process;
-	int c;
+	int			c;
 
 	vm = (t_env*)pvm;
 	process = (t_process*)pproc;
@@ -26,7 +26,6 @@ static void		cb_aff(void *pvm, void *pproc)
 		c %= 256;
 		ft_printf("%c\n", *(int*)process->records[process->param[0].value - 1]);
 	}
-
 	else
 	{
 		c = *(int*)process->records[process->param[0].value - 1];

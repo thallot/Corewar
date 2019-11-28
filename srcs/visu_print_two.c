@@ -6,7 +6,7 @@
 /*   By: thallot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 13:30:03 by thallot           #+#    #+#             */
-/*   Updated: 2019/11/27 14:31:56 by thallot          ###   ########.fr       */
+/*   Updated: 2019/11/28 15:45:57 by jjaegle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ void	print_alive(t_visu *visu, WINDOW *info)
 	}
 }
 
-void print_menu(t_visu *visu, WINDOW *info)
+void	print_menu(t_visu *visu, WINDOW *info)
 {
 	mvwprintw(info, 17, 3, "Cycle :          %d | %d    ",
 	visu->rules->cycle, visu->rules->cr_cycle);
