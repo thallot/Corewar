@@ -6,7 +6,7 @@
 /*   By: jjaegle <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 16:28:29 by jjaegle           #+#    #+#             */
-/*   Updated: 2019/11/28 12:41:48 by jjaegle          ###   ########.fr       */
+/*   Updated: 2019/11/28 15:42:02 by jjaegle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ static void		cb_live(void *pvm, void *pproc)
 		vm->nb_live[id]++;
 		if (!vm->visu)
 			ft_printf("un processus dit que le joueur%d(%s) est en vie\n"
-					, process->param[0].value, vm->tab_champ.champs[vm->lastlive].name);
+					, process->param[0].value
+					, vm->tab_champ.champs[vm->lastlive].name);
 	}
 	process->state = alive;
 }
@@ -79,7 +80,7 @@ static void		cb_ld(void *pvm, void *pproc)
 	else
 	{
 		src = &vm->memory[get_adress(process->pc_instru
-				, process->param[0].value, lg)];	
+				, process->param[0].value, lg)];
 		lg = change_endian(src, REG_SIZE);
 		src = &lg;
 	}

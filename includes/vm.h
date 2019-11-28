@@ -6,7 +6,7 @@
 /*   By: jjaegle <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/06 09:42:52 by jjaegle           #+#    #+#             */
-/*   Updated: 2019/11/28 12:41:04 by jjaegle          ###   ########.fr       */
+/*   Updated: 2019/11/28 15:47:51 by jjaegle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,7 +150,7 @@ typedef struct		s_env
 	int				cmpt_live;
 	int				live[4];
 	int				nb_live[4];
-	t_rules 	*rules;
+	t_rules			*rules;
 	int				aff;
 }					t_env;
 
@@ -252,11 +252,13 @@ void				print_nb_process(t_visu *visu, WINDOW *info);
 void				get_speed(t_visu *visu);
 void				make_pause_exit(t_visu *visu, int opt);
 void				print_pause(t_visu *visu, WINDOW *info);
-void print_livebar(t_visu *visu, WINDOW *info, float live_percent[4]);
-void print_alive(t_visu *visu, WINDOW *info);
-int print_livebar_color(t_visu *visu, WINDOW *info, float live_percent[4]);
-int get_winner(t_visu *visu);
-void print_menu(t_visu *visu, WINDOW *info);
-void print_aff(t_visu *visu, WINDOW *info);
+void				print_livebar(t_visu *visu, WINDOW *info
+		, float live_percent[4]);
+void				print_alive(t_visu *visu, WINDOW *info);
+int					print_livebar_color(t_visu *visu, WINDOW *info
+		, float live_percent[4]);
+int					get_winner(t_visu *visu);
+void				print_menu(t_visu *visu, WINDOW *info);
+void				print_aff(t_visu *visu, WINDOW *info);
 
 #endif
