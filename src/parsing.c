@@ -13,6 +13,15 @@
 #include "../include/asm.h"
 
 /*
+**
+*/
+
+void	looking_for_new_line(t_env *env)
+{
+
+}
+
+/*
 ** Initialise le tableau de pointeur sur fonction
 */
 
@@ -39,6 +48,21 @@ void	init_parsing_tab(t_env *env)
 	env->parsing[TYPE_INSTRUCTION_AFF] = is_valid_aff;
 }
 
+void	skip_to_newline(t_env *env)
+{
+	env->list = env->list->next;
+	while (env->list)
+	{
+		if (env->list->type == TYPE_NEWLINE)
+			return ;
+		else if (env->list->type != TYPE_COMMENT)
+			break ;
+	}
+	ft_printf("Erreur : Manque un NL apres une instruction\n");
+	exit(exit_gc(env, 1));
+}
+
+
 /*
 ** Boucle principale de parsing du fichier .s
 ** a chaque iteration, fait appel à une fonction du tableau défini précédemment
@@ -56,22 +80,27 @@ int		loop_parser(t_env *env)
 		if (env->list->type >= TYPE_INSTRUCTION_LIVE
 		&& env->list->type <= TYPE_LABEL_DEFINITION)
 		{
-			env->parsing[env->list->type](env);
 			if (env->list->type >= TYPE_INSTRUCTION_LIVE && env->list->type <= TYPE_INSTRUCTION_AFF)
 			{
-				env->list = env->list->next;
-				if (env->list->type != TYPE_NEWLINE && env->list->type != TYPE_COMMENT)
-				{
-					ft_printf("Erreur : Pas de new line [%s]\n", env->list->name);
-					exit(exit_gc(env, 1));
-				}
+				env->parsing[env->list->type](env);
+				skip_to_newline(env);
+				//creer une fonction qui va chercher un new line apres cette instruction
+				// env->list = env->list->next;
+				// ft_printf("Element = %s and its type : %d\n", env->list->name, env->list->type);
+				// if (!(env->list) || (env->list->type != TYPE_NEWLINE && env->list->type != TYPE_COMMENT))
+				// {
+				// 	ft_printf("Erreur : Manque un NL apres une instruction\n");
+				// 	exit(exit_gc(env, 1));
+				// }
 			}
+			else
+				env->parsing[env->list->type](env);
 		}
-		else if (env->list->type != TYPE_COMMENT && env->list->type != TYPE_NEWLINE)
-		{
-			ft_printf("Erreur : element inconnu -> [%s]\n", env->list->name);
-			exit(exit_gc(env, 1));
-		}
+		// else if (env->list->type != TYPE_COMMENT /*&& env->list->type != TYPE_NEWLINE*/)
+		// {
+		// 	ft_printf("Erreur : element inconnu -> [%s]\n", env->list->name);
+		// 	exit(exit_gc(env, 1));
+		// }
 		env->list = env->list->next;
 	}
 	env->list = head;

@@ -18,7 +18,7 @@
 
 int		is_blank(char c)
 {
-	if (c == ' ' || c == '\t' || c == '\n' || c == '\r'
+	if (c == ' ' || c == '\t' /*|| c == '\n'*/ || c == '\r'
 	|| c == '\f' | c == '\0')
 		return (1);
 	return (0);
@@ -99,13 +99,16 @@ int		main(int argc, char **argv)
 	parsing_file_s(env, argv[1]);
 	while (get_char(env->fd_s, env->buffer) > 0)
 	{
+		ft_printf("char = %c\n", env->buffer[0]);
 		if (env->buffer[0] == '.')
 			get_command(env);
-		if (env->buffer[0] == '"')
+		else if (env->buffer[0] == '"')
 			get_str(env);
-		if (env->buffer[0] == '#')
+		else if (env->buffer[0] == '#')
 			get_comment(env);
-		if (!is_blank(env->buffer[0]))
+		else if (env->buffer[0] == '\n')
+			add_list(&(env->list), "NL", TYPE_NEWLINE, env);
+		else if (!is_blank(env->buffer[0]))
 			get_instruction(env);
 	}
 	check_error_main(env, argc, argv, 1);

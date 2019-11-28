@@ -59,8 +59,12 @@ void	add_elem(t_env *env, int type, char *instruction, char last_char)
 	}
 	if (env->buffer[0] == ',')
 		add_list(&(env->list), ",", TYPE_VIRGULE, env);
-	if (env->buffer[0] == '\n')
-		add_list(&(env->list), "NL", TYPE_NEWLINE, env);
+	//ici on a un pb : cela insinue qu'on doit trouver un \n direct au prochaine caractere apres l'instru
+	// if (env->buffer[0] == '\n')
+	// {
+	// 	ft_printf("found a new line\n");
+	// 	add_list(&(env->list), "NL", TYPE_NEWLINE, env);
+	// }
 }
 
 /*
