@@ -101,8 +101,10 @@ void	is_valid_registre(t_env *env, char *instruction)
 {
 	int i;
 
+	if (!ft_isnumber(&(env->list->name)[1], 0)) 
+		return ;
 	i = ft_atoi(&(env->list->name)[1]);
-	if (i >= 1 && i <= 16)
+	if ((i >= 1 && i <= 16))
 		return ;
 	ft_printf("Erreur : instruction %s -> [%s] doit etre 1-16\n"
 	, instruction, env->list->name);

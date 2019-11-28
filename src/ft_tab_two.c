@@ -28,7 +28,6 @@ void	is_valid_ld(t_env *env)
 	env->list->type = env->list->type
 		== TYPE_DIRECT ? TYPE_DIRECT_4 : env->list->type;
 	env->size += get_size(env);
-	env->list = env->list->next;
 	is_valid_separator(env, "ld", 1, 2);
 	if (!env->list || env->list->type != TYPE_REGISTRE)
 		print_error(env, "ld", 2);
@@ -48,7 +47,6 @@ void	is_valid_st(t_env *env)
 		print_error(env, "st", 1);
 	env->size += get_size(env);
 	is_valid_param(env, "st");
-	env->list = env->list->next;
 	is_valid_separator(env, "st", 1, 2);
 	if (!env->list || (env->list->type != TYPE_REGISTRE
 		&& env->list->type != TYPE_INDEX
@@ -70,13 +68,11 @@ void	is_valid_add(t_env *env)
 		print_error(env, "add", 1);
 	env->size += get_size(env);
 	is_valid_param(env, "add");
-	env->list = env->list->next;
 	is_valid_separator(env, "add", 1, 2);
 	if (!env->list || env->list->type != TYPE_REGISTRE)
 		print_error(env, "add", 2);
 	env->size += get_size(env);
 	is_valid_param(env, "add");
-	env->list = env->list->next;
 	is_valid_separator(env, "add", 2, 3);
 	if (!env->list || env->list->type != TYPE_REGISTRE)
 		print_error(env, "add", 3);
@@ -96,13 +92,11 @@ void	is_valid_sub(t_env *env)
 		print_error(env, "sub", 1);
 	env->size += get_size(env);
 	is_valid_param(env, "sub");
-	env->list = env->list->next;
 	is_valid_separator(env, "sub", 1, 2);
 	if (!env->list || env->list->type != TYPE_REGISTRE)
 		print_error(env, "sub", 2);
 	env->size += get_size(env);
 	is_valid_param(env, "sub");
-	env->list = env->list->next;
 	is_valid_separator(env, "sub", 2, 3);
 	if (!env->list || env->list->type != TYPE_REGISTRE)
 		print_error(env, "sub", 3);
@@ -118,23 +112,23 @@ void	is_valid_and(t_env *env)
 {
 	env->size += T_INSTRUCTION + T_OCP;
 	env->list = env->list->next;
-	if (!env->list || (env->list->type != TYPE_REGISTRE && env->list->type != TYPE_DIRECT
-		&& env->list->type != TYPE_INDEX && env->list->type != TYPE_LABEL))
+	if (!env->list || (env->list->type != TYPE_REGISTRE
+		&& env->list->type != TYPE_DIRECT && env->list->type != TYPE_INDEX
+		&& env->list->type != TYPE_LABEL))
 		print_error(env, "and", 1);
 	is_valid_param(env, "and");
 	env->list->type = env->list->type
 		== TYPE_DIRECT ? TYPE_DIRECT_4 : env->list->type;
 	env->size += get_size(env);
-	env->list = env->list->next;
 	is_valid_separator(env, "and", 1, 2);
-	if (!env->list || (env->list->type != TYPE_REGISTRE && env->list->type != TYPE_DIRECT
-		&& env->list->type != TYPE_INDEX && env->list->type != TYPE_LABEL))
+	if (!env->list || (env->list->type != TYPE_REGISTRE 
+		&& env->list->type != TYPE_DIRECT && env->list->type != TYPE_INDEX
+		&& env->list->type != TYPE_LABEL))
 		print_error(env, "and", 2);
 	is_valid_param(env, "and");
 	env->list->type = env->list->type
 		== TYPE_DIRECT ? TYPE_DIRECT_4 : env->list->type;
 	env->size += get_size(env);
-	env->list = env->list->next;
 	is_valid_separator(env, "and", 2, 3);
 	if (!env->list || env->list->type != TYPE_REGISTRE)
 		print_error(env, "and", 3);

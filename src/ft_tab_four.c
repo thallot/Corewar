@@ -71,15 +71,13 @@ void	is_valid_lldi(t_env *env)
 	env->size += T_INSTRUCTION + T_OCP;
 	env->list = env->list->next;
 	if (!env->list || (env->list->type != TYPE_REGISTRE
-		&& env->list->type != TYPE_INDEX
-		&& env->list->type != TYPE_DIRECT
+		&& env->list->type != TYPE_INDEX && env->list->type != TYPE_DIRECT
 		&& env->list->type != TYPE_LABEL))
 		print_error(env, "lldi", 1);
 	is_valid_param(env, "lldi");
 	env->list->type = env->list->type
 		== TYPE_DIRECT ? TYPE_DIRECT_2 : env->list->type;
 	env->size += get_size(env);
-	env->list = env->list->next;
 	is_valid_separator(env, "lldi", 1, 2);
 	if (!env->list || (env->list->type != TYPE_REGISTRE
 			&& env->list->type != TYPE_DIRECT))
@@ -88,7 +86,6 @@ void	is_valid_lldi(t_env *env)
 	env->list->type = env->list->type
 		== TYPE_DIRECT ? TYPE_DIRECT_2 : env->list->type;
 	env->size += get_size(env);
-	env->list = env->list->next;
 	is_valid_separator(env, "lldi", 2, 3);
 	if (!env->list || env->list->type != TYPE_REGISTRE)
 		print_error(env, "lldi", 3);
@@ -106,13 +103,12 @@ void	is_valid_lld(t_env *env)
 	env->size += T_INSTRUCTION + T_OCP;
 	env->list = env->list->next;
 	if (!env->list || (env->list->type != TYPE_INDEX
-			&& env->list->type != TYPE_DIRECT && env->list->type != TYPE_LABEL))
+		&& env->list->type != TYPE_DIRECT && env->list->type != TYPE_LABEL))
 		print_error(env, "lld", 1);
 	is_valid_param(env, "lld");
 	env->list->type = env->list->type
 		== TYPE_DIRECT ? TYPE_DIRECT_4 : env->list->type;
 	env->size += get_size(env);
-	env->list = env->list->next;
 	is_valid_separator(env, "lld", 1, 2);
 	if (!env->list || env->list->type != TYPE_REGISTRE)
 		print_error(env, "lld", 2);
