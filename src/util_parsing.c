@@ -61,6 +61,7 @@ void	print_error(t_env *env, char *instr, int nb)
 
 int		is_valid_separator(t_env *env, char *instr, int one, int two)
 {
+	env->list = env->list->next;
 	if (!env->list || env->list->type != TYPE_VIRGULE)
 	{
 		ft_printf("Erreur : %s -> separateur entre param %d et param %d\n"
