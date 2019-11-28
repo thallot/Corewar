@@ -6,7 +6,7 @@
 /*   By: jjaegle <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 16:32:27 by jjaegle           #+#    #+#             */
-/*   Updated: 2019/11/27 14:45:51 by jjaegle          ###   ########.fr       */
+/*   Updated: 2019/11/28 11:13:20 by jjaegle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void				cb_st(void *pvm, void *pproc)
 	if (process->param[1].type == T_REG)
 	{
 		set_param_value(vm->memory, process, 2, false);
-		dest = process->param[1].ptr;
+		dest = &process->records[process->param[1].value - 1];
 	}
 	else
 		dest = &vm->memory[get_adress(process->pc_instru

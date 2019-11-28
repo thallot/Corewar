@@ -6,7 +6,7 @@
 /*   By: jjaegle <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 16:10:06 by jjaegle           #+#    #+#             */
-/*   Updated: 2019/11/22 17:38:53 by jjaegle          ###   ########.fr       */
+/*   Updated: 2019/11/28 11:02:30 by jjaegle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ static void		cb_aff(void *pvm, void *pproc)
 
 	vm = (t_env*)pvm;
 	process = (t_process*)pproc;
+	ft_printf("%c\n", *(int*)process->records[process->param[0].value - 1]);
 }
 
 t_result		ft_aff(t_env *vm, t_process *process)

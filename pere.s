@@ -12,7 +12,7 @@ mdr:       ld %0, r2
             ld %1, r3
             ld %4, r4
             ld %5, r5
-            sti r1, %:mdr, %1
+            sti r1, %:alive, %1
 alive:      live %1
 add         r2, r3, r2
             add r5, r4, r5
