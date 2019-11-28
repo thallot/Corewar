@@ -102,7 +102,7 @@ void	print_menu(t_visu *visu, WINDOW *info)
 	mvwprintw(info, 16, 35, "INFOS :");
 	mvwprintw(info, 20, 35, "PARAMS :");
 	mvwprintw(info, 24, 35, "LIVE BAR :");
-	mvwprintw(info, 29, 35, "Player :");
+	mvwprintw(info, 28, 35, "Player :");
 	wattroff(info, A_UNDERLINE);
 	mvwprintw(info, 11, 3, "CYCLE_TO_DIE %5d | %d  ",
 			CYCLE_TO_DIE, visu->rules->cycle_to_die);
