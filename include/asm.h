@@ -47,6 +47,7 @@
 # define TYPE_REGISTRE 26
 # define TYPE_DIRECT 27
 # define TYPE_UNKNOWN 28
+# define TYPE_NEWLINE 29
 
 # define IND_SIZE 2
 # define REG_SIZE	4

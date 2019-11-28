@@ -59,6 +59,8 @@ void	add_elem(t_env *env, int type, char *instruction, char last_char)
 	}
 	if (env->buffer[0] == ',')
 		add_list(&(env->list), ",", TYPE_VIRGULE, env);
+	if (env->buffer[0] == '\n')
+		add_list(&(env->list), "NL", TYPE_NEWLINE, env);
 }
 
 /*

@@ -55,8 +55,19 @@ int		loop_parser(t_env *env)
 	{
 		if (env->list->type >= TYPE_INSTRUCTION_LIVE
 		&& env->list->type <= TYPE_LABEL_DEFINITION)
+		{
 			env->parsing[env->list->type](env);
-		else if (env->list->type != TYPE_COMMENT)
+			if (env->list->type >= TYPE_INSTRUCTION_LIVE && env->list->type <= TYPE_INSTRUCTION_AFF)
+			{
+				env->list = env->list->next;
+				if (env->list->type != TYPE_NEWLINE && env->list->type != TYPE_COMMENT)
+				{
+					ft_printf("Erreur : Pas de new line [%s]\n", env->list->name);
+					exit(exit_gc(env, 1));
+				}
+			}
+		}
+		else if (env->list->type != TYPE_COMMENT && env->list->type != TYPE_NEWLINE)
 		{
 			ft_printf("Erreur : element inconnu -> [%s]\n", env->list->name);
 			exit(exit_gc(env, 1));

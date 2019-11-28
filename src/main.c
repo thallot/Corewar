@@ -43,8 +43,7 @@ void	print_lst(t_lst *list)
 {
 	while (list)
 	{
-		ft_printf("%-15s", list->name);
-		ft_printf("SIZE : %d\n", list->type);
+		ft_printf("TYPE : %d | [%s]\n", list->type, list->name);
 		list = list->next;
 	}
 }

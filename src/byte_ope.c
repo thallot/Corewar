@@ -53,13 +53,14 @@ void	zap_all(t_env *env, int opt)
 {
 	if (opt == 0)
 	{
-		while (env->list->type == TYPE_COMMENT)
+		while (env->list->type == TYPE_COMMENT || env->list->type == TYPE_NEWLINE)
 			env->list = env->list->next;
 	}
 	else
 	{
 		while (env->list && (env->list->type == TYPE_VIRGULE
 		|| env->list->type == TYPE_COMMENT
+		|| env->list->type == TYPE_NEWLINE
 		|| env->list->type == TYPE_LABEL_DEFINITION))
 			env->list = env->list->next;
 	}
