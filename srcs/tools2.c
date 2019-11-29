@@ -6,7 +6,7 @@
 /*   By: jjaegle <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 15:52:01 by jjaegle           #+#    #+#             */
-/*   Updated: 2019/11/22 18:01:44 by jjaegle          ###   ########.fr       */
+/*   Updated: 2019/11/29 11:20:53 by jjaegle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ char		*get_param(t_process *process, unsigned char memory[], int type
 	return (ret);
 }
 
-int			get_adress(int start, short ind, int l)
+int			get_adress(int start, int ind, int l)
 {
 	int		ret;
 	int		sign;

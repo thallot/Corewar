@@ -6,7 +6,7 @@
 /*   By: jjaegle <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/22 17:27:02 by jjaegle           #+#    #+#             */
-/*   Updated: 2019/11/28 15:41:18 by jjaegle          ###   ########.fr       */
+/*   Updated: 2019/11/29 11:59:13 by jjaegle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,9 @@ static void			cb_ldi(void *pvm, void *pproc)
 	lg = (mem[process->pc_instru] == 10) ? false : true;
 	set_param_value(mem, process, 1, lg);
 	set_param_value(mem, process, 2, lg);
-	address = process->param[0].value + process->param[1].value;
-	address = change_endian(&mem[get_adress(process->pc_instru, address
-				, lg)], REG_SIZE);
+	address = (short)process->param[0].value + (short)process->param[1].value;
+	address = change_endian(&mem[get_adress(process->pc_instru
+				, address % IDX_MOD, lg)], REG_SIZE);
 	dest = process->records[process->param[2].value - 1];
 	ft_memcpy(dest, (void*)&address, REG_SIZE);
 	if (lg == true && !(*(int*)dest))

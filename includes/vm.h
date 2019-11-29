@@ -6,7 +6,7 @@
 /*   By: jjaegle <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/06 09:42:52 by jjaegle           #+#    #+#             */
-/*   Updated: 2019/11/28 15:47:51 by jjaegle          ###   ########.fr       */
+/*   Updated: 2019/11/29 11:20:53 by jjaegle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -227,7 +227,7 @@ char				get_encoded(t_process *process, unsigned char memory[]);
 int					is_register(int tab[], int size);
 int					val_record(t_process *process, int rec, int opt);
 int					change_endian(void *var, int size);
-int					get_adress(int start, short ind, int l);
+int					get_adress(int start, int ind, int l);
 int					clean_process(t_listp *list);
 void				set_param_value(unsigned char *mem, t_process *process
 		, int i, int lg);
