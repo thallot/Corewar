@@ -6,7 +6,7 @@
 /*   By: jjaegle <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 11:53:59 by jjaegle           #+#    #+#             */
-/*   Updated: 2019/11/22 17:57:39 by jjaegle          ###   ########.fr       */
+/*   Updated: 2019/11/29 11:15:29 by jjaegle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ int			change_endian(void *var, int size)
 	ret = 0;
 	ft_memcpy(&ret, var, size);
 	ft_memrev(&ret, size);
+	if (size == IND_SIZE)
+		ret = (short)ret;
 	return (ret);
 }
 
