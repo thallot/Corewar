@@ -65,24 +65,14 @@ void	is_valid_label_definition(t_env *env)
 	i = -1;
 	size = ft_strlen(env->list->name) - 1;
 	if (size == -1)
-	{
-		ft_printf("Label vide\n");
-		exit(exit_gc(env, 1));
-	}
+		exit_label_def(env, 0, 0);
 	if (env->list->name[size - 1] == ':')
-	{
-		ft_printf("Label invalide\n");
-		exit(exit_gc(env, 1));
-	}
+		exit_label_def(env, 1, 0);
 	while (env->list->name[++i])
 	{
 		c = env->list->name[i];
 		if (!((c >= 'a' && c <= 'z') || (c >= '0' && c <= '9') || c == '_'))
-		{
-			ft_printf("Erreur : label %s -> caractere invalide : %c\n"
-			, env->list->name, c);
-			exit(exit_gc(env, 1));
-		}
+			exit_label_def(env, 2, c);
 	}
 	current = env->label;
 	while (current)
@@ -101,7 +91,7 @@ void	is_valid_registre(t_env *env, char *instruction)
 {
 	int i;
 
-	if (!ft_isnumber(&(env->list->name)[1], 0)) 
+	if (!ft_isnumber(&(env->list->name)[1], 0))
 		return ;
 	i = ft_atoi(&(env->list->name)[1]);
 	if ((i >= 1 && i <= 16))

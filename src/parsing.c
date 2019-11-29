@@ -12,6 +12,26 @@
 
 #include "../include/asm.h"
 
+void exit_label_def(t_env *env, int opt, char c)
+{
+	if (opt == 0)
+	{
+		ft_printf("Erreur : label vide\n");
+		exit(exit_gc(env, 1));
+	}
+	else if (opt == 1)
+	{
+		ft_printf("Erreur : label invalide\n");
+		exit(exit_gc(env, 1));
+	}
+	else if (opt == 2)
+	{
+		ft_printf("Erreur : label %s -> caractere invalide : %c\n"
+		, env->list->name, c);
+		exit(exit_gc(env, 1));
+	}
+}
+
 /*
 ** Initialise le tableau de pointeur sur fonction
 */

@@ -153,6 +153,7 @@ int					is_separator(char c);
 */
 int					loop_parser(t_env *env);
 int					get_size(t_env *env);
+void 				exit_label_def(t_env *env, int opt, char c);
 /*
 *********************************** Tableau de fonctions ***********************
 */
