@@ -85,10 +85,10 @@ void	write_instr(t_env *env, int *cpt_instr, int *cpt_octet, int octet)
 	*cpt_instr = *cpt_octet;
 	octet = get_size(env);
 	write(env->fd_cor, &(env->list)->type, 1);
-	if (env->list->type != TYPE_INSTRUCTION_ZJMP
-	&& env->list->type != TYPE_INSTRUCTION_LIVE
-	&& env->list->type != TYPE_INSTRUCTION_FORK
-	&& env->list->type != TYPE_INSTRUCTION_LFORK)
+	if (env->list->type != TYPE_ZJMP
+	&& env->list->type != TYPE_LIVE
+	&& env->list->type != TYPE_FORK
+	&& env->list->type != TYPE_LFORK)
 	{
 		*cpt_octet = (*cpt_octet) + 1;
 		ocp = generate_ocp(env);

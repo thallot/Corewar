@@ -6,7 +6,7 @@
 /*   By: thallot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 15:44:29 by thallot           #+#    #+#             */
-/*   Updated: 2019/11/13 17:49:14 by edillenb         ###   ########.fr       */
+/*   Updated: 2019/11/29 11:30:39 by thallot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,22 +19,22 @@
 # include <stdio.h>
 # include "../lib/libft/libft.h"
 # include "../lib/printf/includes/ft_printf.h"
-# define TYPE_INSTRUCTION_LIVE 1
-# define TYPE_INSTRUCTION_LD 2
-# define TYPE_INSTRUCTION_ST 3
-# define TYPE_INSTRUCTION_ADD 4
-# define TYPE_INSTRUCTION_SUB 5
-# define TYPE_INSTRUCTION_AND 6
-# define TYPE_INSTRUCTION_OR 7
-# define TYPE_INSTRUCTION_XOR 8
-# define TYPE_INSTRUCTION_ZJMP 9
-# define TYPE_INSTRUCTION_LDI 10
-# define TYPE_INSTRUCTION_STI 11
-# define TYPE_INSTRUCTION_FORK 12
-# define TYPE_INSTRUCTION_LLD 13
-# define TYPE_INSTRUCTION_LLDI 14
-# define TYPE_INSTRUCTION_LFORK 15
-# define TYPE_INSTRUCTION_AFF 16
+# define TYPE_LIVE 1
+# define TYPE_LD 2
+# define TYPE_ST 3
+# define TYPE_ADD 4
+# define TYPE_SUB 5
+# define TYPE_AND 6
+# define TYPE_OR 7
+# define TYPE_XOR 8
+# define TYPE_ZJMP 9
+# define TYPE_LDI 10
+# define TYPE_STI 11
+# define TYPE_FORK 12
+# define TYPE_LLD 13
+# define TYPE_LLDI 14
+# define TYPE_LFORK 15
+# define TYPE_AFF 16
 # define TYPE_COMMAND 17
 # define TYPE_STR 18
 # define TYPE_LABEL 19
@@ -153,7 +153,7 @@ int					is_separator(char c);
 */
 int					loop_parser(t_env *env);
 int					get_size(t_env *env);
-void 				exit_label_def(t_env *env, int opt, char c);
+void				exit_label_def(t_env *env, int opt, char c);
 /*
 *********************************** Tableau de fonctions ***********************
 */

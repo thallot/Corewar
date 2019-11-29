@@ -6,7 +6,7 @@
 /*   By: thallot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 09:56:57 by thallot           #+#    #+#             */
-/*   Updated: 2019/11/13 15:50:56 by thallot          ###   ########.fr       */
+/*   Updated: 2019/11/29 11:28:17 by thallot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,8 @@ void	zap_all(t_env *env, int opt)
 {
 	if (opt == 0)
 	{
-		while (env->list->type == TYPE_COMMENT || env->list->type == TYPE_NEWLINE)
+		while (env->list->type == TYPE_COMMENT
+		|| env->list->type == TYPE_NEWLINE)
 			env->list = env->list->next;
 	}
 	else
@@ -110,11 +111,11 @@ int		generate_ocp(t_env *env)
 	int		ocp;
 
 	head = env->list;
-	if (env->list->type == TYPE_INSTRUCTION_AFF)
+	if (env->list->type == TYPE_AFF)
 		return (64);
-	if (env->list->type == TYPE_INSTRUCTION_LD
-	|| env->list->type == TYPE_INSTRUCTION_ST
-	|| env->list->type == TYPE_INSTRUCTION_LLD)
+	if (env->list->type == TYPE_LD
+	|| env->list->type == TYPE_ST
+	|| env->list->type == TYPE_LLD)
 		offset = 2;
 	else
 		offset = 3;

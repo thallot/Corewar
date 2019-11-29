@@ -71,21 +71,21 @@ void	add_elem(t_env *env, int type, char *instruction, char last_char)
 int		is_instruction(char *str)
 {
 	if (!ft_strcmp("live", str))
-		return (TYPE_INSTRUCTION_LIVE);
+		return (TYPE_LIVE);
 	else if (!ft_strcmp("ld", str))
-		return (TYPE_INSTRUCTION_LD);
+		return (TYPE_LD);
 	else if (!ft_strcmp("st", str))
-		return (TYPE_INSTRUCTION_ST);
+		return (TYPE_ST);
 	else if (!ft_strcmp("add", str))
-		return (TYPE_INSTRUCTION_ADD);
+		return (TYPE_ADD);
 	else if (!ft_strcmp("sub", str))
-		return (TYPE_INSTRUCTION_SUB);
+		return (TYPE_SUB);
 	else if (!ft_strcmp("and", str))
-		return (TYPE_INSTRUCTION_AND);
+		return (TYPE_AND);
 	else if (!ft_strcmp("or", str))
-		return (TYPE_INSTRUCTION_OR);
+		return (TYPE_OR);
 	else if (!ft_strcmp("xor", str))
-		return (TYPE_INSTRUCTION_XOR);
+		return (TYPE_XOR);
 	return (is_instruction_next(str));
 }
 
@@ -96,21 +96,21 @@ int		is_instruction(char *str)
 int		is_instruction_next(char *str)
 {
 	if (!ft_strcmp("zjmp", str))
-		return (TYPE_INSTRUCTION_ZJMP);
+		return (TYPE_ZJMP);
 	else if (!ft_strcmp("ldi", str))
-		return (TYPE_INSTRUCTION_LDI);
+		return (TYPE_LDI);
 	else if (!ft_strcmp("sti", str))
-		return (TYPE_INSTRUCTION_STI);
+		return (TYPE_STI);
 	else if (!ft_strcmp("fork", str))
-		return (TYPE_INSTRUCTION_FORK);
+		return (TYPE_FORK);
 	else if (!ft_strcmp("lld", str))
-		return (TYPE_INSTRUCTION_LLD);
+		return (TYPE_LLD);
 	else if (!ft_strcmp("lldi", str))
-		return (TYPE_INSTRUCTION_LLDI);
+		return (TYPE_LLDI);
 	else if (!ft_strcmp("lfork", str))
-		return (TYPE_INSTRUCTION_LFORK);
+		return (TYPE_LFORK);
 	else if (!ft_strcmp("aff", str))
-		return (TYPE_INSTRUCTION_AFF);
+		return (TYPE_AFF);
 	return (0);
 }
 

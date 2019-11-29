@@ -6,7 +6,7 @@
 /*   By: thallot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 15:18:27 by thallot           #+#    #+#             */
-/*   Updated: 2019/11/13 15:32:03 by edillenb         ###   ########.fr       */
+/*   Updated: 2019/11/29 11:28:57 by thallot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ void	is_valid_and(t_env *env)
 		== TYPE_DIRECT ? TYPE_DIRECT_4 : env->list->type;
 	env->size += get_size(env);
 	is_valid_separator(env, "and", 1, 2);
-	if (!env->list || (env->list->type != TYPE_REGISTRE 
+	if (!env->list || (env->list->type != TYPE_REGISTRE
 		&& env->list->type != TYPE_DIRECT && env->list->type != TYPE_INDEX
 		&& env->list->type != TYPE_LABEL))
 		print_error(env, "and", 2);
