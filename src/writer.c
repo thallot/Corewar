@@ -33,6 +33,7 @@ void	check_error(t_env *env, char *name)
 	env->list = env->list->next;
 	ft_strcpy(name, env->list->name);
 	env->list = env->list->next;
+	zap_all(env, 0);
 	if (ft_strcmp(env->list->name, COMMENT_CMD_STRING))
 	{
 		ft_printf("Erreur : Le commentaire doit être la 2ème commande (%s)\n"

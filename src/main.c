@@ -105,6 +105,8 @@ int		main(int argc, char **argv)
 			get_str(env);
 		if (env->buffer[0] == '#')
 			get_comment(env);
+		if (env->buffer[0] == '\n')
+			add_list(&(env->list), "NL", TYPE_NEWLINE, env);
 		if (!is_blank(env->buffer[0]))
 			get_instruction(env);
 	}
