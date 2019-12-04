@@ -6,15 +6,15 @@
 #    By: thallot <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/27 16:42:47 by edillenb          #+#    #+#              #
-#    Updated: 2019/11/25 15:43:06 by jjaegle          ###   ########.fr        #
+#    Updated: 2019/11/29 15:50:20 by jjaegle          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-ASM = assembler
+ASM = asm
 VM = corewar
 
 CFLAGS_ASM = -Wall -Werror -Wextra
-CFLAGS_VM = -Wall -Werror -Wextra -lncurses -fsanitize=address
+CFLAGS_VM = -Wall -Werror -Wextra -lncurses
 CC = gcc
 LIBFT_ASM = lib/libft/libft.a
 LIBFT_VM = libft/libftprintf.a

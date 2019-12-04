@@ -6,7 +6,7 @@
 /*   By: thallot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 11:12:43 by thallot           #+#    #+#             */
-/*   Updated: 2019/11/28 15:46:05 by thallot          ###   ########.fr       */
+/*   Updated: 2019/11/29 15:38:11 by jjaegle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	get_speed(t_visu *visu)
 		else if (c == 43)
 		{
 			visu->speed -= 10;
-			visu->speed <= 0 ? visu->speed = 10 : visu->speed;
+			visu->speed <= 0 ? visu->speed = 1 : visu->speed;
 			visu_core(visu, 1);
 		}
 		else if (c == 45)

@@ -6,7 +6,7 @@
 /*   By: thallot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 15:44:29 by thallot           #+#    #+#             */
-/*   Updated: 2019/11/29 11:30:39 by thallot          ###   ########.fr       */
+/*   Updated: 2019/11/29 15:46:55 by jjaegle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 # include <fcntl.h>
 # include <unistd.h>
 # include <stdlib.h>
-# include <stdio.h>
 # include "../lib/libft/libft.h"
 # include "../lib/printf/includes/ft_printf.h"
 # define TYPE_LIVE 1

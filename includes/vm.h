@@ -6,7 +6,7 @@
 /*   By: jjaegle <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/06 09:42:52 by jjaegle           #+#    #+#             */
-/*   Updated: 2019/11/29 11:20:53 by jjaegle          ###   ########.fr       */
+/*   Updated: 2019/11/29 15:49:04 by jjaegle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 # include "../libft/includes/ft_printf.h"
 # include "op.h"
-# include <stdio.h>
 # include <ncurses.h>
 
 # define NB_INSTR 16

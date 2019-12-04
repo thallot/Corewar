@@ -6,7 +6,7 @@
 /*   By: thallot <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 09:56:57 by thallot           #+#    #+#             */
-/*   Updated: 2019/11/29 11:28:17 by thallot          ###   ########.fr       */
+/*   Updated: 2019/11/29 15:47:54 by jjaegle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 #include <sys/uio.h>
 #include <unistd.h>
 #include <stdlib.h>
-#include <stdio.h>
 #include "../include/asm.h"
 
 /*
